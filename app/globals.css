@@ -1,0 +1,414 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: var(--font-geist-sans), 'Geist Fallback';
+  --font-mono: var(--font-geist-mono), 'Geist Mono Fallback';
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  color-scheme: light;
+  /* Soft off-white agency theme — easy on the eyes, strong contrast */
+  --background: oklch(0.949 0.004 95); /* warm off-white, not bright */
+  --foreground: oklch(0.205 0 0); /* near black */
+  --card: oklch(0.975 0.003 95); /* slightly lighter panel */
+  --card-foreground: oklch(0.205 0 0);
+  --popover: oklch(0.975 0.003 95);
+  --popover-foreground: oklch(0.205 0 0);
+  --primary: oklch(0.205 0 0); /* near-black CTA */
+  --primary-foreground: oklch(0.97 0.003 95);
+  --secondary: oklch(0.915 0.004 95);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.915 0.004 95);
+  --muted-foreground: oklch(0.205 0 0 / 68%); /* darker, more legible */
+  --accent: oklch(0.205 0 0); /* monochrome — matches the logo */
+  --accent-foreground: oklch(0.97 0.003 95);
+  --destructive: oklch(0.55 0.22 27);
+  --border: oklch(0.205 0 0 / 18%); /* stronger so fine lines show */
+  --input: oklch(0.205 0 0 / 18%);
+  --ring: oklch(0.205 0 0 / 40%);
+  --chart-1: oklch(0.205 0 0);
+  --chart-2: oklch(0.45 0 0);
+  --chart-3: oklch(0.55 0 0);
+  --chart-4: oklch(0.7 0 0);
+  --chart-5: oklch(0.82 0 0);
+  --radius: 0.75rem;
+  --sidebar: oklch(0.975 0.003 95);
+  --sidebar-foreground: oklch(0.205 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.97 0.003 95);
+  --sidebar-accent: oklch(0.915 0.004 95);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.205 0 0 / 18%);
+  --sidebar-ring: oklch(0.205 0 0 / 40%);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+  @apply font-sans;
+  scroll-behavior: smooth;
+  }
+  }
+
+::selection {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* Interactive cursors — unlayered so they win over Tailwind utilities */
+button,
+a,
+[role="button"],
+label,
+summary,
+select {
+  cursor: pointer;
+}
+button:disabled,
+[aria-disabled="true"],
+button[disabled] {
+  cursor: not-allowed;
+}
+input:not([type="button"]):not([type="submit"]):not([type="reset"]):not(
+    [type="checkbox"]
+  ):not([type="radio"]),
+textarea {
+  cursor: text;
+}
+
+@layer utilities {
+  /* Marquee */
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .animate-marquee {
+    animation: marquee 22s linear infinite;
+  }
+  .animate-marquee-fast {
+    animation: marquee 14s linear infinite;
+  }
+  .animate-marquee-slow {
+    animation: marquee 40s linear infinite;
+  }
+
+  /* Fade / rise in */
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-rise {
+    animation: rise-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* Hero scroll hint */
+  @keyframes scroll-hint {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(300%);
+    }
+  }
+
+  /* Intro: clip reveal columns */
+  @keyframes intro-bar {
+    0% {
+      transform: scaleY(1);
+    }
+    100% {
+      transform: scaleY(0);
+    }
+  }
+
+  @keyframes intro-word {
+    0% {
+      transform: translateY(110%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes intro-word-out {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-110%);
+    }
+  }
+
+  @keyframes intro-line {
+    0% {
+      transform: scaleX(0);
+    }
+    100% {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes bg-drift {
+    from {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    to {
+      transform: translate(-50%, -52%) scale(1.03);
+    }
+  }
+  .animate-bg-drift {
+    animation: bg-drift 8s ease-in-out infinite alternate;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(34px);
+    transition:
+      opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  .reveal-left {
+    transform: translateX(-40px);
+  }
+  .reveal-right {
+    transform: translateX(40px);
+  }
+  .reveal-scale {
+    transform: scale(0.94);
+  }
+  .reveal-left.is-visible,
+  .reveal-right.is-visible,
+  .reveal-scale.is-visible {
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* Image hover zoom helper */
+  @keyframes pan-slow {
+    from {
+      transform: scale(1.05) translateY(0);
+    }
+    to {
+      transform: scale(1.12) translateY(-2%);
+    }
+  }
+
+  /* Marquee for project tags / scrolling band */
+  @keyframes shimmer-line {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Grid background */
+  .bg-grid {
+    background-image: linear-gradient(
+        to right,
+        color-mix(in oklch, var(--foreground) 6%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in oklch, var(--foreground) 6%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 64px 64px;
+  }
+
+  .hide-scrollbar {
+    scrollbar-width: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Slow rotation (circular badge) */
+  @keyframes spin-slow {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .animate-spin-slow {
+    animation: spin-slow 16s linear infinite;
+  }
+
+  /* SVG stroke draw (hero underline) */
+  @keyframes draw-line {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* Word-by-word masked reveal (TextReveal) */
+  .tr-word {
+    display: inline-block;
+    transform: translateY(115%);
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+  }
+  .tr-visible .tr-word {
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tr-word {
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* Outlined display type */
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--foreground);
+  }
+  .text-outline-thin {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--foreground);
+  }
+
+  /* Animated underline for links */
+  .link-underline {
+    position: relative;
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .link-underline:hover::after,
+  .link-underline.is-active::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Film-grain overlay */
+  .noise-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+  }
+}
+
+/* ————— Premium button fills (unlayered so they beat utilities) ————— */
+.btn-fill-dark,
+.btn-fill-light {
+  position: relative;
+  overflow: hidden;
+  transition:
+    color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-fill-dark::after,
+.btn-fill-light::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  transform: translateY(103%);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-fill-dark::after {
+  background: var(--foreground);
+}
+.btn-fill-light::after {
+  background: var(--background);
+}
+.btn-fill-dark:hover::after,
+.btn-fill-light:hover::after {
+  transform: translateY(0);
+}
+.btn-fill-dark:hover {
+  color: var(--background);
+  border-color: var(--foreground);
+}
+.btn-fill-light {
+  border: 1px solid var(--primary);
+}
+.btn-fill-light:hover {
+  color: var(--foreground);
+}
+.btn-fill-dark > *,
+.btn-fill-light > * {
+  position: relative;
+  z-index: 1;
+}
