@@ -21,6 +21,7 @@ const SITE_DESCRIPTION =
   'Agencia de diseño y desarrollo web en Madrid. Webs a medida que convierten visitas en clientes. Prototipo gratis en 48h. Pagas solo si te gusta.'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://mpweblabs.com'),
   title: {
     default: SITE_TITLE,
     template: '%s — MP WebLabs',
