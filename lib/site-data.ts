@@ -33,7 +33,7 @@ export const TICKER_CTA_ITEMS = [
 ]
 
 export const STATS = [
-  { num: "+60", label: "Proyectos entregados" },
+  { num: "+10", label: "Proyectos entregados" },
   { num: "7", label: "Años de experiencia" },
   { num: "24h", label: "Tiempo de respuesta" },
 ]

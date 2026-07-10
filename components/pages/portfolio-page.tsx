@@ -23,7 +23,7 @@ export function PortfolioPage() {
           as="h1"
           className="max-w-4xl text-balance text-5xl font-medium leading-[1] tracking-tighter md:text-8xl"
           segments={[
-            "+60 webs hechas.",
+            "+10 webs hechas.",
             { text: "Estas son las mejores.", serif: true },
           ]}
         />
