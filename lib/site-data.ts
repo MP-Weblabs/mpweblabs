@@ -60,7 +60,7 @@ export const PROJECTS: Project[] = [
     title: "Automóviles Cobeña",
     desc: "Web corporativa con catálogo de vehículos y formulario de contacto directo que multiplicó las consultas cualificadas.",
     result: "+35% consultas en 6 semanas",
-    image: "/projects/cobena.png",
+    image: "/projects/cobena.webp",
   },
   {
     num: "02",
@@ -71,7 +71,7 @@ export const PROJECTS: Project[] = [
     title: "MammaMia Daganzo",
     desc: "Web con menú visual y reservas online que llena mesas entre semana, no solo los fines de semana.",
     result: "+120 reservas el primer mes",
-    image: "/projects/mammamia.png",
+    image: "/projects/mammamia.webp",
   },
   {
     num: "03",
@@ -82,7 +82,7 @@ export const PROJECTS: Project[] = [
     title: "MueveMiCoche",
     desc: "Plataforma de transporte de vehículos puerta a puerta en toda España, con seguimiento de rutas en tiempo real.",
     result: "+5.000 vehículos transportados",
-    image: "/projects/muevemicoche.png",
+    image: "/projects/muevemicoche.webp",
   },
   {
     num: "04",
@@ -93,7 +93,7 @@ export const PROJECTS: Project[] = [
     title: "Lotus Experience",
     desc: "Landing de marca con catálogo visual y cita en tienda que elevó el tráfico al punto de venta físico.",
     result: "+80% visitas a tienda física",
-    image: "/projects/lotus.png",
+    image: "/projects/lotus.webp",
   },
 ]
 
