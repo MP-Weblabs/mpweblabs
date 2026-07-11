@@ -35,6 +35,10 @@ async function sendWeb3Forms(
   payload.append("access_key", accessKey)
   payload.append("subject", subject)
   payload.append("from_name", "Web MP WebLabs")
+  const clientEmail = data.get("Email")
+  if (typeof clientEmail === "string" && clientEmail) {
+    payload.append("replyto", clientEmail)
+  }
   try {
     const res = await fetch(WEB3FORMS_ENDPOINT, {
       method: "POST",
