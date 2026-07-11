@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Aviso legal",
   description:
     "Aviso legal de MP WebLabs. Condiciones de uso de este sitio web.",
+  alternates: { canonical: "/aviso-legal" },
 }
 
 const SECTIONS: LegalSection[] = [

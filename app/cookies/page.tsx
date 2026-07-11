@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Política de cookies",
   description:
     "Política de cookies de MP WebLabs. Qué cookies utilizamos y cómo gestionarlas.",
+  alternates: { canonical: "/cookies" },
 }
 
 const SECTIONS: LegalSection[] = [

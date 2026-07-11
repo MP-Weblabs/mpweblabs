@@ -3,6 +3,7 @@
 import { useEffect, useState, type FormEvent } from "react"
 import Link from "next/link"
 import { Check, X } from "lucide-react"
+import { submitLead, type LeadStatus } from "@/lib/web3forms"
 
 export function LeadModal({
   open,
@@ -11,7 +12,7 @@ export function LeadModal({
   open: boolean
   onClose: () => void
 }) {
-  const [sent, setSent] = useState(false)
+  const [status, setStatus] = useState<LeadStatus>("idle")
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -29,13 +30,15 @@ export function LeadModal({
 
   if (!open) return null
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setSent(true)
+    setStatus("sending")
+    const ok = await submitLead(e.currentTarget, "Nuevo lead — Prototipo gratis")
+    setStatus(ok ? "sent" : "error")
   }
 
   function handleClose() {
-    setSent(false)
+    setStatus("idle")
     onClose()
   }
 
@@ -55,7 +58,7 @@ export function LeadModal({
           <X className="h-5 w-5" />
         </button>
 
-        {sent ? (
+        {status === "sent" ? (
           <div className="flex flex-col items-center py-6 text-center">
             <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-accent/15 text-accent">
               <Check className="h-7 w-7" />
@@ -86,11 +89,19 @@ export function LeadModal({
               enviamos el prototipo en 48h.
             </p>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-              <Field placeholder="Nombre completo" required />
-              <Field placeholder="Email" type="email" required />
-              <Field placeholder="Teléfono" type="tel" />
+              <input
+                type="checkbox"
+                name="botcheck"
+                tabIndex={-1}
+                aria-hidden="true"
+                className="hidden"
+              />
+              <Field name="Nombre" placeholder="Nombre completo" required />
+              <Field name="Email" placeholder="Email" type="email" required />
+              <Field name="Teléfono" placeholder="Teléfono" type="tel" />
               <textarea
                 rows={3}
+                name="Mensaje"
                 placeholder="Cuéntanos sobre tu proyecto (opcional)"
                 className="resize-none rounded-md border border-border bg-foreground/5 px-3 py-2.5 text-sm outline-none transition-colors placeholder:text-foreground/25 focus:border-foreground/30"
               />
@@ -107,10 +118,17 @@ export function LeadModal({
               </label>
               <button
                 type="submit"
-                className="mt-1 rounded-md bg-foreground py-3 text-sm font-semibold text-background transition-opacity hover:opacity-90"
+                disabled={status === "sending"}
+                className="mt-1 rounded-md bg-foreground py-3 text-sm font-semibold text-background transition-opacity hover:opacity-90 disabled:opacity-60"
               >
-                Obtener prototipo →
+                {status === "sending" ? "Enviando…" : "Obtener prototipo →"}
               </button>
+              {status === "error" && (
+                <p className="text-xs leading-relaxed text-red-600">
+                  No se pudo enviar el formulario. Inténtalo de nuevo o
+                  escríbenos a hola@mpweblabs.com
+                </p>
+              )}
             </form>
             <p className="mt-4 text-xs leading-relaxed text-foreground/25">
               * Sujeto a disponibilidad y selección por parte de nuestro equipo
@@ -124,10 +142,12 @@ export function LeadModal({
 }
 
 function Field({
+  name,
   placeholder,
   type = "text",
   required,
 }: {
+  name: string
   placeholder: string
   type?: string
   required?: boolean
@@ -135,6 +155,7 @@ function Field({
   return (
     <input
       type={type}
+      name={name}
       required={required}
       placeholder={placeholder}
       className="rounded-md border border-border bg-foreground/5 px-3 py-2.5 text-sm outline-none transition-colors placeholder:text-foreground/25 focus:border-foreground/30"

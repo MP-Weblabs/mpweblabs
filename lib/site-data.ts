@@ -253,3 +253,5 @@ export const TIMELINE = [
 ]
 
 export const WHATSAPP_URL = "https://wa.me/34600000000"
+
+export const SITE_URL = "https://mpweblabs.com"

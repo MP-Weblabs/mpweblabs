@@ -7,13 +7,16 @@ import { WHATSAPP_URL } from "@/lib/site-data"
 import { TextReveal } from "@/components/text-reveal"
 import { Magnetic } from "@/components/magnetic"
 import { LocalTime } from "@/components/local-time"
+import { submitLead, type LeadStatus } from "@/lib/web3forms"
 
 export function ContactPage() {
-  const [sent, setSent] = useState(false)
+  const [status, setStatus] = useState<LeadStatus>("idle")
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setSent(true)
+    setStatus("sending")
+    const ok = await submitLead(e.currentTarget, "Nuevo lead — Formulario de contacto")
+    setStatus(ok ? "sent" : "error")
   }
 
   return (
@@ -61,7 +64,7 @@ export function ContactPage() {
       </div>
 
       <div>
-        {sent ? (
+        {status === "sent" ? (
           <div className="flex h-full flex-col items-start justify-center gap-5 rounded-2xl border border-border bg-card p-10">
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-foreground text-background">
               <Check className="h-7 w-7" />
@@ -77,14 +80,28 @@ export function ContactPage() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-8">
-            <Field label="01 — Nombre completo" placeholder="Tu nombre" required />
+            <input
+              type="checkbox"
+              name="botcheck"
+              tabIndex={-1}
+              aria-hidden="true"
+              className="hidden"
+            />
             <Field
+              name="Nombre"
+              label="01 — Nombre completo"
+              placeholder="Tu nombre"
+              required
+            />
+            <Field
+              name="Email"
               label="02 — Email"
               type="email"
               placeholder="tu@email.com"
               required
             />
             <Field
+              name="Teléfono"
               label="03 — Teléfono (opcional)"
               type="tel"
               placeholder="+34 600 000 000"
@@ -96,6 +113,7 @@ export function ContactPage() {
               <textarea
                 rows={4}
                 required
+                name="Mensaje"
                 placeholder="¿Qué tipo de web necesitas? ¿Tienes web actualmente?"
                 className="resize-none border-b border-border bg-transparent pb-3 pt-1 text-lg outline-none transition-colors placeholder:text-foreground/20 focus:border-foreground"
               />
@@ -113,14 +131,23 @@ export function ContactPage() {
             <Magnetic className="block">
               <button
                 type="submit"
-                className="btn-fill-light group w-full rounded-full bg-foreground py-4 text-sm font-semibold text-background"
+                disabled={status === "sending"}
+                className="btn-fill-light group w-full rounded-full bg-foreground py-4 text-sm font-semibold text-background disabled:opacity-60"
               >
                 <span className="flex items-center justify-center gap-2">
-                  Obtener prototipo gratis
+                  {status === "sending"
+                    ? "Enviando…"
+                    : "Obtener prototipo gratis"}
                   <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
               </button>
             </Magnetic>
+            {status === "error" && (
+              <p className="text-[13px] leading-relaxed text-red-600">
+                No se pudo enviar el formulario. Inténtalo de nuevo o
+                escríbenos a hola@mpweblabs.com
+              </p>
+            )}
           </form>
         )}
       </div>
@@ -168,11 +195,13 @@ function ContactRow({
 }
 
 function Field({
+  name,
   label,
   placeholder,
   type = "text",
   required,
 }: {
+  name: string
   label: string
   placeholder: string
   type?: string
@@ -185,6 +214,7 @@ function Field({
       </label>
       <input
         type={type}
+        name={name}
         required={required}
         placeholder={placeholder}
         className="border-b border-border bg-transparent pb-3 pt-1 text-lg outline-none transition-colors placeholder:text-foreground/20 focus:border-foreground"

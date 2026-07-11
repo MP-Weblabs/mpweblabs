@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Política de privacidad",
   description:
     "Política de privacidad de MP WebLabs. Cómo tratamos y protegemos tus datos personales.",
+  alternates: { canonical: "/privacidad" },
 }
 
 const SECTIONS: LegalSection[] = [
