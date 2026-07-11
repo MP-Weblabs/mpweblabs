@@ -121,7 +121,7 @@ export const FAQS = [
   },
   {
     q: "¿Cuánto cuesta una web?",
-    a: "Desde 500€ para landing pages y proyectos de una página. Las webs corporativas completas parten de 2.000€. Te damos un presupuesto exacto en la primera llamada.",
+    a: "Desde 600€ para landing pages y proyectos de una página. Las webs corporativas completas parten de 2.000€. Te damos un presupuesto exacto en la primera llamada.",
   },
   {
     q: "¿Usáis WordPress o plantillas?",

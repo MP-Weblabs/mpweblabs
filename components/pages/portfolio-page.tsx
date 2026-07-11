@@ -175,7 +175,7 @@ function PricingStrip({ onOpen }: { onOpen: () => void }) {
             <span className="font-serif text-3xl italic tracking-tight">
               desde
             </span>{" "}
-            500 €
+            600 €
           </div>
           <p className="mt-4 text-[13px] leading-relaxed text-background/65">
             Diseño 100% personalizado, animaciones profesionales, código limpio,
