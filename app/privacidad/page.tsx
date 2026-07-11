@@ -13,7 +13,7 @@ const SECTIONS: LegalSection[] = [
     title: "Responsable del tratamiento",
     body: [
       "MP WebLabs (en adelante, «el Estudio»), con domicilio en Madrid, España, es el responsable del tratamiento de los datos personales que nos facilites a través de este sitio web.",
-      "Puedes contactar con nosotros en hola@mpweblabs.com para cualquier cuestión relacionada con la protección de tus datos.",
+      "Puedes contactar con nosotros en info@mpweblabs.com para cualquier cuestión relacionada con la protección de tus datos.",
     ],
   },
   {
@@ -50,7 +50,7 @@ const SECTIONS: LegalSection[] = [
   {
     title: "Tus derechos",
     body: [
-      "Puedes ejercer en cualquier momento tus derechos de acceso, rectificación, supresión, oposición, limitación del tratamiento y portabilidad escribiendo a hola@mpweblabs.com.",
+      "Puedes ejercer en cualquier momento tus derechos de acceso, rectificación, supresión, oposición, limitación del tratamiento y portabilidad escribiendo a info@mpweblabs.com.",
       "Si consideras que no hemos tratado tus datos correctamente, puedes presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es).",
     ],
   },

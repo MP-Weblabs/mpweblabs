@@ -126,7 +126,7 @@ export function LeadModal({
               {status === "error" && (
                 <p className="text-xs leading-relaxed text-red-600">
                   No se pudo enviar el formulario. Inténtalo de nuevo o
-                  escríbenos a hola@mpweblabs.com
+                  escríbenos a info@mpweblabs.com
                 </p>
               )}
             </form>

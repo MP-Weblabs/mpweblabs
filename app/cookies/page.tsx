@@ -42,7 +42,7 @@ const SECTIONS: LegalSection[] = [
     title: "Actualizaciones de esta política",
     body: [
       "Podemos actualizar esta política para reflejar cambios en las cookies que utilizamos. La fecha de la última revisión figura en la cabecera de esta página.",
-      "Para cualquier duda, escríbenos a hola@mpweblabs.com.",
+      "Para cualquier duda, escríbenos a info@mpweblabs.com.",
     ],
   },
 ]

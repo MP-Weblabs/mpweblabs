@@ -38,7 +38,7 @@ export function ContactPage() {
           </p>
 
           <div className="mt-12 flex flex-col">
-            <ContactRow label="Email" value="hola@mpweblabs.com" href="mailto:hola@mpweblabs.com" />
+            <ContactRow label="Email" value="info@mpweblabs.com" href="mailto:info@mpweblabs.com" />
             <ContactRow label="WhatsApp" value="+34 600 000 000" href={WHATSAPP_URL} />
             <ContactRow label="Estudio" value="Madrid, España" />
           </div>
@@ -145,7 +145,7 @@ export function ContactPage() {
             {status === "error" && (
               <p className="text-[13px] leading-relaxed text-red-600">
                 No se pudo enviar el formulario. Inténtalo de nuevo o
-                escríbenos a hola@mpweblabs.com
+                escríbenos a info@mpweblabs.com
               </p>
             )}
           </form>

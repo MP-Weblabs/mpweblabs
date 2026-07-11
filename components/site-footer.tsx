@@ -17,10 +17,10 @@ export function SiteFooter() {
             convierten visitas en clientes.
           </p>
           <a
-            href="mailto:hola@mpweblabs.com"
+            href="mailto:info@mpweblabs.com"
             className="link-underline mt-5 inline-flex items-center gap-1 text-sm font-medium"
           >
-            hola@mpweblabs.com
+            info@mpweblabs.com
             <ArrowUpRight className="h-3.5 w-3.5" />
           </a>
         </div>
@@ -53,10 +53,10 @@ export function SiteFooter() {
 
         <FooterCol title="Contacto">
           <a
-            href="mailto:hola@mpweblabs.com"
+            href="mailto:info@mpweblabs.com"
             className="block w-fit text-[13px] text-foreground/50 transition-colors hover:text-foreground"
           >
-            hola@mpweblabs.com
+            info@mpweblabs.com
           </a>
           <a
             href={WHATSAPP_URL}

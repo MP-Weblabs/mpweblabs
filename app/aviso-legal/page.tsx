@@ -13,7 +13,7 @@ const SECTIONS: LegalSection[] = [
     title: "Identificación del titular",
     body: [
       "En cumplimiento de la Ley 34/2002, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa de que este sitio web es titularidad de MP WebLabs, con domicilio en Madrid, España.",
-      "Contacto: hola@mpweblabs.com",
+      "Contacto: info@mpweblabs.com",
     ],
   },
   {

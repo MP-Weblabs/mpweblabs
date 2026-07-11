@@ -100,7 +100,7 @@ const BUSINESS_JSON_LD = {
   url: 'https://mpweblabs.com',
   logo: 'https://mpweblabs.com/mpweblabs-logo.png',
   image: 'https://mpweblabs.com/mpweblabs-logo.png',
-  email: 'hola@mpweblabs.com',
+  email: 'info@mpweblabs.com',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Madrid',
