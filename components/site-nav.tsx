@@ -49,20 +49,17 @@ export function SiteNav() {
         </Link>
 
         <ul className="hidden items-center gap-9 md:flex">
-          {NAV_ITEMS.map((item, i) => (
+          {NAV_ITEMS.map((item) => (
             <li key={item.href}>
               <Link
                 href={item.href}
                 className={cn(
-                  "link-underline flex items-baseline gap-1.5 text-[13px] tracking-wide transition-colors",
+                  "link-underline text-[13px] tracking-wide transition-colors",
                   pathname === item.href
                     ? "is-active text-foreground"
                     : "text-muted-foreground hover:text-foreground",
                 )}
               >
-                <sup className="font-mono text-[9px] text-muted-foreground">
-                  0{i + 1}
-                </sup>
                 {item.label}
               </Link>
             </li>

@@ -13,8 +13,8 @@ export function SiteFooter() {
         <div className="col-span-2 md:col-span-1">
           <Logo className="h-8" />
           <p className="mt-3 max-w-xs text-[13px] leading-relaxed text-muted-foreground">
-            Estudio de diseño y desarrollo web en Madrid. Webs a medida que
-            convierten visitas en clientes.
+            Estudio de diseño y desarrollo web en Madrid, con clientes en toda
+            España. Webs a medida que convierten visitas en clientes.
           </p>
           <a
             href="mailto:info@mpweblabs.com"

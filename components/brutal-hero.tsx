@@ -68,7 +68,7 @@ export function BrutalHero() {
         style={rise("0.2s")}
       >
         <span className="hidden md:block">
-          Estudio de diseño &amp; desarrollo
+          Estudio de diseño &amp; desarrollo web en Madrid
         </span>
         <span className="inline-flex items-center gap-2.5">
           <span className="relative flex h-1.5 w-1.5">
@@ -136,8 +136,8 @@ export function BrutalHero() {
           style={rise("0.95s")}
         >
           <p className="text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
-            Diseño y desarrollo a medida que convierte visitas en clientes.
-            Sin plantillas. Sin atajos.
+            Diseño y desarrollo web a medida en Madrid que convierte visitas
+            en clientes. Sin plantillas. Sin atajos.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Magnetic>

@@ -1,11 +1,10 @@
 "use client"
 
-import Image from "next/image"
-import { ArrowUpRight } from "lucide-react"
-import { PROJECTS, type Project } from "@/lib/site-data"
+import { PROJECTS } from "@/lib/site-data"
 import { Reveal } from "@/components/reveal"
 import { TextReveal } from "@/components/text-reveal"
 import { Magnetic } from "@/components/magnetic"
+import { ProjectGrid } from "@/components/project-grid"
 import { useSiteChrome } from "@/components/site-chrome"
 
 export function PortfolioPage() {
@@ -29,108 +28,19 @@ export function PortfolioPage() {
         />
         <Reveal delay={300}>
           <p className="mt-8 max-w-md text-base leading-relaxed text-muted-foreground">
-            No somos una fábrica de webs. Somos tu partner tecnológico.
-            Pruébanos sin riesgo.
+            No somos una fábrica de webs. Somos tu partner tecnológico en
+            Madrid, con proyectos entregados en toda España. Pruébanos sin
+            riesgo.
           </p>
         </Reveal>
       </section>
 
-      {/* Alternating showcase grid */}
-      <div className="flex flex-col">
-        {PROJECTS.map((p, i) => (
-          <ProjectRow
-            key={p.title}
-            project={p}
-            reversed={i % 2 === 1}
-            onOpen={openModal}
-          />
-        ))}
-      </div>
+      <section className="px-5 py-20 md:px-10 md:py-28">
+        <ProjectGrid projects={PROJECTS} />
+      </section>
 
       <PricingStrip onOpen={openModal} />
     </div>
-  )
-}
-
-function ProjectRow({
-  project,
-  reversed,
-  onOpen,
-}: {
-  project: Project
-  reversed: boolean
-  onOpen: () => void
-}) {
-  return (
-    <button
-      onClick={onOpen}
-      className="group grid grid-cols-1 items-center gap-8 border-b border-border px-5 py-12 text-left md:grid-cols-2 md:gap-14 md:px-10 md:py-20"
-    >
-      {/* image */}
-      <Reveal
-        variant={reversed ? "right" : "left"}
-        className={reversed ? "md:order-2" : ""}
-      >
-        <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-shadow duration-500 group-hover:shadow-2xl">
-          <Image
-            src={project.image || "/placeholder.svg"}
-            alt={project.title}
-            fill
-            sizes="(max-width: 768px) 100vw, 45vw"
-            className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
-          />
-          <span className="absolute left-4 top-4 rounded-full bg-background/90 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.08em] backdrop-blur">
-            {project.year}
-          </span>
-        </div>
-      </Reveal>
-
-      {/* text */}
-      <Reveal
-        variant={reversed ? "left" : "right"}
-        delay={120}
-        className={reversed ? "md:order-1" : ""}
-      >
-        <div>
-          <div className="mb-4 flex items-center gap-3">
-            <span className="text-[12px] font-medium tracking-[0.1em] text-accent">
-              {project.num}
-            </span>
-            <span className="h-px w-8 bg-border" />
-            <span className="text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
-              {project.tag}
-            </span>
-          </div>
-          <h2 className="text-balance text-3xl font-medium tracking-tight md:text-5xl">
-            {project.title}
-          </h2>
-          <p className="mt-4 max-w-md text-[15px] leading-relaxed text-muted-foreground">
-            {project.desc}
-          </p>
-
-          <div className="mt-6 flex flex-wrap gap-2">
-            {project.services.map((s) => (
-              <span
-                key={s}
-                className="rounded-full border border-border px-3 py-1 text-[11px] text-muted-foreground"
-              >
-                {s}
-              </span>
-            ))}
-          </div>
-
-          <div className="mt-7 flex items-center justify-between border-t border-border pt-5">
-            <span className="text-sm font-semibold text-accent">
-              {project.result}
-            </span>
-            <span className="flex items-center gap-1 text-[13px] font-medium text-foreground transition-colors group-hover:text-accent">
-              Ver caso
-              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </span>
-          </div>
-        </div>
-      </Reveal>
-    </button>
   )
 }
 

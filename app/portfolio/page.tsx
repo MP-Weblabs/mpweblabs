@@ -3,7 +3,7 @@ import { PortfolioPage } from "@/components/pages/portfolio-page"
 
 const title = "Portfolio"
 const description =
-  "Webs a medida entregadas por MP WebLabs: automoción, hostelería, transporte y perfumería, con resultados medibles en cada proyecto."
+  "Webs a medida entregadas por MP WebLabs en Madrid y toda España: automoción, hostelería, transporte y perfumería, con resultados medibles en cada proyecto."
 
 export const metadata: Metadata = {
   title,

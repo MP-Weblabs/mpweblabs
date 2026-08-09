@@ -2,6 +2,7 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono, Instrument_Serif } from 'next/font/google'
 import { SiteShell } from '@/components/site-chrome'
+import { SITE_URL } from '@/lib/site-data'
 import './globals.css'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
@@ -18,23 +19,25 @@ const instrumentSerif = Instrument_Serif({
 
 const SITE_TITLE = 'MP WebLabs — Diseño y desarrollo web en Madrid'
 const SITE_DESCRIPTION =
-  'Agencia de diseño y desarrollo web en Madrid. Webs a medida que convierten visitas en clientes. Prototipo gratis en 48h. Pagas solo si te gusta.'
+  'Agencia de diseño y desarrollo web en Madrid, con clientes en toda España. Webs a medida que convierten visitas en clientes. Prototipo gratis en 48h. Pagas solo si te gusta.'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://mpweblabs.com'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: SITE_TITLE,
     template: '%s — MP WebLabs',
   },
   description: SITE_DESCRIPTION,
   applicationName: 'MP WebLabs',
-  authors: [{ name: 'MP WebLabs', url: 'https://mpweblabs.com' }],
+  authors: [{ name: 'MP WebLabs', url: SITE_URL }],
   creator: 'MP WebLabs',
   publisher: 'MP WebLabs',
   keywords: [
     'diseño web Madrid',
     'desarrollo web Madrid',
     'agencia web Madrid',
+    'diseño web España',
+    'agencia de diseño web en España',
     'diseño web a medida',
     'páginas web para empresas',
     'landing pages',
@@ -94,41 +97,44 @@ export const viewport: Viewport = {
 const BUSINESS_JSON_LD = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
-  '@id': 'https://mpweblabs.com/#business',
+  '@id': `${SITE_URL}/#business`,
   name: 'MP WebLabs',
   description: SITE_DESCRIPTION,
-  url: 'https://mpweblabs.com',
-  logo: 'https://mpweblabs.com/mpweblabs-logo.png',
-  image: 'https://mpweblabs.com/mpweblabs-logo.png',
+  url: SITE_URL,
+  logo: `${SITE_URL}/mpweblabs-logo.png`,
+  image: `${SITE_URL}/mpweblabs-logo.png`,
   email: 'info@mpweblabs.com',
+  telephone: '+34600000000',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Madrid',
     addressRegion: 'Madrid',
     addressCountry: 'ES',
   },
-  areaServed: {
-    '@type': 'Country',
-    name: 'España',
-  },
+  areaServed: [
+    { '@type': 'City', name: 'Madrid' },
+    { '@type': 'Country', name: 'España' },
+  ],
   priceRange: '600€ - 5.000€',
   knowsAbout: [
     'Diseño web',
     'Desarrollo web',
+    'Diseño web Madrid',
     'Landing pages',
     'Branding',
     'SEO técnico',
+    'SEO local',
   ],
 }
 
 const WEBSITE_JSON_LD = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  '@id': 'https://mpweblabs.com/#website',
+  '@id': `${SITE_URL}/#website`,
   name: 'MP WebLabs',
-  url: 'https://mpweblabs.com',
+  url: SITE_URL,
   inLanguage: 'es-ES',
-  publisher: { '@id': 'https://mpweblabs.com/#business' },
+  publisher: { '@id': `${SITE_URL}/#business` },
 }
 
 export default function RootLayout({

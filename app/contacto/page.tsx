@@ -3,7 +3,7 @@ import { ContactPage } from "@/components/pages/contact-page"
 
 const title = "Contacto"
 const description =
-  "Cuéntanos tu proyecto y recibe un prototipo completo gratis en menos de 48 horas. Sin compromiso."
+  "Agencia de diseño web en Madrid que trabaja con clientes de toda España. Cuéntanos tu proyecto y recibe un prototipo completo gratis en menos de 48 horas. Sin compromiso."
 
 export const metadata: Metadata = {
   title,

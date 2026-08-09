@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next"
-import { SITE_URL } from "@/lib/site-data"
+import { PROJECTS, SITE_URL } from "@/lib/site-data"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date()
@@ -13,6 +13,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/portfolio", priority: 0.9, changeFrequency: "monthly" },
     { path: "/contacto", priority: 0.9, changeFrequency: "monthly" },
     { path: "/nosotros", priority: 0.8, changeFrequency: "monthly" },
+    ...PROJECTS.map((p) => ({
+      path: `/portfolio/${p.slug}`,
+      priority: 0.7,
+      changeFrequency: "monthly" as const,
+    })),
     { path: "/aviso-legal", priority: 0.2, changeFrequency: "yearly" },
     { path: "/privacidad", priority: 0.2, changeFrequency: "yearly" },
     { path: "/cookies", priority: 0.2, changeFrequency: "yearly" },

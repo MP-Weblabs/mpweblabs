@@ -1,13 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { ArrowUpRight, Plus, Star } from "lucide-react"
 import { FAQS, PROJECTS, TESTIMONIALS, WHATSAPP_URL } from "@/lib/site-data"
 import { Reveal } from "@/components/reveal"
 import { TextReveal } from "@/components/text-reveal"
 import { Magnetic } from "@/components/magnetic"
+import { ProjectGrid } from "@/components/project-grid"
 import { useSiteChrome } from "@/components/site-chrome"
 
 function SectionLabel({
@@ -45,9 +45,10 @@ export function IntroSection() {
         <div className="flex flex-col gap-5 md:col-span-4">
           <Reveal delay={100}>
             <p className="text-[15px] leading-relaxed text-muted-foreground">
-              Construimos sitios web desde cero, sin plantillas, donde cada
-              decisión de diseño tiene un único objetivo: convertir a tus
-              visitantes en clientes recurrentes.
+              Construimos sitios web desde cero, sin plantillas, para negocios
+              de Madrid y de toda España. Cada decisión de diseño tiene un
+              único objetivo: convertir a tus visitantes en clientes
+              recurrentes.
             </p>
             <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
               No WordPress genérico. No Kit Digital. Código propio, diseño que
@@ -153,60 +154,7 @@ export function PortfolioPreview() {
         </div>
       </Reveal>
 
-      <div className="grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-12">
-        {PROJECTS.map((p, i) => {
-          const wide = i % 3 === 0
-          return (
-            <Reveal
-              key={p.title}
-              delay={(i % 2) * 120}
-              variant="scale"
-              className={
-                wide
-                  ? "md:col-span-7"
-                  : i % 3 === 1
-                    ? "md:col-span-5 md:mt-24"
-                    : "md:col-span-5 md:-mt-10"
-              }
-            >
-              <Link href="/portfolio" className="group block">
-                <div className="relative overflow-hidden rounded-xl border border-border bg-card">
-                  <div
-                    className={`relative overflow-hidden ${wide ? "aspect-[16/11]" : "aspect-[4/3]"}`}
-                  >
-                    <Image
-                      src={p.image || "/placeholder.svg"}
-                      alt={p.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 55vw"
-                      className="object-cover transition-transform duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
-                    />
-                  </div>
-                  <span className="absolute left-4 top-4 rounded-full bg-background/90 px-3 py-1 font-mono text-[11px] backdrop-blur-sm">
-                    {p.num}
-                  </span>
-                  <span className="absolute right-4 top-4 flex h-10 w-10 translate-y-2 items-center justify-center rounded-full bg-background/90 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                    <ArrowUpRight className="h-4 w-4" />
-                  </span>
-                </div>
-                <div className="mt-5 flex items-baseline justify-between gap-4 border-b border-border pb-5">
-                  <div>
-                    <h3 className="text-xl font-medium tracking-tight md:text-2xl">
-                      {p.title}
-                    </h3>
-                    <p className="mt-1 text-[13px] text-muted-foreground">
-                      {p.result}
-                    </p>
-                  </div>
-                  <span className="shrink-0 text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-                    {p.tag} · {p.year}
-                  </span>
-                </div>
-              </Link>
-            </Reveal>
-          )
-        })}
-      </div>
+      <ProjectGrid projects={PROJECTS.filter((p) => p.featured)} />
 
       <Reveal>
         <div className="mt-12 md:hidden">
