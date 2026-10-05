@@ -38,7 +38,7 @@ export function ContactPage() {
             segments={["Hablemos de", { text: "tu proyecto.", serif: true }]}
           />
           <p className="mt-7 max-w-md text-[15px] leading-relaxed text-muted-foreground">
-            Cuéntanos qué necesitas y te enviamos un prototipo completo gratis
+            Cuéntanos qué necesitas y te enviamos una propuesta visual gratis
             en menos de 48 horas. Sin compromiso. Trabajamos en remoto con
             negocios de toda España.
           </p>

@@ -181,7 +181,7 @@ export function OfferStrip() {
             <h2 className="mt-8 text-6xl font-medium leading-[0.95] tracking-tighter md:text-8xl">
               Prototipo
               <br />
-              completo.
+              en 48h.
               <br />
               <span className="font-serif font-normal italic tracking-tight">
                 Gratis.
@@ -195,8 +195,8 @@ export function OfferStrip() {
               Riesgo cero
             </span>
             <p className="mb-8 max-w-md text-[15px] leading-relaxed text-background/65">
-              Antes de que te comprometas, te mostramos exactamente cómo
-              quedaría tu web: diseño, estructura y funcionalidad. Si no te
+              Antes de que te comprometas, te mostramos nuestra propuesta para
+              tu web: estructura, diseño y referencias visuales. Si no te
               convence, no pagas nada.
             </p>
             <Magnetic>
