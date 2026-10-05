@@ -1,12 +1,14 @@
 import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/metadata"
 import { LegalPage, type LegalSection } from "@/components/pages/legal-page"
+import { CONTACT_EMAIL } from "@/lib/site-data"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Política de cookies",
   description:
     "Política de cookies de MP WebLabs. Qué cookies utilizamos y cómo gestionarlas.",
-  alternates: { canonical: "/cookies" },
-}
+  path: "/cookies",
+})
 
 const SECTIONS: LegalSection[] = [
   {
@@ -18,18 +20,18 @@ const SECTIONS: LegalSection[] = [
   {
     title: "Cookies que utilizamos",
     body: [
-      "Este sitio web utiliza un número mínimo de cookies:",
+      "Este sitio web no instala cookies propias ni de terceros con fines analíticos, publicitarios o de seguimiento. Por eso no te mostramos un banner de consentimiento.",
       [
-        "Cookies técnicas imprescindibles para el funcionamiento del sitio.",
-        "Cookies de analítica (Vercel Analytics) que recogen datos agregados y anónimos de visitas, sin identificarte personalmente.",
+        "Estadísticas: usamos Vercel Web Analytics, que mide las visitas de forma agregada y anónima sin utilizar cookies ni identificadores persistentes.",
+        "Almacenamiento técnico: guardamos en el almacenamiento de sesión de tu navegador un indicador para no repetir la animación de entrada. Se borra al cerrar la pestaña y no contiene datos personales.",
       ],
-      "No utilizamos cookies publicitarias ni de seguimiento entre sitios.",
+      "Si en el futuro incorporamos cookies que requieran tu consentimiento, actualizaremos esta política y te lo pediremos antes de instalarlas.",
     ],
   },
   {
     title: "Cómo gestionar las cookies",
     body: [
-      "Puedes configurar tu navegador para bloquear o eliminar las cookies en cualquier momento. Ten en cuenta que bloquear las cookies técnicas puede afectar al funcionamiento del sitio.",
+      "En cualquier caso, puedes configurar tu navegador para bloquear o eliminar las cookies y el almacenamiento local en cualquier momento:",
       [
         "Chrome: Configuración → Privacidad y seguridad → Cookies",
         "Firefox: Ajustes → Privacidad y seguridad",
@@ -42,7 +44,7 @@ const SECTIONS: LegalSection[] = [
     title: "Actualizaciones de esta política",
     body: [
       "Podemos actualizar esta política para reflejar cambios en las cookies que utilizamos. La fecha de la última revisión figura en la cabecera de esta página.",
-      "Para cualquier duda, escríbenos a info@mpweblabs.com.",
+      `Para cualquier duda, escríbenos a ${CONTACT_EMAIL}.`,
     ],
   },
 ]
@@ -53,7 +55,7 @@ export default function CookiesPage() {
       label="Uso de cookies"
       titlePlain="Política de"
       titleSerif="cookies."
-      updated="Julio 2026"
+      updated="Octubre 2026"
       sections={SECTIONS}
     />
   )

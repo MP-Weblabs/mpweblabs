@@ -87,12 +87,12 @@ export function BrutalHero() {
             <span className="block" style={line("0.3s")}>
               Diseñamos
             </span>
-          </span>
+          </span>{" "}
           <span className="block overflow-hidden pb-[0.05em]">
             <span className="text-outline block" style={line("0.42s")}>
               webs que
             </span>
-          </span>
+          </span>{" "}
           <span className="block overflow-hidden pb-[0.2em] -mb-[0.14em]">
             <span
               className="block font-serif font-normal italic tracking-[-0.01em]"

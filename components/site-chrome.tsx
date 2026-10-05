@@ -32,7 +32,9 @@ export function useSiteChrome() {
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const pathname = usePathname()
-  const [introDone, setIntroDone] = useState(false)
+  // The intro only plays when the session starts on the home page.
+  const [showIntro] = useState(pathname === "/")
+  const [introDone, setIntroDone] = useState(!showIntro)
   const [modalOpen, setModalOpen] = useState(false)
 
   const handleIntroDone = useCallback(() => setIntroDone(true), [])
@@ -46,10 +48,18 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
   return (
     <SiteChromeContext.Provider value={value}>
-      <IntroLoader onDone={handleIntroDone} />
+      <a
+        href="#contenido"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[1100] focus:rounded-full focus:bg-foreground focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-background"
+      >
+        Saltar al contenido
+      </a>
+      {showIntro && <IntroLoader onDone={handleIntroDone} />}
       <SiteNav />
-      <main>{children}</main>
-      {pathname !== "/contacto" && <SiteFooter />}
+      <main id="contenido" tabIndex={-1} className="outline-none">
+        {children}
+      </main>
+      <SiteFooter />
       <LeadModal open={modalOpen} onClose={closeModal} />
       <CustomCursor />
       <div

@@ -1,19 +1,25 @@
 import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/metadata"
 import { LegalPage, type LegalSection } from "@/components/pages/legal-page"
+import { CONTACT_EMAIL, LEGAL_OWNER } from "@/lib/site-data"
 
-export const metadata: Metadata = {
+const OWNER = [LEGAL_OWNER.name, LEGAL_OWNER.taxId && `NIF ${LEGAL_OWNER.taxId}`]
+  .filter(Boolean)
+  .join(", ")
+
+export const metadata: Metadata = pageMetadata({
   title: "Política de privacidad",
   description:
     "Política de privacidad de MP WebLabs. Cómo tratamos y protegemos tus datos personales.",
-  alternates: { canonical: "/privacidad" },
-}
+  path: "/privacidad",
+})
 
 const SECTIONS: LegalSection[] = [
   {
     title: "Responsable del tratamiento",
     body: [
-      "MP WebLabs (en adelante, «el Estudio»), con domicilio en Madrid, España, es el responsable del tratamiento de los datos personales que nos facilites a través de este sitio web.",
-      "Puedes contactar con nosotros en info@mpweblabs.com para cualquier cuestión relacionada con la protección de tus datos.",
+      `${OWNER ? `${OWNER}, que opera como ` : ""}MP WebLabs (en adelante, «el Estudio»), con domicilio en ${LEGAL_OWNER.address || "Madrid, España"}, es el responsable del tratamiento de los datos personales que nos facilites a través de este sitio web.`,
+      `Puedes contactar con nosotros en ${CONTACT_EMAIL} para cualquier cuestión relacionada con la protección de tus datos.`,
     ],
   },
   {
@@ -36,6 +42,18 @@ const SECTIONS: LegalSection[] = [
     ],
   },
   {
+    title: "Encargados del tratamiento",
+    body: [
+      "Para prestar el servicio nos apoyamos en proveedores que tratan datos por cuenta nuestra, con contrato de encargo y únicamente para la finalidad indicada:",
+      [
+        "Web3Forms — recepción de los formularios y envío del aviso por correo electrónico.",
+        "Notion Labs, Inc. — gestión interna de las solicitudes recibidas (CRM).",
+        "Vercel Inc. — alojamiento del sitio web y estadísticas de visitas agregadas y anónimas.",
+      ],
+      "Algunos de estos proveedores están ubicados en Estados Unidos. Las transferencias internacionales se amparan en el Marco de Privacidad de Datos UE-EE. UU. o en las cláusulas contractuales tipo aprobadas por la Comisión Europea.",
+    ],
+  },
+  {
     title: "Base legal",
     body: [
       "La base legal para el tratamiento es tu consentimiento, otorgado al marcar la casilla de aceptación de esta política antes de enviar cualquier formulario, así como la aplicación de medidas precontractuales a petición tuya (art. 6.1.a y 6.1.b RGPD).",
@@ -50,7 +68,7 @@ const SECTIONS: LegalSection[] = [
   {
     title: "Tus derechos",
     body: [
-      "Puedes ejercer en cualquier momento tus derechos de acceso, rectificación, supresión, oposición, limitación del tratamiento y portabilidad escribiendo a info@mpweblabs.com.",
+      `Puedes ejercer en cualquier momento tus derechos de acceso, rectificación, supresión, oposición, limitación del tratamiento y portabilidad escribiendo a ${CONTACT_EMAIL}. También puedes retirar tu consentimiento en cualquier momento.`,
       "Si consideras que no hemos tratado tus datos correctamente, puedes presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es).",
     ],
   },
@@ -68,7 +86,7 @@ export default function PrivacidadPage() {
       label="Protección de datos"
       titlePlain="Política de"
       titleSerif="privacidad."
-      updated="Julio 2026"
+      updated="Octubre 2026"
       sections={SECTIONS}
     />
   )

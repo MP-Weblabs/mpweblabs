@@ -1,19 +1,30 @@
 import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/metadata"
 import { LegalPage, type LegalSection } from "@/components/pages/legal-page"
+import { CONTACT_EMAIL, LEGAL_OWNER } from "@/lib/site-data"
 
-export const metadata: Metadata = {
+// Datos del titular (se rellenan en lib/site-data.ts → LEGAL_OWNER)
+const OWNER_DETAILS = [
+  LEGAL_OWNER.name && `Titular: ${LEGAL_OWNER.name}`,
+  LEGAL_OWNER.taxId && `NIF: ${LEGAL_OWNER.taxId}`,
+  LEGAL_OWNER.address && `Domicilio: ${LEGAL_OWNER.address}`,
+  LEGAL_OWNER.registry,
+  `Email: ${CONTACT_EMAIL}`,
+].filter((v): v is string => Boolean(v))
+
+export const metadata: Metadata = pageMetadata({
   title: "Aviso legal",
   description:
     "Aviso legal de MP WebLabs. Condiciones de uso de este sitio web.",
-  alternates: { canonical: "/aviso-legal" },
-}
+  path: "/aviso-legal",
+})
 
 const SECTIONS: LegalSection[] = [
   {
     title: "Identificación del titular",
     body: [
-      "En cumplimiento de la Ley 34/2002, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa de que este sitio web es titularidad de MP WebLabs, con domicilio en Madrid, España.",
-      "Contacto: info@mpweblabs.com",
+      "En cumplimiento del artículo 10 de la Ley 34/2002, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa de que este sitio web, que opera bajo la marca MP WebLabs, es titularidad de:",
+      OWNER_DETAILS,
     ],
   },
   {
@@ -57,7 +68,7 @@ export default function AvisoLegalPage() {
       label="Condiciones de uso"
       titlePlain="Aviso"
       titleSerif="legal."
-      updated="Julio 2026"
+      updated="Octubre 2026"
       sections={SECTIONS}
     />
   )

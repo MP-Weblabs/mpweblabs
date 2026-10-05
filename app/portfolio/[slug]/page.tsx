@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { PROJECTS } from "@/lib/site-data"
 import { ProjectPage } from "@/components/pages/project-page"
-import { SITE_URL } from "@/lib/site-data"
+import { PROJECTS, SITE_URL } from "@/lib/site-data"
+import { pageMetadata } from "@/lib/metadata"
 
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }))
@@ -20,23 +20,13 @@ export async function generateMetadata({
   const title = project.title
   const description = `${project.desc} ${project.result} — Caso de estudio de MP WebLabs en ${project.location}.`
 
-  return {
+  return pageMetadata({
     title,
     description,
-    alternates: { canonical: `/portfolio/${project.slug}` },
-    openGraph: {
-      title: `${title} — MP WebLabs`,
-      description,
-      url: `/portfolio/${project.slug}`,
-      type: "article",
-      images: [project.image],
-    },
-    twitter: {
-      title: `${title} — MP WebLabs`,
-      description,
-      images: [project.image],
-    },
-  }
+    path: `/portfolio/${project.slug}`,
+    type: "article",
+    images: [project.image],
+  })
 }
 
 export default async function Page({

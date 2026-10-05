@@ -1,10 +1,12 @@
 import type { Metadata } from "next"
 import { HomePage } from "@/components/pages/home-page"
-import { FAQS } from "@/lib/site-data"
+import { FAQS, SITE_DESCRIPTION } from "@/lib/site-data"
+import { pageMetadata } from "@/lib/metadata"
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
-}
+export const metadata: Metadata = pageMetadata({
+  description: SITE_DESCRIPTION,
+  path: "/",
+})
 
 const FAQ_JSON_LD = {
   "@context": "https://schema.org",

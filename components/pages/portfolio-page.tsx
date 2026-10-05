@@ -55,14 +55,13 @@ function PricingStrip({ onOpen }: { onOpen: () => void }) {
           <span className="mb-3 inline-block rounded-full border border-accent/25 bg-accent/10 px-3 py-1 text-[11px] uppercase tracking-[0.08em] text-accent">
             Gratis
           </span>
-          <div className="text-sm text-muted-foreground line-through">450 €</div>
           <div className="text-6xl font-medium tracking-tighter">
             0{" "}
             <span className="font-serif italic tracking-tight">€</span>
           </div>
           <p className="mt-4 text-[13px] leading-relaxed text-muted-foreground">
-            Un vídeo con la estructura estratégica y referencias visuales para tu
-            proyecto. Ves nuestra visión antes de cualquier pago.
+            Una propuesta visual de tu web —estructura, diseño y referencias— en
+            menos de 48h. Ves nuestra visión antes de cualquier pago.
           </p>
           <Magnetic className="mt-6 block">
             <button
@@ -80,7 +79,6 @@ function PricingStrip({ onOpen }: { onOpen: () => void }) {
           <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.1em] text-background/50">
             (Precio web)
           </div>
-          <div className="text-sm text-background/40 line-through">2.500 €</div>
           <div className="text-6xl font-medium tracking-tighter">
             <span className="font-serif text-3xl italic tracking-tight">
               desde

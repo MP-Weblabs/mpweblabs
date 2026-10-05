@@ -1,9 +1,10 @@
 "use client"
 
-import { useEffect, useState, type FormEvent } from "react"
+import { useEffect, useRef, useState, type FormEvent } from "react"
 import Link from "next/link"
 import { Check, X } from "lucide-react"
 import { submitLead, type LeadStatus } from "@/lib/web3forms"
+import { CONTACT_EMAIL } from "@/lib/site-data"
 
 export function LeadModal({
   open,
@@ -13,18 +14,47 @@ export function LeadModal({
   onClose: () => void
 }) {
   const [status, setStatus] = useState<LeadStatus>("idle")
+  const panelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    if (!open) return
+    const panel = panelRef.current
+    const previouslyFocused = document.activeElement as HTMLElement | null
+
+    // Move focus into the dialog (first form field).
+    const firstField =
+      panel?.querySelector<HTMLElement>("input:not([tabindex='-1'])") ??
+      panel?.querySelector<HTMLElement>("button")
+    firstField?.focus()
+
     function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose()
+      if (e.key === "Escape") {
+        onClose()
+        return
+      }
+      // Keep keyboard focus trapped inside the dialog.
+      if (e.key === "Tab" && panel) {
+        const focusables = panel.querySelectorAll<HTMLElement>(
+          "a[href], button:not([disabled]), input:not([tabindex='-1']), textarea",
+        )
+        if (!focusables.length) return
+        const first = focusables[0]
+        const last = focusables[focusables.length - 1]
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
     }
-    if (open) {
-      document.addEventListener("keydown", onKey)
-      document.body.style.overflow = "hidden"
-    }
+    document.addEventListener("keydown", onKey)
+    document.body.style.overflow = "hidden"
     return () => {
       document.removeEventListener("keydown", onKey)
       document.body.style.overflow = ""
+      previouslyFocused?.focus?.()
     }
   }, [open, onClose])
 
@@ -49,7 +79,13 @@ export function LeadModal({
         if (e.target === e.currentTarget) handleClose()
       }}
     >
-      <div className="relative w-full max-w-md border border-border bg-card p-8">
+      <div
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="lead-modal-title"
+        className="relative max-h-[calc(100svh-2.5rem)] w-full max-w-md overflow-y-auto border border-border bg-card p-8"
+      >
         <button
           onClick={handleClose}
           className="absolute right-4 top-4 text-muted-foreground transition-colors hover:text-foreground"
@@ -63,7 +99,10 @@ export function LeadModal({
             <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-accent/15 text-accent">
               <Check className="h-7 w-7" />
             </div>
-            <h2 className="mb-2 text-xl font-semibold tracking-tight">
+            <h2
+              id="lead-modal-title"
+              className="mb-2 text-xl font-semibold tracking-tight"
+            >
               ¡Solicitud recibida!
             </h2>
             <p className="text-sm leading-relaxed text-muted-foreground">
@@ -81,7 +120,10 @@ export function LeadModal({
             <span className="mb-4 inline-block rounded-full border border-accent/25 bg-accent/10 px-3 py-1 text-[11px] uppercase tracking-[0.1em] text-accent">
               Riesgo cero
             </span>
-            <h2 className="mb-2 text-2xl font-semibold tracking-tight">
+            <h2
+              id="lead-modal-title"
+              className="mb-2 text-2xl font-semibold tracking-tight"
+            >
               Obtener mi prototipo gratis
             </h2>
             <p className="mb-6 text-sm leading-relaxed text-muted-foreground">
@@ -96,14 +138,35 @@ export function LeadModal({
                 aria-hidden="true"
                 className="hidden"
               />
-              <Field name="Nombre" placeholder="Nombre completo" required />
-              <Field name="Email" placeholder="Email" type="email" required />
-              <Field name="Teléfono" placeholder="Teléfono" type="tel" />
+              <Field
+                name="Nombre"
+                placeholder="Nombre completo"
+                autoComplete="name"
+                maxLength={120}
+                required
+              />
+              <Field
+                name="Email"
+                placeholder="Email"
+                type="email"
+                autoComplete="email"
+                maxLength={160}
+                required
+              />
+              <Field
+                name="Teléfono"
+                placeholder="Teléfono (opcional)"
+                type="tel"
+                autoComplete="tel"
+                maxLength={30}
+              />
               <textarea
                 rows={3}
                 name="Mensaje"
+                aria-label="Cuéntanos sobre tu proyecto (opcional)"
                 placeholder="Cuéntanos sobre tu proyecto (opcional)"
-                className="resize-none rounded-md border border-border bg-foreground/5 px-3 py-2.5 text-sm outline-none transition-colors placeholder:text-foreground/25 focus:border-foreground/30"
+                maxLength={1800}
+                className="resize-none rounded-md border border-border bg-foreground/5 px-3 py-2.5 text-sm outline-none transition-colors placeholder:text-foreground/50 focus:border-foreground/40"
               />
               <label className="flex items-center gap-2 text-xs text-muted-foreground">
                 <input type="checkbox" required className="accent-foreground" />
@@ -124,13 +187,13 @@ export function LeadModal({
                 {status === "sending" ? "Enviando…" : "Obtener prototipo →"}
               </button>
               {status === "error" && (
-                <p className="text-xs leading-relaxed text-red-600">
+                <p role="alert" className="text-xs leading-relaxed text-red-700">
                   No se pudo enviar el formulario. Inténtalo de nuevo o
-                  escríbenos a info@mpweblabs.com
+                  escríbenos a {CONTACT_EMAIL}
                 </p>
               )}
             </form>
-            <p className="mt-4 text-xs leading-relaxed text-foreground/25">
+            <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
               * Sujeto a disponibilidad y selección por parte de nuestro equipo
               creativo.
             </p>
@@ -146,11 +209,15 @@ function Field({
   placeholder,
   type = "text",
   required,
+  autoComplete,
+  maxLength,
 }: {
   name: string
   placeholder: string
   type?: string
   required?: boolean
+  autoComplete?: string
+  maxLength?: number
 }) {
   return (
     <input
@@ -158,7 +225,10 @@ function Field({
       name={name}
       required={required}
       placeholder={placeholder}
-      className="rounded-md border border-border bg-foreground/5 px-3 py-2.5 text-sm outline-none transition-colors placeholder:text-foreground/25 focus:border-foreground/30"
+      aria-label={placeholder}
+      autoComplete={autoComplete}
+      maxLength={maxLength}
+      className="rounded-md border border-border bg-foreground/5 px-3 py-2.5 text-sm outline-none transition-colors placeholder:text-foreground/50 focus:border-foreground/40"
     />
   )
 }

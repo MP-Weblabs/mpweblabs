@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, ArrowUpRight, Check, Star } from "lucide-react"
-import { PROJECTS, type Project } from "@/lib/site-data"
+import { PROJECTS, initialsOf, type Project } from "@/lib/site-data"
 import { Reveal } from "@/components/reveal"
 import { TextReveal } from "@/components/text-reveal"
 import { Magnetic } from "@/components/magnetic"
@@ -167,10 +167,18 @@ export function ProjectPage({ project }: { project: Project }) {
       </section>
 
       <section className="border-b border-border px-5 py-20 md:px-10 md:py-28">
-        <Reveal>
-          <div className="flex gap-0.5">
+        <Reveal as="figure">
+          <div
+            className="flex gap-0.5"
+            role="img"
+            aria-label="Valoración: 5 de 5"
+          >
             {Array.from({ length: 5 }).map((_, j) => (
-              <Star key={j} className="h-3.5 w-3.5 fill-current" />
+              <Star
+                key={j}
+                className="h-3.5 w-3.5 fill-current"
+                aria-hidden="true"
+              />
             ))}
           </div>
           <blockquote className="mt-6 max-w-3xl font-serif text-2xl italic leading-snug text-foreground/85 md:text-4xl">
@@ -178,7 +186,7 @@ export function ProjectPage({ project }: { project: Project }) {
           </blockquote>
           <figcaption className="mt-6 flex items-center gap-3">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-semibold text-muted-foreground">
-              {project.initials}
+              {initialsOf(project.testimonial.name)}
             </span>
             <span>
               <span className="block text-[13px] font-medium">

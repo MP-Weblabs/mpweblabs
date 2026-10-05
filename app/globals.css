@@ -156,9 +156,6 @@ textarea {
       transform: translateY(0);
     }
   }
-  .animate-rise {
-    animation: rise-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
 
   /* Hero scroll hint */
   @keyframes scroll-hint {
@@ -167,16 +164,6 @@ textarea {
     }
     100% {
       transform: translateY(300%);
-    }
-  }
-
-  /* Intro: clip reveal columns */
-  @keyframes intro-bar {
-    0% {
-      transform: scaleY(1);
-    }
-    100% {
-      transform: scaleY(0);
     }
   }
 
@@ -189,15 +176,6 @@ textarea {
     }
   }
 
-  @keyframes intro-word-out {
-    0% {
-      transform: translateY(0);
-    }
-    100% {
-      transform: translateY(-110%);
-    }
-  }
-
   @keyframes intro-line {
     0% {
       transform: scaleX(0);
@@ -205,18 +183,6 @@ textarea {
     100% {
       transform: scaleX(1);
     }
-  }
-
-  @keyframes bg-drift {
-    from {
-      transform: translate(-50%, -50%) scale(1);
-    }
-    to {
-      transform: translate(-50%, -52%) scale(1.03);
-    }
-  }
-  .animate-bg-drift {
-    animation: bg-drift 8s ease-in-out infinite alternate;
   }
 
   /* Scroll reveal */
@@ -254,26 +220,6 @@ textarea {
     }
   }
 
-  /* Image hover zoom helper */
-  @keyframes pan-slow {
-    from {
-      transform: scale(1.05) translateY(0);
-    }
-    to {
-      transform: scale(1.12) translateY(-2%);
-    }
-  }
-
-  /* Marquee for project tags / scrolling band */
-  @keyframes shimmer-line {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(100%);
-    }
-  }
-
   /* Grid background */
   .bg-grid {
     background-image: linear-gradient(
@@ -287,13 +233,6 @@ textarea {
         transparent 1px
       );
     background-size: 64px 64px;
-  }
-
-  .hide-scrollbar {
-    scrollbar-width: none;
-  }
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
   }
 
   /* Slow rotation (circular badge) */
@@ -334,10 +273,6 @@ textarea {
   .text-outline {
     color: transparent;
     -webkit-text-stroke: 1.5px var(--foreground);
-  }
-  .text-outline-thin {
-    color: transparent;
-    -webkit-text-stroke: 1px var(--foreground);
   }
 
   /* Animated underline for links */
@@ -411,4 +346,28 @@ textarea {
 .btn-fill-light > * {
   position: relative;
   z-index: 1;
+}
+
+/* Intro already seen this session (or reduced motion) — see lib/intro.ts */
+[data-intro-seen] .intro-loader {
+  display: none;
+}
+
+/* Respect reduced-motion preferences site-wide */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee,
+  .animate-marquee-fast,
+  .animate-marquee-slow,
+  .animate-spin-slow,
+  .animate-ping {
+    animation: none !important;
+  }
 }

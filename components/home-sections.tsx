@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { ArrowUpRight, Plus, Star } from "lucide-react"
-import { FAQS, PROJECTS, TESTIMONIALS, WHATSAPP_URL } from "@/lib/site-data"
+import { FAQS, PROJECTS, WHATSAPP_URL, initialsOf } from "@/lib/site-data"
 import { Reveal } from "@/components/reveal"
 import { TextReveal } from "@/components/text-reveal"
 import { Magnetic } from "@/components/magnetic"
@@ -120,7 +120,6 @@ export function ServicesSection() {
                 <span className="font-serif text-lg italic text-muted-foreground opacity-0 transition-all duration-500 group-hover:text-background/80 group-hover:opacity-100">
                   {s.desc}
                 </span>
-                <ArrowUpRight className="h-6 w-6 -translate-x-2 translate-y-2 opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:text-background group-hover:opacity-100" />
               </div>
             </div>
           </Reveal>
@@ -211,7 +210,7 @@ export function OfferStrip() {
                 </span>
               </button>
             </Magnetic>
-            <p className="mt-4 text-xs text-background/40">
+            <p className="mt-4 text-xs text-background/60">
               Solo aceptamos 3 proyectos nuevos al mes para garantizar la
               calidad.
             </p>
@@ -237,6 +236,11 @@ function SectionLabelDark({
   )
 }
 
+const TESTIMONIALS = PROJECTS.filter((p) => p.featured).map((p) => ({
+  ...p.testimonial,
+  initials: initialsOf(p.testimonial.name),
+}))
+
 export function Testimonials() {
   return (
     <section className="border-b border-border px-5 py-20 md:px-10 md:py-28">
@@ -253,9 +257,17 @@ export function Testimonials() {
         {TESTIMONIALS.map((t, i) => (
           <Reveal key={t.name} delay={i * 100}>
             <figure className="grid grid-cols-1 gap-6 border-t border-border py-12 last:border-b md:grid-cols-12 md:py-16">
-              <div className="flex gap-0.5 md:col-span-2">
+              <div
+                className="flex gap-0.5 md:col-span-2"
+                role="img"
+                aria-label="Valoración: 5 de 5"
+              >
                 {Array.from({ length: 5 }).map((_, j) => (
-                  <Star key={j} className="h-3.5 w-3.5 fill-current" />
+                  <Star
+                    key={j}
+                    className="h-3.5 w-3.5 fill-current"
+                    aria-hidden="true"
+                  />
                 ))}
               </div>
               <blockquote className="font-serif text-2xl italic leading-snug text-foreground/85 md:col-span-7 md:text-3xl">
@@ -317,6 +329,8 @@ export function FaqSection() {
                     onClick={() => setOpenIndex(open ? -1 : i)}
                     className="flex w-full items-center justify-between gap-4 py-6 text-left text-[15px] font-medium transition-colors hover:text-foreground/60 md:text-lg"
                     aria-expanded={open}
+                    aria-controls={`faq-panel-${i}`}
+                    id={`faq-button-${i}`}
                   >
                     <span className="flex items-baseline gap-4">
                       <span className="font-mono text-[11px] text-muted-foreground">
@@ -335,6 +349,9 @@ export function FaqSection() {
                     </span>
                   </button>
                   <div
+                    id={`faq-panel-${i}`}
+                    role="region"
+                    aria-labelledby={`faq-button-${i}`}
                     className="grid transition-all duration-300 ease-out"
                     style={{
                       gridTemplateRows: open ? "1fr" : "0fr",
@@ -369,7 +386,7 @@ export function CtaSection() {
       <TextReveal
         as="h2"
         className="relative mx-auto mt-6 max-w-5xl text-balance text-6xl font-medium leading-[1] tracking-tighter md:text-[7.5rem]"
-        segments={["Tu web, lista en", { text: "4 semanas.", serif: true }]}
+        segments={["Tu web, lista en", { text: "4–8 semanas.", serif: true }]}
       />
       <Reveal delay={250}>
         <p className="relative mt-7 text-base text-muted-foreground">
@@ -384,16 +401,18 @@ export function CtaSection() {
               <span>Solicitar prototipo gratis →</span>
             </button>
           </Magnetic>
-          <Magnetic>
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="btn-fill-dark flex items-center gap-2 rounded-full border border-border px-7 py-4 text-sm font-medium"
-            >
-              <span>WhatsApp</span>
-            </a>
-          </Magnetic>
+          {WHATSAPP_URL && (
+            <Magnetic>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-fill-dark flex items-center gap-2 rounded-full border border-border px-7 py-4 text-sm font-medium"
+              >
+                <span>WhatsApp</span>
+              </a>
+            </Magnetic>
+          )}
         </div>
         <p className="relative mt-5 text-xs text-muted-foreground">
           Solo 3 proyectos nuevos al mes · Respuesta garantizada en &lt;24h

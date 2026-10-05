@@ -1,19 +1,12 @@
+export const SITE_TITLE = "MP WebLabs — Diseño y desarrollo web en Madrid"
+export const SITE_DESCRIPTION =
+  "Agencia de diseño y desarrollo web en Madrid, con clientes en toda España. Webs a medida que convierten visitas en clientes. Prototipo gratis en 48h. Pagas solo si te gusta."
+
 export const NAV_ITEMS: { href: string; label: string }[] = [
   { href: "/", label: "Inicio" },
   { href: "/nosotros", label: "Nosotros" },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/contacto", label: "Contacto" },
-]
-
-export const TICKER_ITEMS = [
-  "Diseño web a medida",
-  "Sin plantillas",
-  "Prototipo gratis",
-  "Resultados medibles",
-  "Código propio",
-  "100% personalizado",
-  "Madrid · España",
-  "Sin compromisos",
 ]
 
 export const DISPLAY_TICKER = [
@@ -30,12 +23,6 @@ export const TICKER_CTA_ITEMS = [
   "Pagas solo si te gusta",
   "Sin plantillas ni atajos",
   "Código desde cero",
-]
-
-export const STATS = [
-  { num: "+10", label: "Proyectos entregados" },
-  { num: "7", label: "Años de experiencia" },
-  { num: "24h", label: "Tiempo de respuesta" },
 ]
 
 export type Project = {
@@ -211,27 +198,10 @@ export const PROJECTS: Project[] = [
   },
 ]
 
-export const TESTIMONIALS = [
-  {
-    initials: "RC",
-    name: "Roberto Cobeña",
-    role: "Automóviles Cobeña · Madrid",
-    quote:
-      "Llevaba meses buscando alguien que entendiera lo que necesitaba. En dos semanas tenía el prototipo y en cuatro la web funcionando. Los resultados se notaron desde el primer mes.",
-  },
-  {
-    initials: "AM",
-    name: "Antonio M.",
-    role: "MammaMia Daganzo · Madrid",
-    quote:
-      "El restaurante llenó mesas entre semana por primera vez. La web transmite exactamente lo que somos. El proceso fue claro de principio a fin, sin sorpresas ni retrasos.",
-  },
-]
-
 export const FAQS = [
   {
     q: "¿El prototipo es realmente gratis?",
-    a: "Sí. Te diseñamos un prototipo completo antes de que decidas contratar. Ves exactamente cómo quedaría tu web. Si no te convence, no pagas nada.",
+    a: "Sí. En menos de 48h te enviamos una propuesta visual de tu web —estructura, diseño y referencias— antes de que decidas contratar. Si no te convence, no pagas nada.",
   },
   {
     q: "¿Cuánto cuesta una web?",
@@ -296,7 +266,7 @@ export const VALUES = [
   {
     num: "04",
     title: "Prototipo antes de pagar",
-    desc: "Ves exactamente cómo quedará tu web antes de comprometerte. Riesgo cero desde el primer día.",
+    desc: "Ves nuestra propuesta para tu web antes de comprometerte. Riesgo cero desde el primer día.",
   },
   {
     num: "05",
@@ -332,8 +302,8 @@ export const METHODOLOGY: Phase[] = [
     id: "02",
     label: "Diseño",
     week: "Semana 03–04",
-    title: "Prototipo visual completo, antes de pagar",
-    desc: "Arquitectura de información enfocada en conversión y diseño de interfaz. Lo ves todo antes de que empiece el desarrollo.",
+    title: "Diseño completo, aprobado por ti",
+    desc: "Partimos del prototipo gratuito y diseñamos cada página: arquitectura enfocada en conversión e interfaz. Lo apruebas todo antes de que empiece el desarrollo.",
     bullets: ["Arquitectura UX", "Diseño UI", "Prototipo navegable"],
   },
   {
@@ -354,45 +324,46 @@ export const METHODOLOGY: Phase[] = [
   },
 ]
 
-export const TIMELINE = [
-  {
-    week: "Semana 01",
-    title: "Reunión inicial y briefing",
-    desc: "Conocemos tu negocio, objetivos y audiencia. Definimos la estrategia.",
-  },
-  {
-    week: "Semana 02",
-    title: "Investigación de mercado",
-    desc: "Analizamos la competencia y definimos el posicionamiento visual.",
-  },
-  {
-    week: "Semana 03",
-    title: "Arquitectura de información",
-    desc: "Estructura de la web enfocada en conversión y experiencia de usuario.",
-  },
-  {
-    week: "Semana 04",
-    title: "Diseño de interfaz (UI)",
-    desc: "Prototipo visual completo. Lo ves antes de que empiece el desarrollo.",
-  },
-  {
-    week: "Semana 05–06",
-    title: "Desarrollo frontend",
-    desc: "Código limpio y optimizado. Rápido, responsive y sin plantillas.",
-  },
-  {
-    week: "Semana 07",
-    title: "QA y testing",
-    desc: "Pruebas en todos los dispositivos y navegadores. Cero errores al lanzar.",
-  },
-  {
-    week: "Semana 08",
-    title: "Lanzamiento y optimización",
-    desc: "Publicamos y monitorizamos. Soporte real los primeros 30 días.",
-  },
-]
+// ————— Datos de contacto y titular —————
+// Rellena los campos vacíos: todo lo que esté vacío se oculta automáticamente
+// de la web (botones de WhatsApp, enlaces a redes, JSON-LD, aviso legal…).
 
-export const WHATSAPP_URL = "https://wa.me/34600000000"
+export const CONTACT_EMAIL = "info@mpweblabs.com"
+
+/** Teléfono/WhatsApp en formato internacional sin espacios, p. ej. "+34612345678". */
+export const PHONE: string = ""
+
+export const WHATSAPP_URL = PHONE ? `https://wa.me/${PHONE.replace(/\D/g, "")}` : ""
+
+/** "+34612345678" → "+34 612 345 678" */
+export const PHONE_DISPLAY = PHONE.replace(/^\+34(\d{3})(\d{3})(\d{3})$/, "+34 $1 $2 $3")
+
+export const SOCIAL_LINKS: { label: string; href: string }[] = [
+  { label: "Instagram", href: "" },
+  { label: "LinkedIn", href: "" },
+].filter((s) => s.href)
+
+/** Datos obligatorios del titular (art. 10 LSSI-CE) para el aviso legal. */
+export const LEGAL_OWNER = {
+  /** Nombre y apellidos (autónomo) o razón social (sociedad) */
+  name: "",
+  /** NIF / CIF */
+  taxId: "",
+  /** Domicilio completo */
+  address: "",
+  /** Datos registrales, solo si es sociedad (Registro Mercantil…) */
+  registry: "",
+}
+
+/** Iniciales de una persona: "Roberto Cobeña" → "RC", "Antonio M." → "AM" */
+export function initialsOf(name: string) {
+  return name
+    .split(/\s+/)
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase()
+}
 
 // Dominio canónico de producción. Se puede sobreescribir con NEXT_PUBLIC_SITE_URL
 // (útil en previews de Vercel) para que robots.txt y sitemap.xml siempre apunten

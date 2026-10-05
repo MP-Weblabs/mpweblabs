@@ -2,7 +2,12 @@
 
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
-import { NAV_ITEMS, WHATSAPP_URL } from "@/lib/site-data"
+import {
+  CONTACT_EMAIL,
+  NAV_ITEMS,
+  SOCIAL_LINKS,
+  WHATSAPP_URL,
+} from "@/lib/site-data"
 import { Logo } from "@/components/logo"
 import { LocalTime } from "@/components/local-time"
 
@@ -17,10 +22,10 @@ export function SiteFooter() {
             España. Webs a medida que convierten visitas en clientes.
           </p>
           <a
-            href="mailto:info@mpweblabs.com"
+            href={`mailto:${CONTACT_EMAIL}`}
             className="link-underline mt-5 inline-flex items-center gap-1 text-sm font-medium"
           >
-            info@mpweblabs.com
+            {CONTACT_EMAIL}
             <ArrowUpRight className="h-3.5 w-3.5" />
           </a>
         </div>
@@ -30,7 +35,7 @@ export function SiteFooter() {
             <Link
               key={item.href}
               href={item.href}
-              className="block w-fit text-left text-[13px] text-foreground/50 transition-colors hover:text-foreground"
+              className={FOOTER_LINK}
             >
               {item.label}
             </Link>
@@ -43,7 +48,7 @@ export function SiteFooter() {
               <Link
                 key={s}
                 href="/#servicios"
-                className="block w-fit text-[13px] text-foreground/50 transition-colors hover:text-foreground"
+                className={FOOTER_LINK}
               >
                 {s}
               </Link>
@@ -52,27 +57,31 @@ export function SiteFooter() {
         </FooterCol>
 
         <FooterCol title="Contacto">
-          <a
-            href="mailto:info@mpweblabs.com"
-            className="block w-fit text-[13px] text-foreground/50 transition-colors hover:text-foreground"
-          >
-            info@mpweblabs.com
+          <a href={`mailto:${CONTACT_EMAIL}`} className={FOOTER_LINK}>
+            {CONTACT_EMAIL}
           </a>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="block w-fit text-[13px] text-foreground/50 transition-colors hover:text-foreground"
-          >
-            WhatsApp
-          </a>
-          <span className="block text-[13px] text-foreground/50">
-            Instagram
-          </span>
-          <span className="block text-[13px] text-foreground/50">
-            LinkedIn
-          </span>
-          <LocalTime className="mt-3 block text-[11px] uppercase tracking-[0.16em] text-foreground/35 tabular-nums" />
+          {WHATSAPP_URL && (
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noreferrer"
+              className={FOOTER_LINK}
+            >
+              WhatsApp
+            </a>
+          )}
+          {SOCIAL_LINKS.map((s) => (
+            <a
+              key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noreferrer"
+              className={FOOTER_LINK}
+            >
+              {s.label}
+            </a>
+          ))}
+          <LocalTime className="mt-3 block text-[11px] uppercase tracking-[0.16em] text-muted-foreground tabular-nums" />
         </FooterCol>
       </div>
 
@@ -84,24 +93,24 @@ export function SiteFooter() {
         MP&nbsp;WEBLABS
       </div>
 
-      <div className="flex flex-col gap-2 border-t border-border px-5 py-6 text-xs text-foreground/25 md:flex-row md:items-center md:justify-between md:px-10">
-        <span>© 2026 MP WebLabs · Madrid, España</span>
+      <div className="flex flex-col gap-2 border-t border-border px-5 py-6 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between md:px-10">
+        <span>© {new Date().getFullYear()} MP WebLabs · Madrid, España</span>
         <div className="flex gap-6">
           <Link
             href="/privacidad"
-            className="transition-colors hover:text-foreground/60"
+            className="py-1 transition-colors hover:text-foreground"
           >
             Privacidad
           </Link>
           <Link
             href="/aviso-legal"
-            className="transition-colors hover:text-foreground/60"
+            className="py-1 transition-colors hover:text-foreground"
           >
             Aviso legal
           </Link>
           <Link
             href="/cookies"
-            className="transition-colors hover:text-foreground/60"
+            className="py-1 transition-colors hover:text-foreground"
           >
             Cookies
           </Link>
@@ -120,10 +129,13 @@ function FooterCol({
 }) {
   return (
     <div>
-      <h4 className="mb-4 text-xs uppercase tracking-[0.08em] text-muted-foreground">
+      <h2 className="mb-3 text-xs uppercase tracking-[0.08em] text-muted-foreground">
         {title}
-      </h4>
-      <div className="flex flex-col gap-2">{children}</div>
+      </h2>
+      <div className="flex flex-col gap-0.5">{children}</div>
     </div>
   )
 }
+
+const FOOTER_LINK =
+  "block w-fit py-1.5 text-left text-[13px] text-muted-foreground transition-colors hover:text-foreground"

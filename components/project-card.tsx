@@ -1,5 +1,3 @@
-"use client"
-
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
@@ -19,10 +17,10 @@ export function ProjectCard({
           className={`relative overflow-hidden ${wide ? "aspect-[16/11]" : "aspect-[4/3]"}`}
         >
           <Image
-            src={project.image || "/placeholder.svg"}
+            src={project.image}
             alt={project.alt}
             fill
-            sizes="(max-width: 768px) 100vw, 55vw"
+            sizes="(max-width: 768px) 100vw, 58vw"
             className="object-cover transition-transform duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
           />
         </div>

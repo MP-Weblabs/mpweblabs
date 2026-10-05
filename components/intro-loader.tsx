@@ -2,23 +2,32 @@
 
 import { useEffect, useState } from "react"
 import { Logo } from "@/components/logo"
+import { INTRO_SEEN_KEY } from "@/lib/intro"
 
 /**
- * Full-screen logo intro animation.
+ * Full-screen logo intro animation (home only, once per session).
  * Sequence:
  *  1. "MP" mark + "WebLabs" word slide up into view
  *  2. Brief hold
- *  3. Panel wipes upward to reveal the hero
+ *  3. Panel wipes upward to reveal the hero (hero animates in underneath)
  */
 export function IntroLoader({ onDone }: { onDone: () => void }) {
   const [phase, setPhase] = useState<"in" | "out" | "gone">("in")
 
   useEffect(() => {
-    const outTimer = setTimeout(() => setPhase("out"), 1600)
-    const goneTimer = setTimeout(() => {
-      setPhase("gone")
+    // Already seen this session: the loader is hidden by CSS, just release the hero.
+    if (document.documentElement.dataset.introSeen) {
       onDone()
-    }, 2500)
+      return
+    }
+    try {
+      sessionStorage.setItem(INTRO_SEEN_KEY, "1")
+    } catch {}
+    const outTimer = setTimeout(() => {
+      setPhase("out")
+      onDone()
+    }, 1300)
+    const goneTimer = setTimeout(() => setPhase("gone"), 2200)
     return () => {
       clearTimeout(outTimer)
       clearTimeout(goneTimer)
@@ -30,7 +39,7 @@ export function IntroLoader({ onDone }: { onDone: () => void }) {
   return (
     <div
       aria-hidden
-      className="fixed inset-0 z-[1000] flex items-center justify-center bg-background transition-transform duration-[900ms] ease-[cubic-bezier(0.76,0,0.24,1)]"
+      className="intro-loader fixed inset-0 z-[1000] flex items-center justify-center bg-background transition-transform duration-[900ms] ease-[cubic-bezier(0.76,0,0.24,1)]"
       style={{
         transform: phase === "out" ? "translateY(-100%)" : "translateY(0)",
       }}

@@ -1,21 +1,16 @@
 import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/metadata"
 import { ContactPage } from "@/components/pages/contact-page"
 
 const title = "Contacto"
 const description =
-  "Agencia de diseño web en Madrid que trabaja con clientes de toda España. Cuéntanos tu proyecto y recibe un prototipo completo gratis en menos de 48 horas. Sin compromiso."
+  "Agencia de diseño web en Madrid que trabaja con clientes de toda España. Cuéntanos tu proyecto y recibe una propuesta visual gratis en menos de 48 horas. Sin compromiso."
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title,
   description,
-  alternates: { canonical: "/contacto" },
-  openGraph: {
-    title: `${title} — MP WebLabs`,
-    description,
-    url: "/contacto",
-  },
-  twitter: { title: `${title} — MP WebLabs`, description },
-}
+  path: "/contacto",
+})
 
 export default function Page() {
   return <ContactPage />

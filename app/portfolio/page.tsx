@@ -1,21 +1,16 @@
 import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/metadata"
 import { PortfolioPage } from "@/components/pages/portfolio-page"
 
 const title = "Portfolio"
 const description =
   "Webs a medida entregadas por MP WebLabs en Madrid y toda España: automoción, hostelería, transporte y perfumería, con resultados medibles en cada proyecto."
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title,
   description,
-  alternates: { canonical: "/portfolio" },
-  openGraph: {
-    title: `${title} — MP WebLabs`,
-    description,
-    url: "/portfolio",
-  },
-  twitter: { title: `${title} — MP WebLabs`, description },
-}
+  path: "/portfolio",
+})
 
 export default function Page() {
   return <PortfolioPage />

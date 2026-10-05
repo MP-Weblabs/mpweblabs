@@ -33,9 +33,15 @@ export function CustomCursor() {
       t instanceof Element &&
       !!t.closest("a,button,[role=button],label,summary,input,textarea,select")
 
+    // The loop only runs while the ring is catching up, then goes idle.
+    const wake = () => {
+      if (!raf) raf = requestAnimationFrame(loop)
+    }
+
     const onMove = (e: PointerEvent) => {
       x = e.clientX
       y = e.clientY
+      wake()
       if (!visible) {
         visible = true
         dot.style.opacity = "1"
@@ -45,6 +51,7 @@ export function CustomCursor() {
     const onOver = (e: PointerEvent) => {
       const hovering = isInteractive(e.target)
       targetScale = hovering ? 2.4 : 1
+      wake()
       if (hovering !== filled) {
         filled = hovering
         ring.style.backgroundColor = hovering ? "#fff" : "transparent"
@@ -62,13 +69,16 @@ export function CustomCursor() {
       scale += (targetScale - scale) * 0.14
       dot.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`
       ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%) scale(${scale})`
-      raf = requestAnimationFrame(loop)
+      const settled =
+        Math.abs(x - rx) < 0.1 &&
+        Math.abs(y - ry) < 0.1 &&
+        Math.abs(targetScale - scale) < 0.001
+      raf = settled ? 0 : requestAnimationFrame(loop)
     }
 
     window.addEventListener("pointermove", onMove, { passive: true })
     window.addEventListener("pointerover", onOver, { passive: true })
     document.documentElement.addEventListener("mouseleave", onLeaveDoc)
-    raf = requestAnimationFrame(loop)
 
     return () => {
       cancelAnimationFrame(raf)

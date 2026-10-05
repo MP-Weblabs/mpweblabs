@@ -2,7 +2,15 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono, Instrument_Serif } from 'next/font/google'
 import { SiteShell } from '@/components/site-chrome'
-import { SITE_URL } from '@/lib/site-data'
+import { INTRO_GATE_SCRIPT } from '@/lib/intro'
+import {
+  CONTACT_EMAIL,
+  PHONE,
+  SITE_DESCRIPTION,
+  SITE_TITLE,
+  SITE_URL,
+  SOCIAL_LINKS,
+} from '@/lib/site-data'
 import './globals.css'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
@@ -17,9 +25,6 @@ const instrumentSerif = Instrument_Serif({
   style: ['normal', 'italic'],
 })
 
-const SITE_TITLE = 'MP WebLabs — Diseño y desarrollo web en Madrid'
-const SITE_DESCRIPTION =
-  'Agencia de diseño y desarrollo web en Madrid, con clientes en toda España. Webs a medida que convierten visitas en clientes. Prototipo gratis en 48h. Pagas solo si te gusta.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -72,20 +77,18 @@ export const metadata: Metadata = {
     ],
     apple: '/apple-icon.png',
   },
+  // La imagen OG/Twitter se genera en app/opengraph-image.tsx
   openGraph: {
     type: 'website',
-    url: '/',
     locale: 'es_ES',
     siteName: 'MP WebLabs',
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: ['/mpweblabs-logo.png'],
   },
   twitter: {
     card: 'summary_large_image',
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: ['/mpweblabs-logo.png'],
   },
 }
 
@@ -103,8 +106,9 @@ const BUSINESS_JSON_LD = {
   url: SITE_URL,
   logo: `${SITE_URL}/mpweblabs-logo.png`,
   image: `${SITE_URL}/mpweblabs-logo.png`,
-  email: 'info@mpweblabs.com',
-  telephone: '+34600000000',
+  email: CONTACT_EMAIL,
+  ...(PHONE ? { telephone: PHONE } : {}),
+  ...(SOCIAL_LINKS.length ? { sameAs: SOCIAL_LINKS.map((s) => s.href) } : {}),
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Madrid',
@@ -145,9 +149,11 @@ export default function RootLayout({
   return (
     <html
       lang="es"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} bg-background`}
     >
       <body className="font-sans antialiased bg-background text-foreground">
+        <script dangerouslySetInnerHTML={{ __html: INTRO_GATE_SCRIPT }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

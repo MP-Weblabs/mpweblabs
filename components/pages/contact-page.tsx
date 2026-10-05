@@ -3,7 +3,12 @@
 import { useState, type FormEvent } from "react"
 import Link from "next/link"
 import { ArrowUpRight, Check } from "lucide-react"
-import { WHATSAPP_URL } from "@/lib/site-data"
+import {
+  CONTACT_EMAIL,
+  PHONE_DISPLAY,
+  SOCIAL_LINKS,
+  WHATSAPP_URL,
+} from "@/lib/site-data"
 import { TextReveal } from "@/components/text-reveal"
 import { Magnetic } from "@/components/magnetic"
 import { LocalTime } from "@/components/local-time"
@@ -39,29 +44,37 @@ export function ContactPage() {
           </p>
 
           <div className="mt-12 flex flex-col">
-            <ContactRow label="Email" value="info@mpweblabs.com" href="mailto:info@mpweblabs.com" />
-            <ContactRow label="WhatsApp" value="+34 600 000 000" href={WHATSAPP_URL} />
+            <ContactRow
+              label="Email"
+              value={CONTACT_EMAIL}
+              href={`mailto:${CONTACT_EMAIL}`}
+            />
+            {WHATSAPP_URL && (
+              <ContactRow
+                label="WhatsApp"
+                value={PHONE_DISPLAY}
+                href={WHATSAPP_URL}
+              />
+            )}
             <ContactRow label="Estudio" value="Madrid, España" />
           </div>
         </div>
 
-        <div className="mt-12 flex flex-wrap gap-3">
-          {[
-            { label: "Instagram", href: "#" },
-            { label: "LinkedIn", href: "#" },
-            { label: "WhatsApp", href: WHATSAPP_URL },
-          ].map((s) => (
-            <a
-              key={s.label}
-              href={s.href}
-              target="_blank"
-              rel="noreferrer"
-              className="btn-fill-dark rounded-full border border-border px-4 py-1.5 text-xs text-muted-foreground"
-            >
-              <span>{s.label}</span>
-            </a>
-          ))}
-        </div>
+        {SOCIAL_LINKS.length > 0 && (
+          <div className="mt-12 flex flex-wrap gap-3">
+            {SOCIAL_LINKS.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-fill-dark rounded-full border border-border px-4 py-2 text-xs text-muted-foreground"
+              >
+                <span>{s.label}</span>
+              </a>
+            ))}
+          </div>
+        )}
       </div>
 
       <div>
@@ -92,6 +105,8 @@ export function ContactPage() {
               name="Nombre"
               label="01 — Nombre completo"
               placeholder="Tu nombre"
+              autoComplete="name"
+              maxLength={120}
               required
             />
             <Field
@@ -99,24 +114,32 @@ export function ContactPage() {
               label="02 — Email"
               type="email"
               placeholder="tu@email.com"
+              autoComplete="email"
+              maxLength={160}
               required
             />
             <Field
               name="Teléfono"
               label="03 — Teléfono (opcional)"
               type="tel"
-              placeholder="+34 600 000 000"
+              placeholder="Tu teléfono"
+              autoComplete="tel"
+              maxLength={30}
             />
             <div className="flex flex-col gap-2">
-              <label className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-                04 — Cuéntanos sobre tu proyecto
+              <label
+                htmlFor="contact-mensaje"
+                className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground"
+              >
+                04 — Cuéntanos sobre tu proyecto (opcional)
               </label>
               <textarea
+                id="contact-mensaje"
                 rows={4}
-                required
                 name="Mensaje"
+                maxLength={1800}
                 placeholder="¿Qué tipo de web necesitas? ¿Tienes web actualmente?"
-                className="resize-none border-b border-border bg-transparent pb-3 pt-1 text-lg outline-none transition-colors placeholder:text-foreground/20 focus:border-foreground"
+                className="resize-none border-b border-border bg-transparent pb-3 pt-1 text-lg outline-none transition-colors placeholder:text-foreground/45 focus:border-foreground"
               />
             </div>
             <label className="flex items-center gap-2 text-[13px] text-muted-foreground">
@@ -144,9 +167,9 @@ export function ContactPage() {
               </button>
             </Magnetic>
             {status === "error" && (
-              <p className="text-[13px] leading-relaxed text-red-600">
+              <p role="alert" className="text-[13px] leading-relaxed text-red-700">
                 No se pudo enviar el formulario. Inténtalo de nuevo o
-                escríbenos a info@mpweblabs.com
+                escríbenos a {CONTACT_EMAIL}
               </p>
             )}
           </form>
@@ -201,24 +224,35 @@ function Field({
   placeholder,
   type = "text",
   required,
+  autoComplete,
+  maxLength,
 }: {
   name: string
   label: string
   placeholder: string
   type?: string
   required?: boolean
+  autoComplete?: string
+  maxLength?: number
 }) {
+  const id = `contact-${autoComplete ?? name}`
   return (
     <div className="flex flex-col gap-2">
-      <label className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+      <label
+        htmlFor={id}
+        className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground"
+      >
         {label}
       </label>
       <input
+        id={id}
         type={type}
         name={name}
         required={required}
         placeholder={placeholder}
-        className="border-b border-border bg-transparent pb-3 pt-1 text-lg outline-none transition-colors placeholder:text-foreground/20 focus:border-foreground"
+        autoComplete={autoComplete}
+        maxLength={maxLength}
+        className="border-b border-border bg-transparent pb-3 pt-1 text-lg outline-none transition-colors placeholder:text-foreground/45 focus:border-foreground"
       />
     </div>
   )

@@ -119,8 +119,26 @@ export function HeroField() {
       }
       ctx.globalAlpha = 1
 
-      raf = requestAnimationFrame(render)
+      raf = running ? requestAnimationFrame(render) : 0
     }
+
+    // Only animate while the hero is on screen and the tab is visible.
+    let running = false
+    let onScreen = true
+    const sync = () => {
+      const shouldRun = onScreen && !document.hidden
+      if (shouldRun && !running) {
+        running = true
+        raf = requestAnimationFrame(render)
+      } else if (!shouldRun && running) {
+        running = false
+        cancelAnimationFrame(raf)
+      }
+    }
+    const io = new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting
+      sync()
+    })
 
     const onMove = (e: PointerEvent) => {
       const rect = canvas.getBoundingClientRect()
@@ -133,7 +151,9 @@ export function HeroField() {
     if (reduced) {
       drawStatic()
     } else {
-      raf = requestAnimationFrame(render)
+      sync()
+      io.observe(wrap)
+      document.addEventListener("visibilitychange", sync)
       window.addEventListener("pointermove", onMove, { passive: true })
     }
 
@@ -148,7 +168,10 @@ export function HeroField() {
     window.addEventListener("resize", onResize)
 
     return () => {
+      running = false
       cancelAnimationFrame(raf)
+      io.disconnect()
+      document.removeEventListener("visibilitychange", sync)
       window.removeEventListener("pointermove", onMove)
       window.removeEventListener("resize", onResize)
       clearTimeout(resizeT)

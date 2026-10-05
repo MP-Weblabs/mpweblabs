@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
-import { NAV_ITEMS } from "@/lib/site-data"
+import { CONTACT_EMAIL, NAV_ITEMS } from "@/lib/site-data"
 import { cn } from "@/lib/utils"
 import { Logo } from "@/components/logo"
 import { LocalTime } from "@/components/local-time"
@@ -25,8 +25,13 @@ export function SiteNav() {
 
   useEffect(() => {
     document.documentElement.style.overflow = mobileOpen ? "hidden" : ""
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileOpen(false)
+    }
+    if (mobileOpen) document.addEventListener("keydown", onKey)
     return () => {
       document.documentElement.style.overflow = ""
+      document.removeEventListener("keydown", onKey)
     }
   }, [mobileOpen])
 
@@ -54,7 +59,7 @@ export function SiteNav() {
               <Link
                 href={item.href}
                 className={cn(
-                  "link-underline text-[13px] tracking-wide transition-colors",
+                  "link-underline inline-block py-2 text-[13px] tracking-wide transition-colors",
                   pathname === item.href
                     ? "is-active text-foreground"
                     : "text-muted-foreground hover:text-foreground",
@@ -75,8 +80,10 @@ export function SiteNav() {
 
         <button
           onClick={() => setMobileOpen(true)}
-          className="md:hidden"
+          className="-m-2 p-2 md:hidden"
           aria-label="Abrir menú"
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-menu"
         >
           <Menu className="h-6 w-6" />
         </button>
@@ -84,15 +91,20 @@ export function SiteNav() {
 
       {/* Mobile menu */}
       <div
+        id="mobile-menu"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menú"
+        inert={!mobileOpen}
         className={cn(
-          "fixed inset-0 z-[60] flex-col justify-between bg-background px-6 pb-8 pt-24 transition-opacity duration-300",
-          mobileOpen ? "flex opacity-100" : "pointer-events-none hidden opacity-0",
+          "fixed inset-0 z-[60] flex flex-col justify-between bg-background px-6 pb-8 pt-24 transition-[opacity,visibility] duration-300 md:hidden",
+          mobileOpen ? "visible opacity-100" : "pointer-events-none invisible opacity-0",
         )}
       >
         <div className="bg-grid pointer-events-none absolute inset-0 opacity-30" />
         <button
           onClick={() => setMobileOpen(false)}
-          className="absolute right-6 top-6"
+          className="absolute right-4 top-4 p-2"
           aria-label="Cerrar menú"
         >
           <X className="h-7 w-7" />
@@ -138,7 +150,7 @@ export function SiteNav() {
             Prototipo gratis →
           </button>
           <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-            <span>info@mpweblabs.com</span>
+            <span>{CONTACT_EMAIL}</span>
             <LocalTime className="tabular-nums" />
           </div>
         </div>
