@@ -10,7 +10,6 @@ import { Magnetic } from "@/components/magnetic"
 import { ProjectGrid } from "@/components/project-grid"
 import { FaqSection, SectionLabel } from "@/components/home-sections"
 import { useSiteChrome } from "@/components/site-chrome"
-import { CtaBlock } from "@/components/cta-block"
 
 export function SectorPage({ sector }: { sector: Sector }) {
   const { openModal, openAudit } = useSiteChrome()
@@ -159,12 +158,37 @@ export function SectorPage({ sector }: { sector: Sector }) {
       <FaqSection items={sector.faqs} num="04" />
 
       {/* CTA final */}
-      <CtaBlock
-        title="¿Cuántas consultas"
-        titleSerif="estás perdiendo?"
-        text="Revisamos tu web gratis y te decimos qué cambiaríamos primero."
-        lead="auditoria"
-      />
+      <section className="relative overflow-hidden border-b border-border px-5 py-28 text-center md:px-10 md:py-40">
+        <div className="bg-grid pointer-events-none absolute inset-0 opacity-50" />
+        <TextReveal
+          as="h2"
+          className="relative mx-auto max-w-4xl text-balance text-5xl font-medium leading-[1] tracking-tighter md:text-8xl"
+          segments={["¿Cuántas consultas", { text: "estás perdiendo?", serif: true }]}
+        />
+        <Reveal delay={250}>
+          <p className="relative mx-auto mt-6 max-w-md text-base text-muted-foreground">
+            Revisamos tu web gratis y te decimos qué cambiaríamos primero.
+          </p>
+          <div className="relative mt-9 flex flex-wrap justify-center gap-3">
+            <Magnetic>
+              <button
+                onClick={openAudit}
+                className="btn-fill-light rounded-full bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground"
+              >
+                <span>Analiza gratis tu web →</span>
+              </button>
+            </Magnetic>
+            <Magnetic>
+              <button
+                onClick={openModal}
+                className="btn-fill-dark rounded-full border border-border px-7 py-4 text-sm font-medium"
+              >
+                <span>Cuéntanos tu proyecto</span>
+              </button>
+            </Magnetic>
+          </div>
+        </Reveal>
+      </section>
     </div>
   )
 }

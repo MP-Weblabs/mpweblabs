@@ -7,9 +7,11 @@ import { PROJECTS, initialsOf, type Project } from "@/lib/site-data"
 import { SECTORS } from "@/lib/sectors"
 import { Reveal } from "@/components/reveal"
 import { TextReveal } from "@/components/text-reveal"
-import { CtaBlock } from "@/components/cta-block"
+import { Magnetic } from "@/components/magnetic"
+import { useSiteChrome } from "@/components/site-chrome"
 
 export function ProjectPage({ project }: { project: Project }) {
+  const { openModal, openAudit } = useSiteChrome()
   const index = PROJECTS.findIndex((p) => p.slug === project.slug)
   const sector = SECTORS.find((s) => s.projects.includes(project.slug))
   const next = PROJECTS[(index + 1) % PROJECTS.length]
@@ -209,11 +211,37 @@ export function ProjectPage({ project }: { project: Project }) {
         </Reveal>
       </section>
 
-      <CtaBlock
-        title="¿Quieres resultados"
-        titleSerif="así?"
-        text="Cuéntanos qué necesitas. Te respondemos en menos de 24h."
-      />
+      <section className="relative overflow-hidden border-b border-border px-5 py-24 text-center md:px-10 md:py-32">
+        <div className="bg-grid pointer-events-none absolute inset-0 opacity-50" />
+        <TextReveal
+          as="h2"
+          className="relative mx-auto max-w-3xl text-balance text-4xl font-medium leading-[1] tracking-tighter md:text-7xl"
+          segments={["¿Quieres resultados", { text: "así?", serif: true }]}
+        />
+        <Reveal delay={200}>
+          <p className="relative mt-6 text-base text-muted-foreground">
+            Cuéntanos qué necesitas. Te respondemos en menos de 24h.
+          </p>
+          <div className="relative mt-9 flex flex-wrap justify-center gap-3">
+            <Magnetic>
+              <button
+                onClick={openModal}
+                className="btn-fill-light rounded-full bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground"
+              >
+                <span>Cuéntanos tu proyecto →</span>
+              </button>
+            </Magnetic>
+            <Magnetic>
+              <button
+                onClick={openAudit}
+                className="btn-fill-dark rounded-full border border-border px-7 py-4 text-sm font-medium"
+              >
+                <span>Analiza gratis tu web</span>
+              </button>
+            </Magnetic>
+          </div>
+        </Reveal>
+      </section>
 
       <section className="px-5 py-12 md:px-10">
         <Link

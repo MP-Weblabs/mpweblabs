@@ -4,9 +4,11 @@ import { FOUNDERS } from "@/lib/site-data"
 import { MethodologySection, ValuesSection } from "@/components/home-sections"
 import { Reveal } from "@/components/reveal"
 import { TextReveal } from "@/components/text-reveal"
-import { CtaBlock } from "@/components/cta-block"
+import { Magnetic } from "@/components/magnetic"
+import { useSiteChrome } from "@/components/site-chrome"
 
 export function AboutPage() {
+  const { openModal, openAudit } = useSiteChrome()
   return (
     <div>
       <section className="border-b border-border px-5 pb-20 pt-32 md:px-10 md:pt-44">
@@ -39,11 +41,37 @@ export function AboutPage() {
 
       <MethodologySection num="03" />
 
-      <CtaBlock
-        title="¿Hablamos de"
-        titleSerif="tu proyecto?"
-        text="Cuéntanos qué necesitas. Te respondemos en menos de 24h."
-      />
+      <section className="relative overflow-hidden border-b border-border px-5 py-28 text-center md:px-10 md:py-40">
+        <div className="bg-grid pointer-events-none absolute inset-0 opacity-50" />
+        <TextReveal
+          as="h2"
+          className="relative mx-auto max-w-4xl text-balance text-5xl font-medium leading-[1] tracking-tighter md:text-8xl"
+          segments={["¿Hablamos de", { text: "tu proyecto?", serif: true }]}
+        />
+        <Reveal delay={250}>
+          <p className="relative mt-6 text-base text-muted-foreground">
+            Cuéntanos qué necesitas. Te respondemos en menos de 24h.
+          </p>
+          <div className="relative mt-9 flex flex-wrap justify-center gap-3">
+            <Magnetic>
+              <button
+                onClick={openModal}
+                className="btn-fill-light rounded-full bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground"
+              >
+                <span>Cuéntanos tu proyecto →</span>
+              </button>
+            </Magnetic>
+            <Magnetic>
+              <button
+                onClick={openAudit}
+                className="btn-fill-dark rounded-full border border-border px-7 py-4 text-sm font-medium"
+              >
+                <span>Analiza gratis tu web</span>
+              </button>
+            </Magnetic>
+          </div>
+        </Reveal>
+      </section>
     </div>
   )
 }
