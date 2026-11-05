@@ -5,6 +5,7 @@ import { ArrowUpRight } from "lucide-react"
 import {
   CONTACT_EMAIL,
   NAV_ITEMS,
+  SERVICES,
   SOCIAL_LINKS,
   WHATSAPP_URL,
 } from "@/lib/site-data"
@@ -43,17 +44,15 @@ export function SiteFooter() {
         </FooterCol>
 
         <FooterCol title="Servicios">
-          {["Diseño web", "Desarrollo web", "Landing pages", "SEO técnico"].map(
-            (s) => (
-              <Link
-                key={s}
-                href="/#servicios"
-                className={FOOTER_LINK}
-              >
-                {s}
-              </Link>
-            ),
-          )}
+          {SERVICES.map((s) => (
+            <Link
+              key={s.slug}
+              href={`/servicios#${s.slug}`}
+              className={FOOTER_LINK}
+            >
+              {s.title}
+            </Link>
+          ))}
         </FooterCol>
 
         <FooterCol title="Contacto">

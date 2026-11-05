@@ -3,7 +3,13 @@
 import { useState } from "react"
 import Link from "next/link"
 import { ArrowUpRight, Plus, Star } from "lucide-react"
-import { FAQS, PROJECTS, WHATSAPP_URL, initialsOf } from "@/lib/site-data"
+import {
+  FAQS,
+  PROJECTS,
+  SERVICES,
+  WHATSAPP_URL,
+  initialsOf,
+} from "@/lib/site-data"
 import { Reveal } from "@/components/reveal"
 import { TextReveal } from "@/components/text-reveal"
 import { Magnetic } from "@/components/magnetic"
@@ -45,14 +51,14 @@ export function IntroSection() {
         <div className="flex flex-col gap-5 md:col-span-4">
           <Reveal delay={100}>
             <p className="text-[15px] leading-relaxed text-muted-foreground">
-              Construimos sitios web desde cero, sin plantillas, para negocios
-              de Madrid y de toda España. Cada decisión de diseño tiene un
-              único objetivo: convertir a tus visitantes en clientes
-              recurrentes.
+              Creamos sistemas digitales que convierten búsquedas y visitas
+              en clientes. La web es el medio: lo que importa es cuántos
+              contactos, reservas y ventas genera para tu negocio.
             </p>
             <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
-              No WordPress genérico. No Kit Digital. Código propio, diseño que
-              impacta, resultados medibles.
+              Diseño, desarrollo y SEO local trabajando juntos, con código
+              propio y sin plantillas, para negocios de Madrid y de toda
+              España.
             </p>
           </Reveal>
         </div>
@@ -76,13 +82,6 @@ export function IntroSection() {
   )
 }
 
-const SERVICES = [
-  { num: "01", title: "Diseño web", desc: "Interfaces a medida que venden" },
-  { num: "02", title: "Desarrollo", desc: "Código propio, rápido y limpio" },
-  { num: "03", title: "Landing pages", desc: "Una página, un objetivo" },
-  { num: "04", title: "SEO técnico", desc: "Visibilidad desde el código" },
-]
-
 export function ServicesSection() {
   return (
     <section
@@ -99,14 +98,16 @@ export function ServicesSection() {
             </h2>
           </div>
           <span className="hidden font-mono text-xs text-muted-foreground md:block">
-            (04)
+            ({String(SERVICES.length).padStart(2, "0")})
           </span>
         </div>
       </Reveal>
       <div>
         {SERVICES.map((s, i) => (
           <Reveal key={s.num} delay={i * 60}>
-            <div className="group relative flex items-baseline justify-between gap-6 overflow-hidden border-t border-border px-5 py-7 transition-colors last:border-b md:px-10 md:py-9">
+            <Link
+              href={`/servicios#${s.slug}`}
+              className="group relative flex items-baseline justify-between gap-6 overflow-hidden border-t border-border px-5 py-7 transition-colors last:border-b md:px-10 md:py-9">
               <div className="absolute inset-0 origin-bottom scale-y-0 bg-foreground transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100" />
               <div className="relative flex items-baseline gap-5 md:gap-10">
                 <span className="font-mono text-xs text-muted-foreground transition-colors duration-300 group-hover:text-background/60">
@@ -118,10 +119,11 @@ export function ServicesSection() {
               </div>
               <div className="relative hidden items-center gap-6 md:flex">
                 <span className="font-serif text-lg italic text-muted-foreground opacity-0 transition-all duration-500 group-hover:text-background/80 group-hover:opacity-100">
-                  {s.desc}
+                  {s.short}
                 </span>
+                <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-colors duration-300 group-hover:text-background" />
               </div>
-            </div>
+            </Link>
           </Reveal>
         ))}
       </div>
@@ -135,7 +137,7 @@ export function PortfolioPreview() {
       <Reveal>
         <div className="flex items-end justify-between pb-12">
           <div>
-            <SectionLabel num="03">Portfolio</SectionLabel>
+            <SectionLabel num="03">Proyectos</SectionLabel>
             <h2 className="mt-6 text-4xl font-medium tracking-tight md:text-5xl">
               Trabajo{" "}
               <span className="font-serif font-normal italic">
@@ -144,7 +146,7 @@ export function PortfolioPreview() {
             </h2>
           </div>
           <Link
-            href="/portfolio"
+            href="/proyectos"
             className="link-underline group hidden items-center gap-1 text-[13px] font-medium md:flex"
           >
             Ver todos los proyectos
@@ -158,7 +160,7 @@ export function PortfolioPreview() {
       <Reveal>
         <div className="mt-12 md:hidden">
           <Link
-            href="/portfolio"
+            href="/proyectos"
             className="link-underline inline-flex items-center gap-1 text-sm font-medium"
           >
             Ver todos los proyectos

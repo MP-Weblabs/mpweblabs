@@ -10,11 +10,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]
   }[] = [
     { path: "", priority: 1, changeFrequency: "weekly" },
-    { path: "/portfolio", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/servicios", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/proyectos", priority: 0.9, changeFrequency: "monthly" },
     { path: "/contacto", priority: 0.9, changeFrequency: "monthly" },
     { path: "/nosotros", priority: 0.8, changeFrequency: "monthly" },
     ...PROJECTS.map((p) => ({
-      path: `/portfolio/${p.slug}`,
+      path: `/proyectos/${p.slug}`,
       priority: 0.7,
       changeFrequency: "monthly" as const,
     })),

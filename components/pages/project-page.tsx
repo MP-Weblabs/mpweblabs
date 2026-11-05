@@ -20,7 +20,7 @@ export function ProjectPage({ project }: { project: Project }) {
         <Reveal>
           <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
             <Link
-              href="/portfolio"
+              href="/proyectos"
               className="link-underline group flex items-center gap-1.5 text-[11px] uppercase tracking-[0.2em] text-muted-foreground"
             >
               <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5" />
@@ -234,7 +234,7 @@ export function ProjectPage({ project }: { project: Project }) {
 
       <section className="px-5 py-12 md:px-10">
         <Link
-          href={`/portfolio/${next.slug}`}
+          href={`/proyectos/${next.slug}`}
           className="group flex items-center justify-between gap-6 py-6"
         >
           <div>

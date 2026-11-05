@@ -7,14 +7,14 @@ import { Magnetic } from "@/components/magnetic"
 import { ProjectGrid } from "@/components/project-grid"
 import { useSiteChrome } from "@/components/site-chrome"
 
-export function PortfolioPage() {
+export function ProjectsPage() {
   const { openModal, openAudit } = useSiteChrome()
   return (
     <div>
       <section className="border-b border-border px-5 pb-20 pt-32 md:px-10 md:pt-44">
         <Reveal>
           <p className="mb-8 flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-            <span className="font-mono">(Portfolio)</span>
+            <span className="font-mono">(Proyectos)</span>
             2023 — 2026
           </p>
         </Reveal>

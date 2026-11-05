@@ -4,9 +4,105 @@ export const SITE_DESCRIPTION =
 
 export const NAV_ITEMS: { href: string; label: string }[] = [
   { href: "/", label: "Inicio" },
+  { href: "/servicios", label: "Servicios" },
+  { href: "/proyectos", label: "Proyectos" },
   { href: "/nosotros", label: "Nosotros" },
-  { href: "/portfolio", label: "Portfolio" },
   { href: "/contacto", label: "Contacto" },
+]
+
+export type Service = {
+  num: string
+  /** ancla en /servicios y futura ruta /servicios/[slug] */
+  slug: string
+  title: string
+  /** frase corta para listados */
+  short: string
+  desc: string
+  includes: string[]
+  idealFor: string
+  /** proyectos reales donde se aplicó (slugs de PROJECTS) */
+  projects?: string[]
+}
+
+export const SERVICES: Service[] = [
+  {
+    num: "01",
+    slug: "diseno-web",
+    title: "Diseño web",
+    short: "Webs que se entienden y convierten",
+    desc: "Webs corporativas y landings diseñadas para que quien llega entienda en segundos qué haces, confíe en ti y te contacte.",
+    includes: [
+      "Arquitectura de páginas orientada a conversión",
+      "Diseño a medida, sin plantillas",
+      "Textos y llamadas a la acción claras",
+      "Mobile-first: perfecta en el móvil",
+    ],
+    idealFor:
+      "Negocios cuya web no transmite lo que valen o no genera contactos.",
+    projects: ["lotus-experience", "mammamia-daganzo"],
+  },
+  {
+    num: "02",
+    slug: "desarrollo-web",
+    title: "Desarrollo web",
+    short: "Código propio, rápido y seguro",
+    desc: "Desarrollamos cada web desde cero, sin depender de plugins ni constructores: carga rápida, segura y fácil de mantener.",
+    includes: [
+      "Rendimiento y Core Web Vitals medidos",
+      "Formularios conectados a email y CRM",
+      "Analítica y medición de conversiones",
+      "SEO técnico integrado desde el código",
+    ],
+    idealFor:
+      "Empresas que necesitan una web rápida y fiable, sin sustos de plugins ni actualizaciones.",
+    projects: ["automoviles-cobena"],
+  },
+  {
+    num: "03",
+    slug: "aplicaciones-web",
+    title: "Aplicaciones web",
+    short: "Herramientas a medida para tu negocio",
+    desc: "Catálogos, reservas, citas, áreas de cliente o seguimiento en tiempo real: llevamos a la web los procesos que hoy gestionas por teléfono, email o Excel.",
+    includes: [
+      "Catálogos y fichas con filtros",
+      "Reservas y cita previa online",
+      "Seguimiento y paneles en tiempo real",
+      "Integraciones con servicios externos",
+    ],
+    idealFor:
+      "Negocios con procesos manuales que les quitan tiempo o clientes.",
+    projects: ["muevemicoche", "automoviles-cobena", "mammamia-daganzo"],
+  },
+  {
+    num: "04",
+    slug: "seo-local",
+    title: "SEO local",
+    short: "Que te encuentren cuando te buscan",
+    desc: "Trabajamos tu web y tu Perfil de Empresa en Google para que aparezcas en Google y en Google Maps cuando alguien busca lo que haces en tu zona.",
+    includes: [
+      "SEO técnico y on-page",
+      "Optimización del Perfil de Empresa en Google",
+      "Páginas por servicio y por zona",
+      "Seguimiento de posiciones y contactos",
+    ],
+    idealFor:
+      "Negocios locales que dependen de que les encuentren cerca: talleres, clínicas, reformas, instaladores.",
+  },
+  {
+    num: "05",
+    slug: "mantenimiento-web",
+    title: "Mantenimiento web",
+    short: "Tu web al día, sin preocuparte",
+    desc: "Nos ocupamos de que tu web siga funcionando, segura y actualizada, y de hacer los cambios que necesites sin que tengas que tocar nada.",
+    includes: [
+      "Actualizaciones y copias de seguridad",
+      "Monitorización de disponibilidad y rendimiento",
+      "Cambios de contenido incluidos",
+      "Soporte con respuesta en menos de 24h",
+    ],
+    idealFor:
+      "Quien quiere olvidarse de la parte técnica y centrarse en su negocio.",
+  },
 ]
 
 export const DISPLAY_TICKER = [
@@ -27,7 +123,7 @@ export const TICKER_CTA_ITEMS = [
 
 export type Project = {
   num: string
-  /** slug de la URL: /portfolio/[slug] */
+  /** slug de la URL: /proyectos/[slug] */
   slug: string
   initials: string
   tag: string
