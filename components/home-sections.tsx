@@ -16,7 +16,7 @@ import { Magnetic } from "@/components/magnetic"
 import { ProjectGrid } from "@/components/project-grid"
 import { useSiteChrome } from "@/components/site-chrome"
 
-function SectionLabel({
+export function SectionLabel({
   num,
   children,
 }: {
@@ -296,7 +296,13 @@ export function Testimonials() {
   )
 }
 
-export function FaqSection() {
+export function FaqSection({
+  items = FAQS,
+  num = "06",
+}: {
+  items?: { q: string; a: string }[]
+  num?: string
+} = {}) {
   const [openIndex, setOpenIndex] = useState(0)
   return (
     <section className="border-b border-border px-5 py-20 md:px-10 md:py-28">
@@ -304,7 +310,7 @@ export function FaqSection() {
         <div className="md:col-span-5">
           <div className="md:sticky md:top-28">
             <Reveal>
-              <SectionLabel num="06">FAQ</SectionLabel>
+              <SectionLabel num={num}>FAQ</SectionLabel>
               <TextReveal
                 as="h2"
                 className="mt-6 max-w-sm text-balance text-4xl font-medium tracking-tight md:text-5xl"
@@ -322,7 +328,7 @@ export function FaqSection() {
         </div>
 
         <div className="md:col-span-7">
-          {FAQS.map((f, i) => {
+          {items.map((f, i) => {
             const open = openIndex === i
             return (
               <Reveal key={f.q} delay={i * 60}>

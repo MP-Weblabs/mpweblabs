@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, ArrowUpRight, Check, Star } from "lucide-react"
 import { PROJECTS, initialsOf, type Project } from "@/lib/site-data"
+import { SECTORS } from "@/lib/sectors"
 import { Reveal } from "@/components/reveal"
 import { TextReveal } from "@/components/text-reveal"
 import { Magnetic } from "@/components/magnetic"
@@ -12,6 +13,7 @@ import { useSiteChrome } from "@/components/site-chrome"
 export function ProjectPage({ project }: { project: Project }) {
   const { openModal, openAudit } = useSiteChrome()
   const index = PROJECTS.findIndex((p) => p.slug === project.slug)
+  const sector = SECTORS.find((s) => s.projects.includes(project.slug))
   const next = PROJECTS[(index + 1) % PROJECTS.length]
 
   return (
@@ -52,6 +54,15 @@ export function ProjectPage({ project }: { project: Project }) {
                 <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </span>
             </a>
+          )}
+          {sector && (
+            <Link
+              href={`/sectores/${sector.slug}`}
+              className="link-underline mt-6 flex w-fit items-center gap-1 text-[13px] font-medium text-muted-foreground"
+            >
+              Más sobre webs para {sector.name.toLowerCase()}
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </Link>
           )}
         </Reveal>
 

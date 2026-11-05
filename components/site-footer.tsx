@@ -9,6 +9,7 @@ import {
   SOCIAL_LINKS,
   WHATSAPP_URL,
 } from "@/lib/site-data"
+import { SECTORS } from "@/lib/sectors"
 import { Logo } from "@/components/logo"
 import { LocalTime } from "@/components/local-time"
 
@@ -20,7 +21,8 @@ export function SiteFooter() {
           <Logo className="h-8" />
           <p className="mt-3 max-w-xs text-[13px] leading-relaxed text-muted-foreground">
             Estudio de diseño y desarrollo web en Madrid, con clientes en toda
-            España. Webs a medida que convierten visitas en clientes.
+            España. Sistemas digitales que convierten búsquedas y visitas en
+            clientes.
           </p>
           <a
             href={`mailto:${CONTACT_EMAIL}`}
@@ -39,6 +41,15 @@ export function SiteFooter() {
               className={FOOTER_LINK}
             >
               {item.label}
+            </Link>
+          ))}
+          {SECTORS.map((s) => (
+            <Link
+              key={s.slug}
+              href={`/sectores/${s.slug}`}
+              className={FOOTER_LINK}
+            >
+              Webs para {s.name.toLowerCase()}
             </Link>
           ))}
         </FooterCol>
