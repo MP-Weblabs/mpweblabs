@@ -5,14 +5,47 @@ import Link from "next/link"
 import { Check, X } from "lucide-react"
 import { submitLead, type LeadStatus } from "@/lib/web3forms"
 import { CONTACT_EMAIL } from "@/lib/site-data"
+import type { LeadMode } from "@/components/site-chrome"
+
+const COPY: Record<
+  LeadMode,
+  {
+    badge: string
+    title: string
+    desc: string
+    submit: string
+    subject: string
+    sentText: string
+  }
+> = {
+  proyecto: {
+    badge: "Respuesta en menos de 24h",
+    title: "Cuéntanos tu proyecto",
+    desc: "Te respondemos en menos de 24h para entender qué necesitas y, tras una primera llamada, te enviamos una propuesta a medida.",
+    submit: "Solicitar propuesta →",
+    subject: "Nuevo lead — Cuéntanos tu proyecto",
+    sentText: "Te respondemos en menos de 24h. Revisa tu correo.",
+  },
+  auditoria: {
+    badge: "Gratis · Sin compromiso",
+    title: "Analiza gratis tu web",
+    desc: "Revisamos personalmente tu web —velocidad, móvil, Google y conversión— y te enviamos por email los problemas que más contactos te pueden estar costando.",
+    submit: "Analizar mi web →",
+    subject: "Nuevo lead — Análisis web gratuito",
+    sentText: "Te enviaremos el análisis de tu web por email. Revisa tu correo.",
+  },
+}
 
 export function LeadModal({
   open,
+  mode,
   onClose,
 }: {
   open: boolean
+  mode: LeadMode
   onClose: () => void
 }) {
+  const copy = COPY[mode]
   const [status, setStatus] = useState<LeadStatus>("idle")
   const panelRef = useRef<HTMLDivElement>(null)
 
@@ -63,9 +96,14 @@ export function LeadModal({
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setStatus("sending")
-    const ok = await submitLead(e.currentTarget, "Nuevo lead — Prototipo gratis")
+    const ok = await submitLead(e.currentTarget, copy.subject, mode)
     setStatus(ok ? "sent" : "error")
   }
+
+  const msgLabel =
+    mode === "auditoria"
+      ? "¿Algo que te preocupe de tu web? (opcional)"
+      : "Cuéntanos sobre tu proyecto (opcional)"
 
   function handleClose() {
     setStatus("idle")
@@ -106,7 +144,7 @@ export function LeadModal({
               ¡Solicitud recibida!
             </h2>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Te contactamos en menos de 48h con tu prototipo. Revisa tu correo.
+              {copy.sentText}
             </p>
             <button
               onClick={handleClose}
@@ -118,17 +156,16 @@ export function LeadModal({
         ) : (
           <>
             <span className="mb-4 inline-block rounded-full border border-accent/25 bg-accent/10 px-3 py-1 text-[11px] uppercase tracking-[0.1em] text-accent">
-              Riesgo cero
+              {copy.badge}
             </span>
             <h2
               id="lead-modal-title"
               className="mb-2 text-2xl font-semibold tracking-tight"
             >
-              Obtener mi prototipo gratis
+              {copy.title}
             </h2>
             <p className="mb-6 text-sm leading-relaxed text-muted-foreground">
-              Estamos seleccionando 3 proyectos al mes. Cuéntanos tu idea y te
-              enviamos el prototipo en 48h.
+              {copy.desc}
             </p>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
               <input
@@ -138,6 +175,16 @@ export function LeadModal({
                 aria-hidden="true"
                 className="hidden"
               />
+              {mode === "auditoria" && (
+                <Field
+                  name="Web"
+                  placeholder="URL de tu web (p. ej. tunegocio.com)"
+                  inputMode="url"
+                  autoComplete="url"
+                  maxLength={200}
+                  required
+                />
+              )}
               <Field
                 name="Nombre"
                 placeholder="Nombre completo"
@@ -163,8 +210,8 @@ export function LeadModal({
               <textarea
                 rows={3}
                 name="Mensaje"
-                aria-label="Cuéntanos sobre tu proyecto (opcional)"
-                placeholder="Cuéntanos sobre tu proyecto (opcional)"
+                aria-label={msgLabel}
+                placeholder={msgLabel}
                 maxLength={1800}
                 className="resize-none rounded-md border border-border bg-foreground/5 px-3 py-2.5 text-sm outline-none transition-colors placeholder:text-foreground/50 focus:border-foreground/40"
               />
@@ -184,7 +231,7 @@ export function LeadModal({
                 disabled={status === "sending"}
                 className="mt-1 rounded-md bg-foreground py-3 text-sm font-semibold text-background transition-opacity hover:opacity-90 disabled:opacity-60"
               >
-                {status === "sending" ? "Enviando…" : "Obtener prototipo →"}
+                {status === "sending" ? "Enviando…" : copy.submit}
               </button>
               {status === "error" && (
                 <p role="alert" className="text-xs leading-relaxed text-red-700">
@@ -193,10 +240,6 @@ export function LeadModal({
                 </p>
               )}
             </form>
-            <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-              * Sujeto a disponibilidad y selección por parte de nuestro equipo
-              creativo.
-            </p>
           </>
         )}
       </div>
@@ -211,6 +254,7 @@ function Field({
   required,
   autoComplete,
   maxLength,
+  inputMode,
 }: {
   name: string
   placeholder: string
@@ -218,6 +262,7 @@ function Field({
   required?: boolean
   autoComplete?: string
   maxLength?: number
+  inputMode?: "url" | "email" | "tel" | "text"
 }) {
   return (
     <input
@@ -228,6 +273,7 @@ function Field({
       aria-label={placeholder}
       autoComplete={autoComplete}
       maxLength={maxLength}
+      inputMode={inputMode}
       className="rounded-md border border-border bg-foreground/5 px-3 py-2.5 text-sm outline-none transition-colors placeholder:text-foreground/50 focus:border-foreground/40"
     />
   )

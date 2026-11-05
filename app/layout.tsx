@@ -2,7 +2,8 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono, Instrument_Serif } from 'next/font/google'
 import { SiteShell } from '@/components/site-chrome'
-import { INTRO_GATE_SCRIPT } from '@/lib/intro'
+import { Analytics as ConsentAnalytics } from '@/components/analytics'
+import { analyticsConfig } from '@/lib/analytics-config'
 import {
   CONTACT_EMAIL,
   PHONE,
@@ -47,7 +48,8 @@ export const metadata: Metadata = {
     'páginas web para empresas',
     'landing pages',
     'diseño web sin plantillas',
-    'prototipo web gratis',
+    'SEO local Madrid',
+    'auditoría web gratis',
   ],
   robots: {
     index: true,
@@ -119,7 +121,6 @@ const BUSINESS_JSON_LD = {
     { '@type': 'City', name: 'Madrid' },
     { '@type': 'Country', name: 'España' },
   ],
-  priceRange: '600€ - 5.000€',
   knowsAbout: [
     'Diseño web',
     'Desarrollo web',
@@ -146,6 +147,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const { gaId, clarityId, hasConsentTools } = analyticsConfig()
   return (
     <html
       lang="es"
@@ -153,15 +155,15 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} bg-background`}
     >
       <body className="font-sans antialiased bg-background text-foreground">
-        <script dangerouslySetInnerHTML={{ __html: INTRO_GATE_SCRIPT }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify([BUSINESS_JSON_LD, WEBSITE_JSON_LD]),
           }}
         />
-        <SiteShell>{children}</SiteShell>
+        <SiteShell hasConsentTools={hasConsentTools}>{children}</SiteShell>
         {process.env.NODE_ENV === 'production' && <Analytics />}
+        <ConsentAnalytics gaId={gaId} clarityId={clarityId} />
       </body>
     </html>
   )

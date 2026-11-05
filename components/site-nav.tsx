@@ -75,7 +75,7 @@ export function SiteNav() {
           onClick={openModal}
           className="btn-fill-light hidden rounded-full bg-foreground px-5 py-2 text-[13px] font-semibold text-background md:block"
         >
-          <span>Prototipo gratis</span>
+          <span>Cuéntanos tu proyecto</span>
         </button>
 
         <button
@@ -147,7 +147,7 @@ export function SiteNav() {
             }}
             className="w-full rounded-full bg-foreground px-6 py-4 text-sm font-semibold text-background"
           >
-            Prototipo gratis →
+            Cuéntanos tu proyecto →
           </button>
           <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
             <span>{CONTACT_EMAIL}</span>

@@ -1,12 +1,108 @@
 export const SITE_TITLE = "MP WebLabs — Diseño y desarrollo web en Madrid"
 export const SITE_DESCRIPTION =
-  "Agencia de diseño y desarrollo web en Madrid, con clientes en toda España. Webs a medida que convierten visitas en clientes. Prototipo gratis en 48h. Pagas solo si te gusta."
+  "Agencia de diseño y desarrollo web en Madrid, con clientes en toda España. Webs rápidas, optimizadas para Google y pensadas para generar contactos, reservas y ventas."
 
 export const NAV_ITEMS: { href: string; label: string }[] = [
   { href: "/", label: "Inicio" },
+  { href: "/servicios", label: "Servicios" },
+  { href: "/proyectos", label: "Proyectos" },
   { href: "/nosotros", label: "Nosotros" },
-  { href: "/portfolio", label: "Portfolio" },
   { href: "/contacto", label: "Contacto" },
+]
+
+export type Service = {
+  num: string
+  /** ancla en /servicios y futura ruta /servicios/[slug] */
+  slug: string
+  title: string
+  /** frase corta para listados */
+  short: string
+  desc: string
+  includes: string[]
+  idealFor: string
+  /** proyectos reales donde se aplicó (slugs de PROJECTS) */
+  projects?: string[]
+}
+
+export const SERVICES: Service[] = [
+  {
+    num: "01",
+    slug: "diseno-web",
+    title: "Diseño web",
+    short: "Webs que se entienden y convierten",
+    desc: "Webs corporativas y landings diseñadas para que quien llega entienda en segundos qué haces, confíe en ti y te contacte.",
+    includes: [
+      "Arquitectura de páginas orientada a conversión",
+      "Diseño a medida, sin plantillas",
+      "Textos y llamadas a la acción claras",
+      "Mobile-first: perfecta en el móvil",
+    ],
+    idealFor:
+      "Negocios cuya web no transmite lo que valen o no genera contactos.",
+    projects: ["lotus-experience", "mammamia-daganzo"],
+  },
+  {
+    num: "02",
+    slug: "desarrollo-web",
+    title: "Desarrollo web",
+    short: "Código propio, rápido y seguro",
+    desc: "Desarrollamos cada web desde cero, sin depender de plugins ni constructores: carga rápida, segura y fácil de mantener.",
+    includes: [
+      "Rendimiento y Core Web Vitals medidos",
+      "Formularios conectados a email y CRM",
+      "Analítica y medición de conversiones",
+      "SEO técnico integrado desde el código",
+    ],
+    idealFor:
+      "Empresas que necesitan una web rápida y fiable, sin sustos de plugins ni actualizaciones.",
+    projects: ["automoviles-cobena"],
+  },
+  {
+    num: "03",
+    slug: "aplicaciones-web",
+    title: "Aplicaciones web",
+    short: "Herramientas a medida para tu negocio",
+    desc: "Catálogos, reservas, citas, áreas de cliente o seguimiento en tiempo real: llevamos a la web los procesos que hoy gestionas por teléfono, email o Excel.",
+    includes: [
+      "Catálogos y fichas con filtros",
+      "Reservas y cita previa online",
+      "Seguimiento y paneles en tiempo real",
+      "Integraciones con servicios externos",
+    ],
+    idealFor:
+      "Negocios con procesos manuales que les quitan tiempo o clientes.",
+    projects: ["muevemicoche", "automoviles-cobena", "mammamia-daganzo"],
+  },
+  {
+    num: "04",
+    slug: "seo-local",
+    title: "SEO local",
+    short: "Que te encuentren cuando te buscan",
+    desc: "Trabajamos tu web y tu Perfil de Empresa en Google para que aparezcas en Google y en Google Maps cuando alguien busca lo que haces en tu zona.",
+    includes: [
+      "SEO técnico y on-page",
+      "Optimización del Perfil de Empresa en Google",
+      "Páginas por servicio y por zona",
+      "Seguimiento de posiciones y contactos",
+    ],
+    idealFor:
+      "Negocios locales que dependen de que les encuentren cerca: talleres, clínicas, reformas, instaladores.",
+  },
+  {
+    num: "05",
+    slug: "mantenimiento-web",
+    title: "Mantenimiento web",
+    short: "Tu web al día, sin preocuparte",
+    desc: "Nos ocupamos de que tu web siga funcionando, segura y actualizada, y de hacer los cambios que necesites sin que tengas que tocar nada.",
+    includes: [
+      "Actualizaciones y copias de seguridad",
+      "Monitorización de disponibilidad y rendimiento",
+      "Cambios de contenido incluidos",
+      "Soporte con respuesta en menos de 24h",
+    ],
+    idealFor:
+      "Quien quiere olvidarse de la parte técnica y centrarse en su negocio.",
+  },
 ]
 
 export const DISPLAY_TICKER = [
@@ -17,17 +113,9 @@ export const DISPLAY_TICKER = [
   "SEO técnico",
 ]
 
-export const TICKER_CTA_ITEMS = [
-  "Prototipo gratis en 48h",
-  "Solo 3 proyectos al mes",
-  "Pagas solo si te gusta",
-  "Sin plantillas ni atajos",
-  "Código desde cero",
-]
-
 export type Project = {
   num: string
-  /** slug de la URL: /portfolio/[slug] */
+  /** slug de la URL: /proyectos/[slug] */
   slug: string
   initials: string
   tag: string
@@ -200,12 +288,12 @@ export const PROJECTS: Project[] = [
 
 export const FAQS = [
   {
-    q: "¿El prototipo es realmente gratis?",
-    a: "Sí. En menos de 48h te enviamos una propuesta visual de tu web —estructura, diseño y referencias— antes de que decidas contratar. Si no te convence, no pagas nada.",
+    q: "¿Cuánto cuesta una web?",
+    a: "Depende de lo que necesites: no es lo mismo una landing que una web con reservas online o una aplicación a medida. Tras una primera llamada te enviamos una propuesta cerrada, con precio y plazos por escrito. Sin sorpresas.",
   },
   {
-    q: "¿Cuánto cuesta una web?",
-    a: "Desde 600€ para landing pages y proyectos de una página. Las webs corporativas completas parten de 2.000€. Te damos un presupuesto exacto en la primera llamada.",
+    q: "¿Qué incluye el análisis gratuito de mi web?",
+    a: "Revisamos personalmente la velocidad, la experiencia en móvil, el SEO básico y los puntos de contacto (llamadas, formularios, reservas). Te enviamos por email los problemas prioritarios y cómo solucionarlos, en lenguaje claro. Sin compromiso.",
   },
   {
     q: "¿Usáis WordPress o plantillas?",
@@ -213,7 +301,7 @@ export const FAQS = [
   },
   {
     q: "¿Trabajáis solo en Madrid o también en el resto de España?",
-    a: "Nuestro estudio está en Madrid, pero trabajamos en remoto con negocios de toda España. Llamadas, prototipo y entrega, todo 100% online, sin que importe tu ciudad.",
+    a: "Nuestro estudio está en Madrid, pero trabajamos en remoto con negocios de toda España. Llamadas, propuesta y entrega, todo 100% online, sin que importe tu ciudad.",
   },
   {
     q: "¿Cuánto tiempo tarda?",
@@ -221,7 +309,7 @@ export const FAQS = [
   },
   {
     q: "¿Qué pasa después de lanzar?",
-    a: "Soporte técnico real durante los primeros 30 días incluido. Respondemos en menos de 24h. Para cambios mayores, tarifas claras acordadas desde el principio.",
+    a: "Soporte técnico real durante los primeros 30 días incluido. Respondemos en menos de 24h. Después puedes contratar mantenimiento mensual y SEO local para que la web siga al día y mejorando su posicionamiento.",
   },
 ]
 
@@ -265,8 +353,8 @@ export const VALUES = [
   },
   {
     num: "04",
-    title: "Prototipo antes de pagar",
-    desc: "Ves nuestra propuesta para tu web antes de comprometerte. Riesgo cero desde el primer día.",
+    title: "Pensadas para Google",
+    desc: "SEO técnico y local integrado desde el código, no como un añadido. Que te encuentren quienes ya te están buscando.",
   },
   {
     num: "05",
@@ -303,7 +391,7 @@ export const METHODOLOGY: Phase[] = [
     label: "Diseño",
     week: "Semana 03–04",
     title: "Diseño completo, aprobado por ti",
-    desc: "Partimos del prototipo gratuito y diseñamos cada página: arquitectura enfocada en conversión e interfaz. Lo apruebas todo antes de que empiece el desarrollo.",
+    desc: "Diseñamos cada página: arquitectura enfocada en conversión e interfaz. Lo apruebas todo antes de que empiece el desarrollo.",
     bullets: ["Arquitectura UX", "Diseño UI", "Prototipo navegable"],
   },
   {

@@ -8,16 +8,20 @@ import {
   useState,
   type ReactNode,
 } from "react"
-import { usePathname } from "next/navigation"
-import { IntroLoader } from "@/components/intro-loader"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { LeadModal } from "@/components/lead-modal"
 import { CustomCursor } from "@/components/custom-cursor"
+import { track } from "@/lib/analytics"
+
+export type LeadMode = "proyecto" | "auditoria"
 
 type SiteChromeValue = {
   ready: boolean
+  /** abre el formulario "Cuéntanos tu proyecto" */
   openModal: () => void
+  /** abre el formulario "Analiza gratis tu web" */
+  openAudit: () => void
 }
 
 const SiteChromeContext = createContext<SiteChromeValue | null>(null)
@@ -30,20 +34,31 @@ export function useSiteChrome() {
   return ctx
 }
 
-export function SiteShell({ children }: { children: ReactNode }) {
-  const pathname = usePathname()
-  // The intro only plays when the session starts on the home page.
-  const [showIntro] = useState(pathname === "/")
-  const [introDone, setIntroDone] = useState(!showIntro)
+export function SiteShell({
+  children,
+  hasConsentTools = false,
+}: {
+  children: ReactNode
+  /** muestra "Configurar cookies" en el footer */
+  hasConsentTools?: boolean
+}) {
   const [modalOpen, setModalOpen] = useState(false)
+  const [modalMode, setModalMode] = useState<LeadMode>("proyecto")
 
-  const handleIntroDone = useCallback(() => setIntroDone(true), [])
-  const openModal = useCallback(() => setModalOpen(true), [])
+  const openModal = useCallback(() => {
+    setModalMode("proyecto")
+    setModalOpen(true)
+  }, [])
+  const openAudit = useCallback(() => {
+    track("audit_started", { page: window.location.pathname })
+    setModalMode("auditoria")
+    setModalOpen(true)
+  }, [])
   const closeModal = useCallback(() => setModalOpen(false), [])
 
   const value = useMemo<SiteChromeValue>(
-    () => ({ ready: introDone, openModal }),
-    [introDone, openModal],
+    () => ({ ready: true, openModal, openAudit }),
+    [openModal, openAudit],
   )
 
   return (
@@ -54,13 +69,12 @@ export function SiteShell({ children }: { children: ReactNode }) {
       >
         Saltar al contenido
       </a>
-      {showIntro && <IntroLoader onDone={handleIntroDone} />}
       <SiteNav />
       <main id="contenido" tabIndex={-1} className="outline-none">
         {children}
       </main>
-      <SiteFooter />
-      <LeadModal open={modalOpen} onClose={closeModal} />
+      <SiteFooter hasConsentTools={hasConsentTools} />
+      <LeadModal open={modalOpen} mode={modalMode} onClose={closeModal} />
       <CustomCursor />
       <div
         aria-hidden="true"

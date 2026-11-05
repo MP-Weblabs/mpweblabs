@@ -23,7 +23,7 @@ export async function generateMetadata({
   return pageMetadata({
     title,
     description,
-    path: `/portfolio/${project.slug}`,
+    path: `/proyectos/${project.slug}`,
     type: "article",
     images: [project.image],
   })
@@ -46,14 +46,14 @@ export default async function Page({
       {
         "@type": "ListItem",
         position: 2,
-        name: "Portfolio",
-        item: `${SITE_URL}/portfolio`,
+        name: "Proyectos",
+        item: `${SITE_URL}/proyectos`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: project.title,
-        item: `${SITE_URL}/portfolio/${project.slug}`,
+        item: `${SITE_URL}/proyectos/${project.slug}`,
       },
     ],
   }

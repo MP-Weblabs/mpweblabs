@@ -11,7 +11,7 @@ export function ProjectCard({
   wide?: boolean
 }) {
   return (
-    <Link href={`/portfolio/${project.slug}`} className="group block">
+    <Link href={`/proyectos/${project.slug}`} className="group block">
       <div className="relative overflow-hidden rounded-xl border border-border bg-card">
         <div
           className={`relative overflow-hidden ${wide ? "aspect-[16/11]" : "aspect-[4/3]"}`}

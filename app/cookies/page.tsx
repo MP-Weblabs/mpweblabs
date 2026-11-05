@@ -2,6 +2,10 @@ import type { Metadata } from "next"
 import { pageMetadata } from "@/lib/metadata"
 import { LegalPage, type LegalSection } from "@/components/pages/legal-page"
 import { CONTACT_EMAIL } from "@/lib/site-data"
+import { analyticsConfig } from "@/lib/analytics-config"
+
+const { gaId: GA_ID, clarityId: CLARITY_ID, hasConsentTools: HAS_CONSENT_TOOLS } =
+  analyticsConfig()
 
 export const metadata: Metadata = pageMetadata({
   title: "Política de cookies",
@@ -20,12 +24,24 @@ const SECTIONS: LegalSection[] = [
   {
     title: "Cookies que utilizamos",
     body: [
-      "Este sitio web no instala cookies propias ni de terceros con fines analíticos, publicitarios o de seguimiento. Por eso no te mostramos un banner de consentimiento.",
+      HAS_CONSENT_TOOLS
+        ? "Este sitio no utiliza cookies publicitarias. Las cookies de analítica solo se instalan si las aceptas en el aviso de cookies, y puedes cambiar tu decisión en cualquier momento desde «Configurar cookies», en el pie de página."
+        : "Este sitio web no instala cookies propias ni de terceros con fines analíticos, publicitarios o de seguimiento. Por eso no te mostramos un banner de consentimiento.",
       [
-        "Estadísticas: usamos Vercel Web Analytics, que mide las visitas de forma agregada y anónima sin utilizar cookies ni identificadores persistentes.",
-        "Almacenamiento técnico: guardamos en el almacenamiento de sesión de tu navegador un indicador para no repetir la animación de entrada. Se borra al cerrar la pestaña y no contiene datos personales.",
+        "Estadísticas sin cookies: usamos Vercel Web Analytics, que mide las visitas de forma agregada y anónima sin utilizar cookies ni identificadores persistentes.",
+        ...(GA_ID
+          ? [
+              "Google Analytics 4 (Google Ireland Ltd.), solo con tu consentimiento: cookies _ga y _ga_* para medir visitas y conversiones de forma estadística. Duración: hasta 2 años. Sin uso publicitario.",
+            ]
+          : []),
+        ...(CLARITY_ID
+          ? [
+              "Microsoft Clarity (Microsoft Corporation), solo con tu consentimiento: cookies _clck y _clsk para analizar de forma agregada cómo se navega por la web (clics, desplazamiento). Duración: hasta 1 año. Sin uso publicitario.",
+            ]
+          : []),
+        "Almacenamiento técnico: guardamos en tu navegador tu decisión sobre las cookies, el origen de tu visita durante la sesión (para saber qué canal nos trajo tu consulta si nos escribes) y un indicador para no repetir la animación de entrada. No contienen datos personales.",
       ],
-      "Si en el futuro incorporamos cookies que requieran tu consentimiento, actualizaremos esta política y te lo pediremos antes de instalarlas.",
+      "Si incorporamos nuevas cookies que requieran tu consentimiento, actualizaremos esta política y te lo pediremos antes de instalarlas.",
     ],
   },
   {
@@ -55,7 +71,7 @@ export default function CookiesPage() {
       label="Uso de cookies"
       titlePlain="Política de"
       titleSerif="cookies."
-      updated="Octubre 2026"
+      updated="Noviembre 2026"
       sections={SECTIONS}
     />
   )

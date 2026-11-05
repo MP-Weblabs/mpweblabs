@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import Link from "next/link"
 import { ArrowDown, ArrowRight } from "lucide-react"
 import { HeroField } from "@/components/hero-field"
 import { Magnetic } from "@/components/magnetic"
@@ -9,7 +8,7 @@ import { LocalTime } from "@/components/local-time"
 import { useSiteChrome } from "@/components/site-chrome"
 
 export function BrutalHero() {
-  const { ready, openModal } = useSiteChrome()
+  const { ready, openModal, openAudit } = useSiteChrome()
   const parallaxRef = useRef<HTMLDivElement>(null)
 
   // Content drifts down and fades as you scroll away — depth on exit.
@@ -75,7 +74,7 @@ export function BrutalHero() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-foreground/40" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-foreground" />
           </span>
-          Disponibles — 3 proyectos / mes
+          Madrid · Toda España
         </span>
         <LocalTime className="hidden tabular-nums md:block" />
       </div>
@@ -85,12 +84,12 @@ export function BrutalHero() {
         <h1 className="text-[clamp(4rem,14.5vw,12.5rem)] font-semibold leading-[0.88] tracking-[-0.045em]">
           <span className="block overflow-hidden pb-[0.05em]">
             <span className="block" style={line("0.3s")}>
-              Diseñamos
+              Webs que
             </span>
           </span>{" "}
           <span className="block overflow-hidden pb-[0.05em]">
             <span className="text-outline block" style={line("0.42s")}>
-              webs que
+              traen
             </span>
           </span>{" "}
           <span className="block overflow-hidden pb-[0.2em] -mb-[0.14em]">
@@ -99,7 +98,7 @@ export function BrutalHero() {
               style={line("0.54s")}
             >
               <span className="relative inline-block pr-[0.1em]">
-                venden.
+                clientes.
                 <svg
                   className="absolute -bottom-[0.03em] left-0 w-full"
                   viewBox="0 0 320 26"
@@ -136,8 +135,8 @@ export function BrutalHero() {
           style={rise("0.95s")}
         >
           <p className="text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
-            Diseño y desarrollo web a medida en Madrid que convierte visitas
-            en clientes. Sin plantillas. Sin atajos.
+            Diseñamos y desarrollamos webs rápidas, optimizadas para Google y
+            pensadas para generar contactos, reservas y ventas.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Magnetic>
@@ -146,18 +145,18 @@ export function BrutalHero() {
                 className="btn-fill-light group rounded-full bg-primary px-7 py-4 text-sm font-semibold text-primary-foreground"
               >
                 <span className="flex items-center gap-2">
-                  Prototipo gratis
+                  Cuéntanos tu proyecto
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </button>
             </Magnetic>
             <Magnetic>
-              <Link
-                href="/portfolio"
-                className="btn-fill-dark block rounded-full border border-border bg-card/70 px-7 py-4 text-sm font-semibold backdrop-blur-sm"
+              <button
+                onClick={openAudit}
+                className="btn-fill-dark block w-full rounded-full border border-border bg-card/70 px-7 py-4 text-sm font-semibold backdrop-blur-sm"
               >
-                <span>Ver proyectos</span>
-              </Link>
+                <span>Analiza gratis tu web</span>
+              </button>
             </Magnetic>
           </div>
         </div>
@@ -191,10 +190,10 @@ export function BrutalHero() {
         </span>
 
         <button
-          onClick={openModal}
+          onClick={openAudit}
           className="group relative hidden h-28 w-28 items-center justify-center lg:flex"
           style={rise("1.5s")}
-          aria-label="Solicitar prototipo gratis en 48 horas"
+          aria-label="Analiza gratis tu web"
         >
           <svg
             className="animate-spin-slow absolute inset-0 h-full w-full"
@@ -212,7 +211,7 @@ export function BrutalHero() {
               style={{ fontSize: "8.6px", letterSpacing: "0.16em" }}
             >
               <textPath href="#hero-badge-circle">
-                Prototipo gratis en 48h · Sin riesgo ·
+                Analiza gratis tu web · Sin compromiso ·
               </textPath>
             </text>
           </svg>

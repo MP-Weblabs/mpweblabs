@@ -5,13 +5,20 @@ import { ArrowUpRight } from "lucide-react"
 import {
   CONTACT_EMAIL,
   NAV_ITEMS,
+  SERVICES,
   SOCIAL_LINKS,
   WHATSAPP_URL,
 } from "@/lib/site-data"
+import { SECTORS } from "@/lib/sectors"
+import { OPEN_CONSENT_EVENT } from "@/lib/analytics"
 import { Logo } from "@/components/logo"
 import { LocalTime } from "@/components/local-time"
 
-export function SiteFooter() {
+export function SiteFooter({
+  hasConsentTools = false,
+}: {
+  hasConsentTools?: boolean
+}) {
   return (
     <footer className="overflow-hidden">
       <div className="grid grid-cols-2 gap-8 border-t border-border px-5 py-14 md:grid-cols-4 md:px-10">
@@ -19,7 +26,8 @@ export function SiteFooter() {
           <Logo className="h-8" />
           <p className="mt-3 max-w-xs text-[13px] leading-relaxed text-muted-foreground">
             Estudio de diseño y desarrollo web en Madrid, con clientes en toda
-            España. Webs a medida que convierten visitas en clientes.
+            España. Sistemas digitales que convierten búsquedas y visitas en
+            clientes.
           </p>
           <a
             href={`mailto:${CONTACT_EMAIL}`}
@@ -40,20 +48,27 @@ export function SiteFooter() {
               {item.label}
             </Link>
           ))}
+          {SECTORS.map((s) => (
+            <Link
+              key={s.slug}
+              href={`/sectores/${s.slug}`}
+              className={FOOTER_LINK}
+            >
+              Webs para {s.name.toLowerCase()}
+            </Link>
+          ))}
         </FooterCol>
 
         <FooterCol title="Servicios">
-          {["Diseño web", "Desarrollo web", "Landing pages", "SEO técnico"].map(
-            (s) => (
-              <Link
-                key={s}
-                href="/#servicios"
-                className={FOOTER_LINK}
-              >
-                {s}
-              </Link>
-            ),
-          )}
+          {SERVICES.map((s) => (
+            <Link
+              key={s.slug}
+              href={`/servicios#${s.slug}`}
+              className={FOOTER_LINK}
+            >
+              {s.title}
+            </Link>
+          ))}
         </FooterCol>
 
         <FooterCol title="Contacto">
@@ -87,11 +102,10 @@ export function SiteFooter() {
 
       {/* giant wordmark */}
       <div
-        className="pointer-events-none select-none whitespace-nowrap px-2 text-center text-[clamp(3rem,12.5vw,11.5rem)] font-semibold leading-[0.8] tracking-[-0.04em] text-foreground/[0.06]"
+        className="pointer-events-none select-none whitespace-nowrap px-2 text-center text-[clamp(3rem,12.5vw,11.5rem)] font-semibold leading-[0.8] tracking-[-0.04em] text-foreground/[0.06] before:content-[attr(data-wordmark)]"
+        data-wordmark="MP WEBLABS"
         aria-hidden="true"
-      >
-        MP&nbsp;WEBLABS
-      </div>
+      />
 
       <div className="flex flex-col gap-2 border-t border-border px-5 py-6 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between md:px-10">
         <span>© {new Date().getFullYear()} MP WebLabs · Madrid, España</span>
@@ -114,6 +128,14 @@ export function SiteFooter() {
           >
             Cookies
           </Link>
+          {hasConsentTools && (
+            <button
+              onClick={() => window.dispatchEvent(new Event(OPEN_CONSENT_EVENT))}
+              className="py-1 transition-colors hover:text-foreground"
+            >
+              Configurar cookies
+            </button>
+          )}
         </div>
       </div>
     </footer>

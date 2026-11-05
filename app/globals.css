@@ -348,10 +348,6 @@ textarea {
   z-index: 1;
 }
 
-/* Intro already seen this session (or reduced motion) — see lib/intro.ts */
-[data-intro-seen] .intro-loader {
-  display: none;
-}
 
 /* Respect reduced-motion preferences site-wide */
 @media (prefers-reduced-motion: reduce) {

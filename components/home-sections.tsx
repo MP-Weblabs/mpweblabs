@@ -2,15 +2,24 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { ArrowUpRight, Plus, Star } from "lucide-react"
-import { FAQS, PROJECTS, WHATSAPP_URL, initialsOf } from "@/lib/site-data"
+import { ArrowUpRight, Check, Plus, Star } from "lucide-react"
+import {
+  FAQS,
+  METHODOLOGY,
+  PROJECTS,
+  SERVICES,
+  VALUES,
+  WHATSAPP_URL,
+  initialsOf,
+} from "@/lib/site-data"
+import { SECTORS } from "@/lib/sectors"
 import { Reveal } from "@/components/reveal"
 import { TextReveal } from "@/components/text-reveal"
 import { Magnetic } from "@/components/magnetic"
 import { ProjectGrid } from "@/components/project-grid"
 import { useSiteChrome } from "@/components/site-chrome"
 
-function SectionLabel({
+export function SectionLabel({
   num,
   children,
 }: {
@@ -45,14 +54,14 @@ export function IntroSection() {
         <div className="flex flex-col gap-5 md:col-span-4">
           <Reveal delay={100}>
             <p className="text-[15px] leading-relaxed text-muted-foreground">
-              Construimos sitios web desde cero, sin plantillas, para negocios
-              de Madrid y de toda España. Cada decisión de diseño tiene un
-              único objetivo: convertir a tus visitantes en clientes
-              recurrentes.
+              Creamos sistemas digitales que convierten búsquedas y visitas
+              en clientes. La web es el medio: lo que importa es cuántos
+              contactos, reservas y ventas genera para tu negocio.
             </p>
             <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
-              No WordPress genérico. No Kit Digital. Código propio, diseño que
-              impacta, resultados medibles.
+              Diseño, desarrollo y SEO local trabajando juntos, con código
+              propio y sin plantillas, para negocios de Madrid y de toda
+              España.
             </p>
           </Reveal>
         </div>
@@ -76,13 +85,6 @@ export function IntroSection() {
   )
 }
 
-const SERVICES = [
-  { num: "01", title: "Diseño web", desc: "Interfaces a medida que venden" },
-  { num: "02", title: "Desarrollo", desc: "Código propio, rápido y limpio" },
-  { num: "03", title: "Landing pages", desc: "Una página, un objetivo" },
-  { num: "04", title: "SEO técnico", desc: "Visibilidad desde el código" },
-]
-
 export function ServicesSection() {
   return (
     <section
@@ -99,14 +101,16 @@ export function ServicesSection() {
             </h2>
           </div>
           <span className="hidden font-mono text-xs text-muted-foreground md:block">
-            (04)
+            ({String(SERVICES.length).padStart(2, "0")})
           </span>
         </div>
       </Reveal>
       <div>
         {SERVICES.map((s, i) => (
           <Reveal key={s.num} delay={i * 60}>
-            <div className="group relative flex items-baseline justify-between gap-6 overflow-hidden border-t border-border px-5 py-7 transition-colors last:border-b md:px-10 md:py-9">
+            <Link
+              href={`/servicios#${s.slug}`}
+              className="group relative flex items-baseline justify-between gap-6 overflow-hidden border-t border-border px-5 py-7 transition-colors last:border-b md:px-10 md:py-9">
               <div className="absolute inset-0 origin-bottom scale-y-0 bg-foreground transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100" />
               <div className="relative flex items-baseline gap-5 md:gap-10">
                 <span className="font-mono text-xs text-muted-foreground transition-colors duration-300 group-hover:text-background/60">
@@ -118,10 +122,11 @@ export function ServicesSection() {
               </div>
               <div className="relative hidden items-center gap-6 md:flex">
                 <span className="font-serif text-lg italic text-muted-foreground opacity-0 transition-all duration-500 group-hover:text-background/80 group-hover:opacity-100">
-                  {s.desc}
+                  {s.short}
                 </span>
+                <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-colors duration-300 group-hover:text-background" />
               </div>
-            </div>
+            </Link>
           </Reveal>
         ))}
       </div>
@@ -135,7 +140,7 @@ export function PortfolioPreview() {
       <Reveal>
         <div className="flex items-end justify-between pb-12">
           <div>
-            <SectionLabel num="03">Portfolio</SectionLabel>
+            <SectionLabel num="03">Proyectos</SectionLabel>
             <h2 className="mt-6 text-4xl font-medium tracking-tight md:text-5xl">
               Trabajo{" "}
               <span className="font-serif font-normal italic">
@@ -144,7 +149,7 @@ export function PortfolioPreview() {
             </h2>
           </div>
           <Link
-            href="/portfolio"
+            href="/proyectos"
             className="link-underline group hidden items-center gap-1 text-[13px] font-medium md:flex"
           >
             Ver todos los proyectos
@@ -158,7 +163,7 @@ export function PortfolioPreview() {
       <Reveal>
         <div className="mt-12 md:hidden">
           <Link
-            href="/portfolio"
+            href="/proyectos"
             className="link-underline inline-flex items-center gap-1 text-sm font-medium"
           >
             Ver todos los proyectos
@@ -170,21 +175,240 @@ export function PortfolioPreview() {
   )
 }
 
-export function OfferStrip() {
-  const { openModal } = useSiteChrome()
+
+/** Resultados reales de los proyectos (campo `result` de PROJECTS). */
+export function ProofStrip() {
+  return (
+    <section
+      aria-label="Resultados de nuestros proyectos"
+      className="border-b border-border"
+    >
+      <div className="grid grid-cols-2 lg:grid-cols-4">
+        {PROJECTS.map((p, i) => {
+          const [figure, ...rest] = p.result.split(" ")
+          return (
+            <Reveal key={p.slug} delay={i * 80} className="h-full">
+              <Link
+                href={`/proyectos/${p.slug}`}
+                className={`group flex h-full flex-col justify-between gap-6 border-border px-5 py-10 transition-colors hover:bg-card md:px-10 md:py-14 ${
+                  i % 2 === 0 ? "border-r" : ""
+                } ${i < 2 ? "border-b lg:border-b-0" : ""} ${
+                  i === 1 ? "lg:border-r" : ""
+                }`}
+              >
+                <span>
+                  <span className="block text-4xl font-medium tracking-tighter md:text-6xl">
+                    {figure}
+                  </span>
+                  <span className="mt-2 block text-[13px] leading-snug text-muted-foreground md:text-sm">
+                    {rest.join(" ")}
+                  </span>
+                </span>
+                <span className="flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground transition-colors group-hover:text-foreground">
+                  {p.title}
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </span>
+              </Link>
+            </Reveal>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
+
+/** Sectores de enfoque (plan: Tier 1). Solo se enlazan los que tienen landing. */
+const FOCUS_SECTORS = [
+  { name: "Automoción y talleres", slug: "automocion" },
+  { name: "Clínicas dentales y estéticas" },
+  { name: "Reformas" },
+  { name: "Instaladores y climatización" },
+  { name: "Servicios profesionales" },
+]
+
+export function SectorsSection({ num }: { num: string }) {
+  return (
+    <section className="border-b border-border px-5 py-20 md:px-10 md:py-28">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
+        <div className="md:col-span-5">
+          <Reveal>
+            <SectionLabel num={num}>Sectores</SectionLabel>
+            <h2 className="mt-6 text-4xl font-medium tracking-tight md:text-5xl">
+              Negocios locales que{" "}
+              <span className="font-serif font-normal italic">
+                viven de que les encuentren
+              </span>
+            </h2>
+            <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-muted-foreground">
+              Nos enfocamos en negocios de servicios donde una buena web y
+              aparecer en Google se traducen directamente en llamadas, citas y
+              presupuestos. ¿Tu sector no está? También trabajamos contigo.
+            </p>
+          </Reveal>
+        </div>
+        <ul className="md:col-span-7">
+          {FOCUS_SECTORS.map((s, i) => {
+            const sector = s.slug
+              ? SECTORS.find((x) => x.slug === s.slug)
+              : undefined
+            return (
+              <li key={s.name} className="border-b border-border first:border-t">
+                <Reveal delay={i * 60}>
+                  {sector ? (
+                    <Link
+                      href={`/sectores/${sector.slug}`}
+                      className="group flex items-center justify-between gap-4 py-6"
+                    >
+                      <span className="text-2xl font-medium tracking-tight transition-transform duration-500 group-hover:translate-x-2 md:text-3xl">
+                        {s.name}
+                      </span>
+                      <span className="flex shrink-0 items-center gap-1 text-[13px] text-muted-foreground transition-colors group-hover:text-foreground">
+                        {sector.projects.length} casos reales
+                        <ArrowUpRight className="h-4 w-4" />
+                      </span>
+                    </Link>
+                  ) : (
+                    <span className="block py-6 text-2xl font-medium tracking-tight text-foreground/60 md:text-3xl">
+                      {s.name}
+                    </span>
+                  )}
+                </Reveal>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+export function ValuesSection({
+  num,
+  label,
+}: {
+  num: string
+  label: string
+}) {
+  return (
+  <section className="border-b border-border px-5 py-20 md:px-10 md:py-28">
+    <Reveal>
+      <p className="mb-3 flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+        <span className="font-mono">({num})</span>
+        {label}
+      </p>
+      <h2 className="text-3xl font-medium tracking-tight md:text-5xl">
+        Lo que nos{" "}
+        <span className="font-serif font-normal italic">diferencia</span>
+      </h2>
+    </Reveal>
+    <div className="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+      {VALUES.map((v, i) => (
+        <Reveal key={v.num} delay={(i % 3) * 90} className="h-full">
+          <div className="group h-full bg-background p-8 transition-colors duration-500 hover:bg-foreground">
+            <div className="mb-4 font-mono text-[11px] tracking-[0.1em] text-muted-foreground transition-colors duration-500 group-hover:text-background/50">
+              {v.num}
+            </div>
+            <h3 className="mb-2 text-lg font-medium transition-colors duration-500 group-hover:text-background">
+              {v.title}
+            </h3>
+            <p className="text-[13px] leading-relaxed text-muted-foreground transition-colors duration-500 group-hover:text-background/65">
+              {v.desc}
+            </p>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  </section>
+  )
+}
+
+export function MethodologySection({ num }: { num: string }) {
+  return (
+    <section className="border-b border-border px-5 py-20 md:px-10 md:py-28">
+      <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
+        {/* sticky intro */}
+        <div className="md:col-span-4">
+          <div className="md:sticky md:top-28">
+            <Reveal>
+              <p className="mb-3 flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                <span className="font-mono">({num})</span>
+                Metodología
+              </p>
+              <h2 className="text-balance text-3xl font-medium leading-tight tracking-tight md:text-5xl">
+                Cuatro fases.
+                <br />
+                <span className="font-serif font-normal italic">
+                  Cero sorpresas.
+                </span>
+              </h2>
+              <p className="mt-5 max-w-xs text-[15px] leading-relaxed text-muted-foreground">
+                Un flujo 100% transparente donde cada etapa garantiza claridad
+                absoluta y ejecución técnica impecable.
+              </p>
+            </Reveal>
+          </div>
+        </div>
+
+        {/* phase cards */}
+        <div className="flex flex-col gap-4 md:col-span-8">
+          {METHODOLOGY.map((phase, i) => (
+            <Reveal key={phase.id} delay={i * 80} variant="up">
+              <article className="group relative overflow-hidden rounded-2xl border border-border bg-card p-7 transition-all hover:-translate-y-1 hover:shadow-xl md:p-9">
+                {/* big ghost number */}
+                <span className="pointer-events-none absolute -right-2 -top-6 select-none font-serif text-[8rem] italic leading-none tracking-tighter text-foreground/[0.05] transition-colors group-hover:text-foreground/10 md:text-[10rem]">
+                  {phase.id}
+                </span>
+                <div className="relative">
+                  <div className="mb-4 flex flex-wrap items-center gap-3">
+                    <span className="rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-primary-foreground">
+                      {phase.label}
+                    </span>
+                    <span className="text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
+                      {phase.week}
+                    </span>
+                  </div>
+                  <h3 className="mb-2 max-w-md text-xl font-medium tracking-tight md:text-2xl">
+                    {phase.title}
+                  </h3>
+                  <p className="mb-5 max-w-md text-[14px] leading-relaxed text-muted-foreground">
+                    {phase.desc}
+                  </p>
+                  <ul className="flex flex-wrap gap-x-6 gap-y-2">
+                    {phase.bullets.map((b) => (
+                      <li
+                        key={b}
+                        className="flex items-center gap-2 text-[13px] text-foreground/70"
+                      >
+                        <Check className="h-4 w-4 text-accent" />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export function OfferStrip({ num = "04" }: { num?: string } = {}) {
+  const { openAudit } = useSiteChrome()
   return (
     <section className="bg-foreground text-background">
       <div className="grid grid-cols-1 items-center gap-12 px-5 py-24 md:grid-cols-2 md:gap-16 md:px-10 md:py-36">
         <div>
           <Reveal variant="left">
-            <SectionLabelDark num="04">La oferta</SectionLabelDark>
+            <SectionLabelDark num={num}>Análisis gratuito</SectionLabelDark>
             <h2 className="mt-8 text-6xl font-medium leading-[0.95] tracking-tighter md:text-8xl">
-              Prototipo
+              ¿Tu web
               <br />
-              en 48h.
+              trae clientes?
               <br />
               <span className="font-serif font-normal italic tracking-tight">
-                Gratis.
+                Te lo decimos.
               </span>
             </h2>
           </Reveal>
@@ -192,27 +416,27 @@ export function OfferStrip() {
         <Reveal variant="right" delay={120}>
           <div>
             <span className="mb-6 inline-block rounded-full border border-background/25 px-3.5 py-1.5 text-[11px] uppercase tracking-[0.12em] text-background/80">
-              Riesgo cero
+              Gratis · Sin compromiso
             </span>
             <p className="mb-8 max-w-md text-[15px] leading-relaxed text-background/65">
-              Antes de que te comprometas, te mostramos nuestra propuesta para
-              tu web: estructura, diseño y referencias visuales. Si no te
-              convence, no pagas nada.
+              Envíanos tu web y la revisamos personalmente: velocidad, móvil,
+              posicionamiento en Google y puntos de contacto. Te devolvemos los
+              problemas que más clientes te pueden estar costando, explicados
+              sin tecnicismos.
             </p>
             <Magnetic>
               <button
-                onClick={openModal}
+                onClick={openAudit}
                 className="group rounded-full bg-background px-7 py-4 text-sm font-semibold text-foreground transition-transform duration-300 hover:scale-[1.04]"
               >
                 <span className="flex items-center gap-2">
-                  Quiero mi prototipo
+                  Analiza gratis tu web
                   <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
               </button>
             </Magnetic>
             <p className="mt-4 text-xs text-background/60">
-              Solo aceptamos 3 proyectos nuevos al mes para garantizar la
-              calidad.
+              Revisión hecha por una persona, no por un bot.
             </p>
           </div>
         </Reveal>
@@ -241,11 +465,11 @@ const TESTIMONIALS = PROJECTS.filter((p) => p.featured).map((p) => ({
   initials: initialsOf(p.testimonial.name),
 }))
 
-export function Testimonials() {
+export function Testimonials({ num = "05" }: { num?: string } = {}) {
   return (
     <section className="border-b border-border px-5 py-20 md:px-10 md:py-28">
       <Reveal>
-        <SectionLabel num="05">Testimonios</SectionLabel>
+        <SectionLabel num={num}>Testimonios</SectionLabel>
         <h2 className="mt-6 text-4xl font-medium tracking-tight md:text-5xl">
           Lo que dicen{" "}
           <span className="font-serif font-normal italic">
@@ -294,7 +518,13 @@ export function Testimonials() {
   )
 }
 
-export function FaqSection() {
+export function FaqSection({
+  items = FAQS,
+  num = "06",
+}: {
+  items?: { q: string; a: string }[]
+  num?: string
+} = {}) {
   const [openIndex, setOpenIndex] = useState(0)
   return (
     <section className="border-b border-border px-5 py-20 md:px-10 md:py-28">
@@ -302,7 +532,7 @@ export function FaqSection() {
         <div className="md:col-span-5">
           <div className="md:sticky md:top-28">
             <Reveal>
-              <SectionLabel num="06">FAQ</SectionLabel>
+              <SectionLabel num={num}>FAQ</SectionLabel>
               <TextReveal
                 as="h2"
                 className="mt-6 max-w-sm text-balance text-4xl font-medium tracking-tight md:text-5xl"
@@ -320,7 +550,7 @@ export function FaqSection() {
         </div>
 
         <div className="md:col-span-7">
-          {FAQS.map((f, i) => {
+          {items.map((f, i) => {
             const open = openIndex === i
             return (
               <Reveal key={f.q} delay={i * 60}>
@@ -374,7 +604,7 @@ export function FaqSection() {
 }
 
 export function CtaSection() {
-  const { openModal } = useSiteChrome()
+  const { openModal, openAudit } = useSiteChrome()
   return (
     <section className="relative overflow-hidden border-b border-border px-5 py-28 text-center md:px-10 md:py-40">
       <div className="bg-grid pointer-events-none absolute inset-0 opacity-50" />
@@ -390,7 +620,7 @@ export function CtaSection() {
       />
       <Reveal delay={250}>
         <p className="relative mt-7 text-base text-muted-foreground">
-          Cuéntanos tu proyecto hoy. Prototipo gratis en 48h.
+          Cuéntanos qué necesitas y te enviamos una propuesta a medida.
         </p>
         <div className="relative mt-9 flex flex-wrap justify-center gap-3">
           <Magnetic>
@@ -398,7 +628,15 @@ export function CtaSection() {
               onClick={openModal}
               className="btn-fill-light rounded-full bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground"
             >
-              <span>Solicitar prototipo gratis →</span>
+              <span>Cuéntanos tu proyecto →</span>
+            </button>
+          </Magnetic>
+          <Magnetic>
+            <button
+              onClick={openAudit}
+              className="btn-fill-dark rounded-full border border-border px-7 py-4 text-sm font-medium"
+            >
+              <span>Analiza gratis tu web</span>
             </button>
           </Magnetic>
           {WHATSAPP_URL && (
@@ -415,7 +653,7 @@ export function CtaSection() {
           )}
         </div>
         <p className="relative mt-5 text-xs text-muted-foreground">
-          Solo 3 proyectos nuevos al mes · Respuesta garantizada en &lt;24h
+          Respuesta en menos de 24h · Trabajamos con negocios de toda España
         </p>
       </Reveal>
     </section>

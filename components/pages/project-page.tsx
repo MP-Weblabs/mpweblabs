@@ -4,14 +4,16 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, ArrowUpRight, Check, Star } from "lucide-react"
 import { PROJECTS, initialsOf, type Project } from "@/lib/site-data"
+import { SECTORS } from "@/lib/sectors"
 import { Reveal } from "@/components/reveal"
 import { TextReveal } from "@/components/text-reveal"
 import { Magnetic } from "@/components/magnetic"
 import { useSiteChrome } from "@/components/site-chrome"
 
 export function ProjectPage({ project }: { project: Project }) {
-  const { openModal } = useSiteChrome()
+  const { openModal, openAudit } = useSiteChrome()
   const index = PROJECTS.findIndex((p) => p.slug === project.slug)
+  const sector = SECTORS.find((s) => s.projects.includes(project.slug))
   const next = PROJECTS[(index + 1) % PROJECTS.length]
 
   return (
@@ -20,7 +22,7 @@ export function ProjectPage({ project }: { project: Project }) {
         <Reveal>
           <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
             <Link
-              href="/portfolio"
+              href="/proyectos"
               className="link-underline group flex items-center gap-1.5 text-[11px] uppercase tracking-[0.2em] text-muted-foreground"
             >
               <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5" />
@@ -52,6 +54,15 @@ export function ProjectPage({ project }: { project: Project }) {
                 <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </span>
             </a>
+          )}
+          {sector && (
+            <Link
+              href={`/sectores/${sector.slug}`}
+              className="link-underline mt-6 flex w-fit items-center gap-1 text-[13px] font-medium text-muted-foreground"
+            >
+              Más sobre webs para {sector.name.toLowerCase()}
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </Link>
           )}
         </Reveal>
 
@@ -209,15 +220,23 @@ export function ProjectPage({ project }: { project: Project }) {
         />
         <Reveal delay={200}>
           <p className="relative mt-6 text-base text-muted-foreground">
-            Cuéntanos tu proyecto. Prototipo gratis en 48h.
+            Cuéntanos qué necesitas. Te respondemos en menos de 24h.
           </p>
-          <div className="relative mt-9 flex justify-center">
+          <div className="relative mt-9 flex flex-wrap justify-center gap-3">
             <Magnetic>
               <button
                 onClick={openModal}
                 className="btn-fill-light rounded-full bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground"
               >
-                <span>Solicitar prototipo gratis →</span>
+                <span>Cuéntanos tu proyecto →</span>
+              </button>
+            </Magnetic>
+            <Magnetic>
+              <button
+                onClick={openAudit}
+                className="btn-fill-dark rounded-full border border-border px-7 py-4 text-sm font-medium"
+              >
+                <span>Analiza gratis tu web</span>
               </button>
             </Magnetic>
           </div>
@@ -226,7 +245,7 @@ export function ProjectPage({ project }: { project: Project }) {
 
       <section className="px-5 py-12 md:px-10">
         <Link
-          href={`/portfolio/${next.slug}`}
+          href={`/proyectos/${next.slug}`}
           className="group flex items-center justify-between gap-6 py-6"
         >
           <div>
