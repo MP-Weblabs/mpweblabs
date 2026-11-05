@@ -12,6 +12,7 @@ export async function submitLead(
   form: HTMLFormElement,
   subject: string,
   formType: LeadForm,
+  accessKey: string,
 ): Promise<boolean> {
   const data = new FormData(form)
   if (data.get("botcheck") !== null) return true // honeypot: descartar bots
@@ -20,7 +21,7 @@ export async function submitLead(
   if (attribution) data.append("Origen visita", attribution)
 
   const [emailOk] = await Promise.all([
-    sendWeb3Forms(data, subject),
+    sendWeb3Forms(data, subject, accessKey),
     saveToNotion(data, subject, formType),
   ])
   if (emailOk) {
@@ -33,10 +34,10 @@ export async function submitLead(
 async function sendWeb3Forms(
   data: FormData,
   subject: string,
+  accessKey: string,
 ): Promise<boolean> {
-  const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY
   if (!accessKey) {
-    console.error("NEXT_PUBLIC_WEB3FORMS_KEY no está configurada")
+    console.error("WEB3FORMS_KEY no está configurada en el servidor")
     return false
   }
   const payload = new FormData()

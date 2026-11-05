@@ -4,6 +4,7 @@ import { Geist, Geist_Mono, Instrument_Serif } from 'next/font/google'
 import { SiteShell } from '@/components/site-chrome'
 import { Analytics as ConsentAnalytics } from '@/components/analytics'
 import { analyticsConfig } from '@/lib/analytics-config'
+import { web3formsKey } from '@/lib/forms-config'
 import {
   CONTACT_EMAIL,
   PHONE,
@@ -161,7 +162,9 @@ export default function RootLayout({
             __html: JSON.stringify([BUSINESS_JSON_LD, WEBSITE_JSON_LD]),
           }}
         />
-        <SiteShell hasConsentTools={hasConsentTools}>{children}</SiteShell>
+        <SiteShell hasConsentTools={hasConsentTools} web3formsKey={web3formsKey()}>
+          {children}
+        </SiteShell>
         {process.env.NODE_ENV === 'production' && <Analytics />}
         <ConsentAnalytics gaId={gaId} clarityId={clarityId} />
       </body>

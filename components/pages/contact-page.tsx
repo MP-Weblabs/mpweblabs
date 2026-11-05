@@ -13,9 +13,12 @@ import { TextReveal } from "@/components/text-reveal"
 import { Magnetic } from "@/components/magnetic"
 import { LocalTime } from "@/components/local-time"
 import { submitLead, type LeadStatus } from "@/lib/web3forms"
+import { useSiteChrome } from "@/components/site-chrome"
 
 export function ContactPage() {
   const [status, setStatus] = useState<LeadStatus>("idle")
+
+  const { web3formsKey } = useSiteChrome()
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -24,6 +27,7 @@ export function ContactPage() {
       e.currentTarget,
       "Nuevo lead — Formulario de contacto",
       "contacto",
+      web3formsKey,
     )
     setStatus(ok ? "sent" : "error")
   }

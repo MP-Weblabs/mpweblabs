@@ -22,6 +22,8 @@ type SiteChromeValue = {
   openModal: () => void
   /** abre el formulario "Analiza gratis tu web" */
   openAudit: () => void
+  /** clave de Web3Forms (leída en el servidor, ver lib/forms-config.ts) */
+  web3formsKey: string
 }
 
 const SiteChromeContext = createContext<SiteChromeValue | null>(null)
@@ -37,10 +39,12 @@ export function useSiteChrome() {
 export function SiteShell({
   children,
   hasConsentTools = false,
+  web3formsKey = "",
 }: {
   children: ReactNode
   /** muestra "Configurar cookies" en el footer */
   hasConsentTools?: boolean
+  web3formsKey?: string
 }) {
   const [modalOpen, setModalOpen] = useState(false)
   const [modalMode, setModalMode] = useState<LeadMode>("proyecto")
@@ -57,8 +61,8 @@ export function SiteShell({
   const closeModal = useCallback(() => setModalOpen(false), [])
 
   const value = useMemo<SiteChromeValue>(
-    () => ({ ready: true, openModal, openAudit }),
-    [openModal, openAudit],
+    () => ({ ready: true, openModal, openAudit, web3formsKey }),
+    [openModal, openAudit, web3formsKey],
   )
 
   return (

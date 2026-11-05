@@ -5,7 +5,7 @@ import Link from "next/link"
 import { Check, X } from "lucide-react"
 import { submitLead, type LeadStatus } from "@/lib/web3forms"
 import { CONTACT_EMAIL } from "@/lib/site-data"
-import type { LeadMode } from "@/components/site-chrome"
+import { useSiteChrome, type LeadMode } from "@/components/site-chrome"
 
 const COPY: Record<
   LeadMode,
@@ -46,6 +46,7 @@ export function LeadModal({
   onClose: () => void
 }) {
   const copy = COPY[mode]
+  const { web3formsKey } = useSiteChrome()
   const [status, setStatus] = useState<LeadStatus>("idle")
   const panelRef = useRef<HTMLDivElement>(null)
 
@@ -96,7 +97,7 @@ export function LeadModal({
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setStatus("sending")
-    const ok = await submitLead(e.currentTarget, copy.subject, mode)
+    const ok = await submitLead(e.currentTarget, copy.subject, mode, web3formsKey)
     setStatus(ok ? "sent" : "error")
   }
 
