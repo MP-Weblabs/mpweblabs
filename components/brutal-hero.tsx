@@ -84,12 +84,12 @@ export function BrutalHero() {
         <h1 className="text-[clamp(4rem,14.5vw,12.5rem)] font-semibold leading-[0.88] tracking-[-0.045em]">
           <span className="block overflow-hidden pb-[0.05em]">
             <span className="block" style={line("0.3s")}>
-              Diseñamos
+              Webs que
             </span>
           </span>{" "}
           <span className="block overflow-hidden pb-[0.05em]">
             <span className="text-outline block" style={line("0.42s")}>
-              webs que
+              traen
             </span>
           </span>{" "}
           <span className="block overflow-hidden pb-[0.2em] -mb-[0.14em]">
@@ -98,7 +98,7 @@ export function BrutalHero() {
               style={line("0.54s")}
             >
               <span className="relative inline-block pr-[0.1em]">
-                venden.
+                clientes.
                 <svg
                   className="absolute -bottom-[0.03em] left-0 w-full"
                   viewBox="0 0 320 26"

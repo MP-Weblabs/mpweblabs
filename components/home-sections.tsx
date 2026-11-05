@@ -2,14 +2,17 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { ArrowUpRight, Plus, Star } from "lucide-react"
+import { ArrowUpRight, Check, Plus, Star } from "lucide-react"
 import {
   FAQS,
+  METHODOLOGY,
   PROJECTS,
   SERVICES,
+  VALUES,
   WHATSAPP_URL,
   initialsOf,
 } from "@/lib/site-data"
+import { SECTORS } from "@/lib/sectors"
 import { Reveal } from "@/components/reveal"
 import { TextReveal } from "@/components/text-reveal"
 import { Magnetic } from "@/components/magnetic"
@@ -172,14 +175,233 @@ export function PortfolioPreview() {
   )
 }
 
-export function OfferStrip() {
+
+/** Resultados reales de los proyectos (campo `result` de PROJECTS). */
+export function ProofStrip() {
+  return (
+    <section
+      aria-label="Resultados de nuestros proyectos"
+      className="border-b border-border"
+    >
+      <div className="grid grid-cols-2 lg:grid-cols-4">
+        {PROJECTS.map((p, i) => {
+          const [figure, ...rest] = p.result.split(" ")
+          return (
+            <Reveal key={p.slug} delay={i * 80} className="h-full">
+              <Link
+                href={`/proyectos/${p.slug}`}
+                className={`group flex h-full flex-col justify-between gap-6 border-border px-5 py-10 transition-colors hover:bg-card md:px-10 md:py-14 ${
+                  i % 2 === 0 ? "border-r" : ""
+                } ${i < 2 ? "border-b lg:border-b-0" : ""} ${
+                  i === 1 ? "lg:border-r" : ""
+                }`}
+              >
+                <span>
+                  <span className="block text-4xl font-medium tracking-tighter md:text-6xl">
+                    {figure}
+                  </span>
+                  <span className="mt-2 block text-[13px] leading-snug text-muted-foreground md:text-sm">
+                    {rest.join(" ")}
+                  </span>
+                </span>
+                <span className="flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground transition-colors group-hover:text-foreground">
+                  {p.title}
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </span>
+              </Link>
+            </Reveal>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
+
+/** Sectores de enfoque (plan: Tier 1). Solo se enlazan los que tienen landing. */
+const FOCUS_SECTORS = [
+  { name: "Automoción y talleres", slug: "automocion" },
+  { name: "Clínicas dentales y estéticas" },
+  { name: "Reformas" },
+  { name: "Instaladores y climatización" },
+  { name: "Servicios profesionales" },
+]
+
+export function SectorsSection({ num }: { num: string }) {
+  return (
+    <section className="border-b border-border px-5 py-20 md:px-10 md:py-28">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
+        <div className="md:col-span-5">
+          <Reveal>
+            <SectionLabel num={num}>Sectores</SectionLabel>
+            <h2 className="mt-6 text-4xl font-medium tracking-tight md:text-5xl">
+              Negocios locales que{" "}
+              <span className="font-serif font-normal italic">
+                viven de que les encuentren
+              </span>
+            </h2>
+            <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-muted-foreground">
+              Nos enfocamos en negocios de servicios donde una buena web y
+              aparecer en Google se traducen directamente en llamadas, citas y
+              presupuestos. ¿Tu sector no está? También trabajamos contigo.
+            </p>
+          </Reveal>
+        </div>
+        <ul className="md:col-span-7">
+          {FOCUS_SECTORS.map((s, i) => {
+            const sector = s.slug
+              ? SECTORS.find((x) => x.slug === s.slug)
+              : undefined
+            return (
+              <Reveal key={s.name} delay={i * 60}>
+                <li className="border-b border-border first:border-t">
+                  {sector ? (
+                    <Link
+                      href={`/sectores/${sector.slug}`}
+                      className="group flex items-center justify-between gap-4 py-6"
+                    >
+                      <span className="text-2xl font-medium tracking-tight transition-transform duration-500 group-hover:translate-x-2 md:text-3xl">
+                        {s.name}
+                      </span>
+                      <span className="flex shrink-0 items-center gap-1 text-[13px] text-muted-foreground transition-colors group-hover:text-foreground">
+                        {sector.projects.length} casos reales
+                        <ArrowUpRight className="h-4 w-4" />
+                      </span>
+                    </Link>
+                  ) : (
+                    <span className="block py-6 text-2xl font-medium tracking-tight text-foreground/60 md:text-3xl">
+                      {s.name}
+                    </span>
+                  )}
+                </li>
+              </Reveal>
+            )
+          })}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+export function ValuesSection({
+  num,
+  label,
+}: {
+  num: string
+  label: string
+}) {
+  return (
+  <section className="border-b border-border px-5 py-20 md:px-10 md:py-28">
+    <Reveal>
+      <p className="mb-3 flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+        <span className="font-mono">({num})</span>
+        {label}
+      </p>
+      <h2 className="text-3xl font-medium tracking-tight md:text-5xl">
+        Lo que nos{" "}
+        <span className="font-serif font-normal italic">diferencia</span>
+      </h2>
+    </Reveal>
+    <div className="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+      {VALUES.map((v, i) => (
+        <Reveal key={v.num} delay={(i % 3) * 90} className="h-full">
+          <div className="group h-full bg-background p-8 transition-colors duration-500 hover:bg-foreground">
+            <div className="mb-4 font-mono text-[11px] tracking-[0.1em] text-muted-foreground transition-colors duration-500 group-hover:text-background/50">
+              {v.num}
+            </div>
+            <h3 className="mb-2 text-lg font-medium transition-colors duration-500 group-hover:text-background">
+              {v.title}
+            </h3>
+            <p className="text-[13px] leading-relaxed text-muted-foreground transition-colors duration-500 group-hover:text-background/65">
+              {v.desc}
+            </p>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  </section>
+  )
+}
+
+export function MethodologySection({ num }: { num: string }) {
+  return (
+    <section className="border-b border-border px-5 py-20 md:px-10 md:py-28">
+      <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
+        {/* sticky intro */}
+        <div className="md:col-span-4">
+          <div className="md:sticky md:top-28">
+            <Reveal>
+              <p className="mb-3 flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                <span className="font-mono">({num})</span>
+                Metodología
+              </p>
+              <h2 className="text-balance text-3xl font-medium leading-tight tracking-tight md:text-5xl">
+                Cuatro fases.
+                <br />
+                <span className="font-serif font-normal italic">
+                  Cero sorpresas.
+                </span>
+              </h2>
+              <p className="mt-5 max-w-xs text-[15px] leading-relaxed text-muted-foreground">
+                Un flujo 100% transparente donde cada etapa garantiza claridad
+                absoluta y ejecución técnica impecable.
+              </p>
+            </Reveal>
+          </div>
+        </div>
+
+        {/* phase cards */}
+        <div className="flex flex-col gap-4 md:col-span-8">
+          {METHODOLOGY.map((phase, i) => (
+            <Reveal key={phase.id} delay={i * 80} variant="up">
+              <article className="group relative overflow-hidden rounded-2xl border border-border bg-card p-7 transition-all hover:-translate-y-1 hover:shadow-xl md:p-9">
+                {/* big ghost number */}
+                <span className="pointer-events-none absolute -right-2 -top-6 select-none font-serif text-[8rem] italic leading-none tracking-tighter text-foreground/[0.05] transition-colors group-hover:text-foreground/10 md:text-[10rem]">
+                  {phase.id}
+                </span>
+                <div className="relative">
+                  <div className="mb-4 flex flex-wrap items-center gap-3">
+                    <span className="rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-primary-foreground">
+                      {phase.label}
+                    </span>
+                    <span className="text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
+                      {phase.week}
+                    </span>
+                  </div>
+                  <h3 className="mb-2 max-w-md text-xl font-medium tracking-tight md:text-2xl">
+                    {phase.title}
+                  </h3>
+                  <p className="mb-5 max-w-md text-[14px] leading-relaxed text-muted-foreground">
+                    {phase.desc}
+                  </p>
+                  <ul className="flex flex-wrap gap-x-6 gap-y-2">
+                    {phase.bullets.map((b) => (
+                      <li
+                        key={b}
+                        className="flex items-center gap-2 text-[13px] text-foreground/70"
+                      >
+                        <Check className="h-4 w-4 text-accent" />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export function OfferStrip({ num = "04" }: { num?: string } = {}) {
   const { openAudit } = useSiteChrome()
   return (
     <section className="bg-foreground text-background">
       <div className="grid grid-cols-1 items-center gap-12 px-5 py-24 md:grid-cols-2 md:gap-16 md:px-10 md:py-36">
         <div>
           <Reveal variant="left">
-            <SectionLabelDark num="04">Análisis gratuito</SectionLabelDark>
+            <SectionLabelDark num={num}>Análisis gratuito</SectionLabelDark>
             <h2 className="mt-8 text-6xl font-medium leading-[0.95] tracking-tighter md:text-8xl">
               ¿Tu web
               <br />
@@ -243,11 +465,11 @@ const TESTIMONIALS = PROJECTS.filter((p) => p.featured).map((p) => ({
   initials: initialsOf(p.testimonial.name),
 }))
 
-export function Testimonials() {
+export function Testimonials({ num = "05" }: { num?: string } = {}) {
   return (
     <section className="border-b border-border px-5 py-20 md:px-10 md:py-28">
       <Reveal>
-        <SectionLabel num="05">Testimonios</SectionLabel>
+        <SectionLabel num={num}>Testimonios</SectionLabel>
         <h2 className="mt-6 text-4xl font-medium tracking-tight md:text-5xl">
           Lo que dicen{" "}
           <span className="font-serif font-normal italic">

@@ -113,14 +113,6 @@ export const DISPLAY_TICKER = [
   "SEO técnico",
 ]
 
-export const TICKER_CTA_ITEMS = [
-  "Webs que generan contactos",
-  "Rápidas y optimizadas para Google",
-  "Analiza gratis tu web",
-  "Sin plantillas ni atajos",
-  "Código desde cero",
-]
-
 export type Project = {
   num: string
   /** slug de la URL: /proyectos/[slug] */
