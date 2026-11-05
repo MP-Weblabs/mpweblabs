@@ -60,6 +60,7 @@ async function saveToNotion(data: FormData, subject: string): Promise<boolean> {
         nombre: data.get("Nombre"),
         email: data.get("Email"),
         telefono: data.get("Teléfono"),
+        web: data.get("Web"),
         mensaje: data.get("Mensaje"),
         subject,
       }),

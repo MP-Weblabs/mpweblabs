@@ -15,9 +15,14 @@ import { SiteFooter } from "@/components/site-footer"
 import { LeadModal } from "@/components/lead-modal"
 import { CustomCursor } from "@/components/custom-cursor"
 
+export type LeadMode = "proyecto" | "auditoria"
+
 type SiteChromeValue = {
   ready: boolean
+  /** abre el formulario "Cuéntanos tu proyecto" */
   openModal: () => void
+  /** abre el formulario "Analiza gratis tu web" */
+  openAudit: () => void
 }
 
 const SiteChromeContext = createContext<SiteChromeValue | null>(null)
@@ -36,14 +41,22 @@ export function SiteShell({ children }: { children: ReactNode }) {
   const [showIntro] = useState(pathname === "/")
   const [introDone, setIntroDone] = useState(!showIntro)
   const [modalOpen, setModalOpen] = useState(false)
+  const [modalMode, setModalMode] = useState<LeadMode>("proyecto")
 
   const handleIntroDone = useCallback(() => setIntroDone(true), [])
-  const openModal = useCallback(() => setModalOpen(true), [])
+  const openModal = useCallback(() => {
+    setModalMode("proyecto")
+    setModalOpen(true)
+  }, [])
+  const openAudit = useCallback(() => {
+    setModalMode("auditoria")
+    setModalOpen(true)
+  }, [])
   const closeModal = useCallback(() => setModalOpen(false), [])
 
   const value = useMemo<SiteChromeValue>(
-    () => ({ ready: introDone, openModal }),
-    [introDone, openModal],
+    () => ({ ready: introDone, openModal, openAudit }),
+    [introDone, openModal, openAudit],
   )
 
   return (
@@ -60,7 +73,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
         {children}
       </main>
       <SiteFooter />
-      <LeadModal open={modalOpen} onClose={closeModal} />
+      <LeadModal open={modalOpen} mode={modalMode} onClose={closeModal} />
       <CustomCursor />
       <div
         aria-hidden="true"

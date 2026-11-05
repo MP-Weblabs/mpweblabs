@@ -8,7 +8,7 @@ import { Magnetic } from "@/components/magnetic"
 import { useSiteChrome } from "@/components/site-chrome"
 
 export function AboutPage() {
-  const { openModal } = useSiteChrome()
+  const { openModal, openAudit } = useSiteChrome()
   return (
     <div>
       <section className="border-b border-border px-5 pb-20 pt-32 md:px-10 md:pt-44">
@@ -78,15 +78,23 @@ export function AboutPage() {
         />
         <Reveal delay={250}>
           <p className="relative mt-6 text-base text-muted-foreground">
-            Cuéntanos qué necesitas. Prototipo gratis en 48h.
+            Cuéntanos qué necesitas. Te respondemos en menos de 24h.
           </p>
-          <div className="relative mt-9 flex justify-center">
+          <div className="relative mt-9 flex flex-wrap justify-center gap-3">
             <Magnetic>
               <button
                 onClick={openModal}
                 className="btn-fill-light rounded-full bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground"
               >
-                <span>Solicitar prototipo gratis →</span>
+                <span>Cuéntanos tu proyecto →</span>
+              </button>
+            </Magnetic>
+            <Magnetic>
+              <button
+                onClick={openAudit}
+                className="btn-fill-dark rounded-full border border-border px-7 py-4 text-sm font-medium"
+              >
+                <span>Analiza gratis tu web</span>
               </button>
             </Magnetic>
           </div>

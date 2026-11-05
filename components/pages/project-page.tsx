@@ -10,7 +10,7 @@ import { Magnetic } from "@/components/magnetic"
 import { useSiteChrome } from "@/components/site-chrome"
 
 export function ProjectPage({ project }: { project: Project }) {
-  const { openModal } = useSiteChrome()
+  const { openModal, openAudit } = useSiteChrome()
   const index = PROJECTS.findIndex((p) => p.slug === project.slug)
   const next = PROJECTS[(index + 1) % PROJECTS.length]
 
@@ -209,15 +209,23 @@ export function ProjectPage({ project }: { project: Project }) {
         />
         <Reveal delay={200}>
           <p className="relative mt-6 text-base text-muted-foreground">
-            Cuéntanos tu proyecto. Prototipo gratis en 48h.
+            Cuéntanos qué necesitas. Te respondemos en menos de 24h.
           </p>
-          <div className="relative mt-9 flex justify-center">
+          <div className="relative mt-9 flex flex-wrap justify-center gap-3">
             <Magnetic>
               <button
                 onClick={openModal}
                 className="btn-fill-light rounded-full bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground"
               >
-                <span>Solicitar prototipo gratis →</span>
+                <span>Cuéntanos tu proyecto →</span>
+              </button>
+            </Magnetic>
+            <Magnetic>
+              <button
+                onClick={openAudit}
+                className="btn-fill-dark rounded-full border border-border px-7 py-4 text-sm font-medium"
+              >
+                <span>Analiza gratis tu web</span>
               </button>
             </Magnetic>
           </div>

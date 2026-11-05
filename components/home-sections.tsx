@@ -171,20 +171,20 @@ export function PortfolioPreview() {
 }
 
 export function OfferStrip() {
-  const { openModal } = useSiteChrome()
+  const { openAudit } = useSiteChrome()
   return (
     <section className="bg-foreground text-background">
       <div className="grid grid-cols-1 items-center gap-12 px-5 py-24 md:grid-cols-2 md:gap-16 md:px-10 md:py-36">
         <div>
           <Reveal variant="left">
-            <SectionLabelDark num="04">La oferta</SectionLabelDark>
+            <SectionLabelDark num="04">Análisis gratuito</SectionLabelDark>
             <h2 className="mt-8 text-6xl font-medium leading-[0.95] tracking-tighter md:text-8xl">
-              Prototipo
+              ¿Tu web
               <br />
-              en 48h.
+              trae clientes?
               <br />
               <span className="font-serif font-normal italic tracking-tight">
-                Gratis.
+                Te lo decimos.
               </span>
             </h2>
           </Reveal>
@@ -192,27 +192,27 @@ export function OfferStrip() {
         <Reveal variant="right" delay={120}>
           <div>
             <span className="mb-6 inline-block rounded-full border border-background/25 px-3.5 py-1.5 text-[11px] uppercase tracking-[0.12em] text-background/80">
-              Riesgo cero
+              Gratis · Sin compromiso
             </span>
             <p className="mb-8 max-w-md text-[15px] leading-relaxed text-background/65">
-              Antes de que te comprometas, te mostramos nuestra propuesta para
-              tu web: estructura, diseño y referencias visuales. Si no te
-              convence, no pagas nada.
+              Envíanos tu web y la revisamos personalmente: velocidad, móvil,
+              posicionamiento en Google y puntos de contacto. Te devolvemos los
+              problemas que más clientes te pueden estar costando, explicados
+              sin tecnicismos.
             </p>
             <Magnetic>
               <button
-                onClick={openModal}
+                onClick={openAudit}
                 className="group rounded-full bg-background px-7 py-4 text-sm font-semibold text-foreground transition-transform duration-300 hover:scale-[1.04]"
               >
                 <span className="flex items-center gap-2">
-                  Quiero mi prototipo
+                  Analiza gratis tu web
                   <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
               </button>
             </Magnetic>
             <p className="mt-4 text-xs text-background/60">
-              Solo aceptamos 3 proyectos nuevos al mes para garantizar la
-              calidad.
+              Revisión hecha por una persona, no por un bot.
             </p>
           </div>
         </Reveal>
@@ -374,7 +374,7 @@ export function FaqSection() {
 }
 
 export function CtaSection() {
-  const { openModal } = useSiteChrome()
+  const { openModal, openAudit } = useSiteChrome()
   return (
     <section className="relative overflow-hidden border-b border-border px-5 py-28 text-center md:px-10 md:py-40">
       <div className="bg-grid pointer-events-none absolute inset-0 opacity-50" />
@@ -390,7 +390,7 @@ export function CtaSection() {
       />
       <Reveal delay={250}>
         <p className="relative mt-7 text-base text-muted-foreground">
-          Cuéntanos tu proyecto hoy. Prototipo gratis en 48h.
+          Cuéntanos qué necesitas y te enviamos una propuesta a medida.
         </p>
         <div className="relative mt-9 flex flex-wrap justify-center gap-3">
           <Magnetic>
@@ -398,7 +398,15 @@ export function CtaSection() {
               onClick={openModal}
               className="btn-fill-light rounded-full bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground"
             >
-              <span>Solicitar prototipo gratis →</span>
+              <span>Cuéntanos tu proyecto →</span>
+            </button>
+          </Magnetic>
+          <Magnetic>
+            <button
+              onClick={openAudit}
+              className="btn-fill-dark rounded-full border border-border px-7 py-4 text-sm font-medium"
+            >
+              <span>Analiza gratis tu web</span>
             </button>
           </Magnetic>
           {WHATSAPP_URL && (
@@ -415,7 +423,7 @@ export function CtaSection() {
           )}
         </div>
         <p className="relative mt-5 text-xs text-muted-foreground">
-          Solo 3 proyectos nuevos al mes · Respuesta garantizada en &lt;24h
+          Respuesta en menos de 24h · Trabajamos con negocios de toda España
         </p>
       </Reveal>
     </section>

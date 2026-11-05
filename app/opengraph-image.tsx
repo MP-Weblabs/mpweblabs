@@ -79,7 +79,7 @@ export default async function OpengraphImage() {
               fontSize: 24,
             }}
           >
-            Prototipo gratis en 48h
+            Analiza gratis tu web
           </span>
         </div>
       </div>

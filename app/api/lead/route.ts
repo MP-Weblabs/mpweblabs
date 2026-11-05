@@ -72,7 +72,12 @@ export async function POST(req: Request) {
   const telefono = clean(body.telefono, 30)
   const mensaje = clean(body.mensaje, 1800)
   const subject = clean(body.subject, 120)
-  const notas = [mensaje, subject ? `Formulario: ${subject}` : ""]
+  const web = clean(body.web, 200)
+  const notas = [
+    web ? `Web: ${web}` : "",
+    mensaje,
+    subject ? `Formulario: ${subject}` : "",
+  ]
     .filter(Boolean)
     .join("\n\n")
     .slice(0, NOTION_TEXT_LIMIT)

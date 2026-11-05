@@ -38,9 +38,10 @@ export function ContactPage() {
             segments={["Hablemos de", { text: "tu proyecto.", serif: true }]}
           />
           <p className="mt-7 max-w-md text-[15px] leading-relaxed text-muted-foreground">
-            Cuéntanos qué necesitas y te enviamos una propuesta visual gratis
-            en menos de 48 horas. Sin compromiso. Trabajamos en remoto con
-            negocios de toda España.
+            Cuéntanos qué necesitas: te respondemos en menos de 24h y, tras
+            una primera llamada, te enviamos una propuesta a medida con precio
+            y plazos por escrito. Trabajamos en remoto con negocios de toda
+            España.
           </p>
 
           <div className="mt-12 flex flex-col">
@@ -88,8 +89,7 @@ export function ContactPage() {
               <span className="font-serif font-normal italic">enviado!</span>
             </h2>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Gracias por tu interés. Te enviaremos tu prototipo en menos de 48
-              horas.
+              Gracias por tu interés. Te respondemos en menos de 24h.
             </p>
           </div>
         ) : (
@@ -126,12 +126,19 @@ export function ContactPage() {
               autoComplete="tel"
               maxLength={30}
             />
+            <Field
+              name="Web"
+              label="04 — Tu web actual (opcional)"
+              placeholder="tunegocio.com"
+              autoComplete="url"
+              maxLength={200}
+            />
             <div className="flex flex-col gap-2">
               <label
                 htmlFor="contact-mensaje"
                 className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground"
               >
-                04 — Cuéntanos sobre tu proyecto (opcional)
+                05 — Cuéntanos sobre tu proyecto (opcional)
               </label>
               <textarea
                 id="contact-mensaje"
@@ -161,7 +168,7 @@ export function ContactPage() {
                 <span className="flex items-center justify-center gap-2">
                   {status === "sending"
                     ? "Enviando…"
-                    : "Obtener prototipo gratis"}
+                    : "Solicitar propuesta"}
                   <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
               </button>

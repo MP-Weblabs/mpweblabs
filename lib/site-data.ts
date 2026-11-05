@@ -1,6 +1,6 @@
 export const SITE_TITLE = "MP WebLabs — Diseño y desarrollo web en Madrid"
 export const SITE_DESCRIPTION =
-  "Agencia de diseño y desarrollo web en Madrid, con clientes en toda España. Webs a medida que convierten visitas en clientes. Prototipo gratis en 48h. Pagas solo si te gusta."
+  "Agencia de diseño y desarrollo web en Madrid, con clientes en toda España. Webs rápidas, optimizadas para Google y pensadas para generar contactos, reservas y ventas."
 
 export const NAV_ITEMS: { href: string; label: string }[] = [
   { href: "/", label: "Inicio" },
@@ -18,9 +18,9 @@ export const DISPLAY_TICKER = [
 ]
 
 export const TICKER_CTA_ITEMS = [
-  "Prototipo gratis en 48h",
-  "Solo 3 proyectos al mes",
-  "Pagas solo si te gusta",
+  "Webs que generan contactos",
+  "Rápidas y optimizadas para Google",
+  "Analiza gratis tu web",
   "Sin plantillas ni atajos",
   "Código desde cero",
 ]
@@ -200,12 +200,12 @@ export const PROJECTS: Project[] = [
 
 export const FAQS = [
   {
-    q: "¿El prototipo es realmente gratis?",
-    a: "Sí. En menos de 48h te enviamos una propuesta visual de tu web —estructura, diseño y referencias— antes de que decidas contratar. Si no te convence, no pagas nada.",
+    q: "¿Cuánto cuesta una web?",
+    a: "Depende de lo que necesites: no es lo mismo una landing que una web con reservas online o una aplicación a medida. Tras una primera llamada te enviamos una propuesta cerrada, con precio y plazos por escrito. Sin sorpresas.",
   },
   {
-    q: "¿Cuánto cuesta una web?",
-    a: "Desde 600€ para landing pages y proyectos de una página. Las webs corporativas completas parten de 2.000€. Te damos un presupuesto exacto en la primera llamada.",
+    q: "¿Qué incluye el análisis gratuito de mi web?",
+    a: "Revisamos personalmente la velocidad, la experiencia en móvil, el SEO básico y los puntos de contacto (llamadas, formularios, reservas). Te enviamos por email los problemas prioritarios y cómo solucionarlos, en lenguaje claro. Sin compromiso.",
   },
   {
     q: "¿Usáis WordPress o plantillas?",
@@ -213,7 +213,7 @@ export const FAQS = [
   },
   {
     q: "¿Trabajáis solo en Madrid o también en el resto de España?",
-    a: "Nuestro estudio está en Madrid, pero trabajamos en remoto con negocios de toda España. Llamadas, prototipo y entrega, todo 100% online, sin que importe tu ciudad.",
+    a: "Nuestro estudio está en Madrid, pero trabajamos en remoto con negocios de toda España. Llamadas, propuesta y entrega, todo 100% online, sin que importe tu ciudad.",
   },
   {
     q: "¿Cuánto tiempo tarda?",
@@ -221,7 +221,7 @@ export const FAQS = [
   },
   {
     q: "¿Qué pasa después de lanzar?",
-    a: "Soporte técnico real durante los primeros 30 días incluido. Respondemos en menos de 24h. Para cambios mayores, tarifas claras acordadas desde el principio.",
+    a: "Soporte técnico real durante los primeros 30 días incluido. Respondemos en menos de 24h. Después puedes contratar mantenimiento mensual y SEO local para que la web siga al día y mejorando su posicionamiento.",
   },
 ]
 
@@ -265,8 +265,8 @@ export const VALUES = [
   },
   {
     num: "04",
-    title: "Prototipo antes de pagar",
-    desc: "Ves nuestra propuesta para tu web antes de comprometerte. Riesgo cero desde el primer día.",
+    title: "Pensadas para Google",
+    desc: "SEO técnico y local integrado desde el código, no como un añadido. Que te encuentren quienes ya te están buscando.",
   },
   {
     num: "05",
@@ -303,7 +303,7 @@ export const METHODOLOGY: Phase[] = [
     label: "Diseño",
     week: "Semana 03–04",
     title: "Diseño completo, aprobado por ti",
-    desc: "Partimos del prototipo gratuito y diseñamos cada página: arquitectura enfocada en conversión e interfaz. Lo apruebas todo antes de que empiece el desarrollo.",
+    desc: "Diseñamos cada página: arquitectura enfocada en conversión e interfaz. Lo apruebas todo antes de que empiece el desarrollo.",
     bullets: ["Arquitectura UX", "Diseño UI", "Prototipo navegable"],
   },
   {

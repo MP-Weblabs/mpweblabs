@@ -25,7 +25,7 @@ const SECTIONS: LegalSection[] = [
   {
     title: "Datos que recopilamos",
     body: [
-      "Únicamente tratamos los datos que tú nos facilitas voluntariamente a través de los formularios de contacto y solicitud de prototipo:",
+      "Únicamente tratamos los datos que tú nos facilitas voluntariamente a través de los formularios de contacto y de solicitud de análisis web:",
       [
         "Nombre completo",
         "Dirección de correo electrónico",
@@ -37,7 +37,7 @@ const SECTIONS: LegalSection[] = [
   {
     title: "Finalidad del tratamiento",
     body: [
-      "Utilizamos tus datos exclusivamente para responder a tu solicitud, elaborar el prototipo o presupuesto que nos pidas y mantener la comunicación comercial relacionada con tu proyecto.",
+      "Utilizamos tus datos exclusivamente para responder a tu solicitud, elaborar el análisis o la propuesta que nos pidas y mantener la comunicación comercial relacionada con tu proyecto.",
       "No utilizamos tus datos para enviarte publicidad no solicitada ni los cedemos a terceros con fines comerciales.",
     ],
   },

@@ -47,7 +47,8 @@ export const metadata: Metadata = {
     'páginas web para empresas',
     'landing pages',
     'diseño web sin plantillas',
-    'prototipo web gratis',
+    'SEO local Madrid',
+    'auditoría web gratis',
   ],
   robots: {
     index: true,
@@ -119,7 +120,6 @@ const BUSINESS_JSON_LD = {
     { '@type': 'City', name: 'Madrid' },
     { '@type': 'Country', name: 'España' },
   ],
-  priceRange: '600€ - 5.000€',
   knowsAbout: [
     'Diseño web',
     'Desarrollo web',
