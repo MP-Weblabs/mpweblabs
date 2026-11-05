@@ -73,6 +73,9 @@ export async function POST(req: Request) {
   const mensaje = clean(body.mensaje, 1800)
   const subject = clean(body.subject, 120)
   const web = clean(body.web, 200)
+  const form = clean(body.form, 20)
+  // Propiedad URL de Notion: normalizar "tunegocio.com" → "https://tunegocio.com"
+  const webUrl = web ? (/^https?:\/\//i.test(web) ? web : `https://${web}`) : ""
   const origen = clean(body.origen, 400)
   const notas = [
     web ? `Web: ${web}` : "",
@@ -101,7 +104,11 @@ export async function POST(req: Request) {
           ...(notas
             ? { Notas: { rich_text: [{ text: { content: notas } }] } }
             : {}),
-          Origen: { select: { name: "Web" } },
+          ...(webUrl ? { Web: { url: webUrl } } : {}),
+          Origen: {
+            select: { name: form === "auditoria" ? "Auditoría web" : "Web" },
+          },
+          Canal: { select: { name: "Formulario web" } },
           Etapa: { select: { name: "Nuevo" } },
         },
       }),

@@ -21,7 +21,7 @@ export async function submitLead(
 
   const [emailOk] = await Promise.all([
     sendWeb3Forms(data, subject),
-    saveToNotion(data, subject),
+    saveToNotion(data, subject, formType),
   ])
   if (emailOk) {
     track("lead_submitted", { form: formType })
@@ -62,7 +62,11 @@ async function sendWeb3Forms(
   }
 }
 
-async function saveToNotion(data: FormData, subject: string): Promise<boolean> {
+async function saveToNotion(
+  data: FormData,
+  subject: string,
+  formType: LeadForm,
+): Promise<boolean> {
   try {
     const res = await fetch("/api/lead", {
       method: "POST",
@@ -75,6 +79,7 @@ async function saveToNotion(data: FormData, subject: string): Promise<boolean> {
         origen: data.get("Origen visita"),
         mensaje: data.get("Mensaje"),
         subject,
+        form: formType,
       }),
     })
     const json = await res.json()
