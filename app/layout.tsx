@@ -4,7 +4,6 @@ import { Geist, Geist_Mono, Instrument_Serif } from 'next/font/google'
 import { SiteShell } from '@/components/site-chrome'
 import { Analytics as ConsentAnalytics } from '@/components/analytics'
 import { analyticsConfig } from '@/lib/analytics-config'
-import { INTRO_GATE_SCRIPT } from '@/lib/intro'
 import {
   CONTACT_EMAIL,
   PHONE,
@@ -156,7 +155,6 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} bg-background`}
     >
       <body className="font-sans antialiased bg-background text-foreground">
-        <script dangerouslySetInnerHTML={{ __html: INTRO_GATE_SCRIPT }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

@@ -8,8 +8,6 @@ import {
   useState,
   type ReactNode,
 } from "react"
-import { usePathname } from "next/navigation"
-import { IntroLoader } from "@/components/intro-loader"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { LeadModal } from "@/components/lead-modal"
@@ -44,14 +42,9 @@ export function SiteShell({
   /** muestra "Configurar cookies" en el footer */
   hasConsentTools?: boolean
 }) {
-  const pathname = usePathname()
-  // The intro only plays when the session starts on the home page.
-  const [showIntro] = useState(pathname === "/")
-  const [introDone, setIntroDone] = useState(!showIntro)
   const [modalOpen, setModalOpen] = useState(false)
   const [modalMode, setModalMode] = useState<LeadMode>("proyecto")
 
-  const handleIntroDone = useCallback(() => setIntroDone(true), [])
   const openModal = useCallback(() => {
     setModalMode("proyecto")
     setModalOpen(true)
@@ -64,8 +57,8 @@ export function SiteShell({
   const closeModal = useCallback(() => setModalOpen(false), [])
 
   const value = useMemo<SiteChromeValue>(
-    () => ({ ready: introDone, openModal, openAudit }),
-    [introDone, openModal, openAudit],
+    () => ({ ready: true, openModal, openAudit }),
+    [openModal, openAudit],
   )
 
   return (
@@ -76,7 +69,6 @@ export function SiteShell({
       >
         Saltar al contenido
       </a>
-      {showIntro && <IntroLoader onDone={handleIntroDone} />}
       <SiteNav />
       <main id="contenido" tabIndex={-1} className="outline-none">
         {children}
