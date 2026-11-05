@@ -36,7 +36,14 @@ export function useSiteChrome() {
   return ctx
 }
 
-export function SiteShell({ children }: { children: ReactNode }) {
+export function SiteShell({
+  children,
+  hasConsentTools = false,
+}: {
+  children: ReactNode
+  /** muestra "Configurar cookies" en el footer */
+  hasConsentTools?: boolean
+}) {
   const pathname = usePathname()
   // The intro only plays when the session starts on the home page.
   const [showIntro] = useState(pathname === "/")
@@ -74,7 +81,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <main id="contenido" tabIndex={-1} className="outline-none">
         {children}
       </main>
-      <SiteFooter />
+      <SiteFooter hasConsentTools={hasConsentTools} />
       <LeadModal open={modalOpen} mode={modalMode} onClose={closeModal} />
       <CustomCursor />
       <div

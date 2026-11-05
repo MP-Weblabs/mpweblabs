@@ -2,7 +2,10 @@ import type { Metadata } from "next"
 import { pageMetadata } from "@/lib/metadata"
 import { LegalPage, type LegalSection } from "@/components/pages/legal-page"
 import { CONTACT_EMAIL } from "@/lib/site-data"
-import { CLARITY_ID, GA_ID, HAS_CONSENT_TOOLS } from "@/lib/analytics"
+import { analyticsConfig } from "@/lib/analytics-config"
+
+const { gaId: GA_ID, clarityId: CLARITY_ID, hasConsentTools: HAS_CONSENT_TOOLS } =
+  analyticsConfig()
 
 export const metadata: Metadata = pageMetadata({
   title: "Política de cookies",

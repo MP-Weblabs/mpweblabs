@@ -4,9 +4,6 @@ import { useEffect, useState, useSyncExternalStore } from "react"
 import Link from "next/link"
 import Script from "next/script"
 import {
-  CLARITY_ID,
-  GA_ID,
-  HAS_CONSENT_TOOLS,
   OPEN_CONSENT_EVENT,
   captureAttribution,
   clearAnalyticsCookies,
@@ -21,7 +18,14 @@ import {
  * Banner de cookies + carga condicionada de GA4/Clarity + evento
  * contact_clicked para enlaces de email, teléfono y WhatsApp.
  */
-export function Analytics() {
+export function Analytics({
+  gaId,
+  clarityId,
+}: {
+  gaId: string
+  clarityId: string
+}) {
+  const HAS_CONSENT_TOOLS = Boolean(gaId || clarityId)
   // "ssr" mientras no se ha hidratado: no se muestra nada ni se carga nada.
   const consent = useSyncExternalStore<Consent | null | "ssr">(
     subscribeConsent,
@@ -78,22 +82,22 @@ export function Analytics() {
 
   return (
     <>
-      {granted && GA_ID && (
+      {granted && gaId && (
         <>
           <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+            src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
             strategy="afterInteractive"
           />
           <Script id="ga4" strategy="afterInteractive">
             {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;
 gtag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
-gtag('js',new Date());gtag('config','${GA_ID}');`}
+gtag('js',new Date());gtag('config','${gaId}');`}
           </Script>
         </>
       )}
-      {granted && CLARITY_ID && (
+      {granted && clarityId && (
         <Script id="clarity" strategy="afterInteractive">
-          {`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${CLARITY_ID}");
+          {`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${clarityId}");
 window.clarity('consentv2',{ad_Storage:'denied',analytics_Storage:'granted'});`}
         </Script>
       )}

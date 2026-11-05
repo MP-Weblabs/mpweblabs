@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono, Instrument_Serif } from 'next/font/google'
 import { SiteShell } from '@/components/site-chrome'
 import { Analytics as ConsentAnalytics } from '@/components/analytics'
+import { analyticsConfig } from '@/lib/analytics-config'
 import { INTRO_GATE_SCRIPT } from '@/lib/intro'
 import {
   CONTACT_EMAIL,
@@ -147,6 +148,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const { gaId, clarityId, hasConsentTools } = analyticsConfig()
   return (
     <html
       lang="es"
@@ -161,9 +163,9 @@ export default function RootLayout({
             __html: JSON.stringify([BUSINESS_JSON_LD, WEBSITE_JSON_LD]),
           }}
         />
-        <SiteShell>{children}</SiteShell>
+        <SiteShell hasConsentTools={hasConsentTools}>{children}</SiteShell>
         {process.env.NODE_ENV === 'production' && <Analytics />}
-        <ConsentAnalytics />
+        <ConsentAnalytics gaId={gaId} clarityId={clarityId} />
       </body>
     </html>
   )

@@ -10,11 +10,15 @@ import {
   WHATSAPP_URL,
 } from "@/lib/site-data"
 import { SECTORS } from "@/lib/sectors"
-import { HAS_CONSENT_TOOLS, OPEN_CONSENT_EVENT } from "@/lib/analytics"
+import { OPEN_CONSENT_EVENT } from "@/lib/analytics"
 import { Logo } from "@/components/logo"
 import { LocalTime } from "@/components/local-time"
 
-export function SiteFooter() {
+export function SiteFooter({
+  hasConsentTools = false,
+}: {
+  hasConsentTools?: boolean
+}) {
   return (
     <footer className="overflow-hidden">
       <div className="grid grid-cols-2 gap-8 border-t border-border px-5 py-14 md:grid-cols-4 md:px-10">
@@ -125,7 +129,7 @@ export function SiteFooter() {
           >
             Cookies
           </Link>
-          {HAS_CONSENT_TOOLS && (
+          {hasConsentTools && (
             <button
               onClick={() => window.dispatchEvent(new Event(OPEN_CONSENT_EVENT))}
               className="py-1 transition-colors hover:text-foreground"

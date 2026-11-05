@@ -3,11 +3,7 @@
 // - Vercel Analytics: sin cookies, siempre activo en producción (layout).
 // - GA4 y Microsoft Clarity: usan cookies → solo se cargan si el visitante
 //   acepta en el banner (LSSI art. 22.2 / RGPD). Se activan definiendo
-//   NEXT_PUBLIC_GA_ID y NEXT_PUBLIC_CLARITY_ID en Vercel.
-
-export const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? ""
-export const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID ?? ""
-export const HAS_CONSENT_TOOLS = Boolean(GA_ID || CLARITY_ID)
+//   GA_ID y CLARITY_ID en Vercel (ver lib/analytics-config.ts).
 
 /** Eventos de conversión definidos en el plan (sección 23). */
 export type AnalyticsEvent =
