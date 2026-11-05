@@ -453,11 +453,11 @@ export function initialsOf(name: string) {
     .toUpperCase()
 }
 
-// Dominio canónico de producción. Se puede sobreescribir con NEXT_PUBLIC_SITE_URL
+// Dominio canónico de producción (www: es el que sirve Vercel). Se puede sobreescribir con NEXT_PUBLIC_SITE_URL
 // (útil en previews de Vercel) para que robots.txt y sitemap.xml siempre apunten
 // al host real donde se sirve el sitio.
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??
   (process.env.VERCEL_ENV && process.env.VERCEL_ENV !== "production" && process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
-    : "https://mpweblabs.com")
+    : "https://www.mpweblabs.com")
