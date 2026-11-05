@@ -102,11 +102,10 @@ export function SiteFooter({
 
       {/* giant wordmark */}
       <div
-        className="pointer-events-none select-none whitespace-nowrap px-2 text-center text-[clamp(3rem,12.5vw,11.5rem)] font-semibold leading-[0.8] tracking-[-0.04em] text-foreground/[0.06]"
+        className="pointer-events-none select-none whitespace-nowrap px-2 text-center text-[clamp(3rem,12.5vw,11.5rem)] font-semibold leading-[0.8] tracking-[-0.04em] text-foreground/[0.06] before:content-[attr(data-wordmark)]"
+        data-wordmark="MP WEBLABS"
         aria-hidden="true"
-      >
-        MP&nbsp;WEBLABS
-      </div>
+      />
 
       <div className="flex flex-col gap-2 border-t border-border px-5 py-6 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between md:px-10">
         <span>© {new Date().getFullYear()} MP WebLabs · Madrid, España</span>

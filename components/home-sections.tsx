@@ -252,8 +252,8 @@ export function SectorsSection({ num }: { num: string }) {
               ? SECTORS.find((x) => x.slug === s.slug)
               : undefined
             return (
-              <Reveal key={s.name} delay={i * 60}>
-                <li className="border-b border-border first:border-t">
+              <li key={s.name} className="border-b border-border first:border-t">
+                <Reveal delay={i * 60}>
                   {sector ? (
                     <Link
                       href={`/sectores/${sector.slug}`}
@@ -272,8 +272,8 @@ export function SectorsSection({ num }: { num: string }) {
                       {s.name}
                     </span>
                   )}
-                </li>
-              </Reveal>
+                </Reveal>
+              </li>
             )
           })}
         </ul>

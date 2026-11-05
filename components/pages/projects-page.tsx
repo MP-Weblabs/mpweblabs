@@ -36,6 +36,7 @@ export function ProjectsPage() {
       </section>
 
       <section className="px-5 py-20 md:px-10 md:py-28">
+        <h2 className="sr-only">Todos los proyectos</h2>
         <ProjectGrid projects={PROJECTS} />
       </section>
 
