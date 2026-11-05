@@ -10,6 +10,7 @@ import {
   WHATSAPP_URL,
 } from "@/lib/site-data"
 import { SECTORS } from "@/lib/sectors"
+import { HAS_CONSENT_TOOLS, OPEN_CONSENT_EVENT } from "@/lib/analytics"
 import { Logo } from "@/components/logo"
 import { LocalTime } from "@/components/local-time"
 
@@ -124,6 +125,14 @@ export function SiteFooter() {
           >
             Cookies
           </Link>
+          {HAS_CONSENT_TOOLS && (
+            <button
+              onClick={() => window.dispatchEvent(new Event(OPEN_CONSENT_EVENT))}
+              className="py-1 transition-colors hover:text-foreground"
+            >
+              Configurar cookies
+            </button>
+          )}
         </div>
       </div>
     </footer>

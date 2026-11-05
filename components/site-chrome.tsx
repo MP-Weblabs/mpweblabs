@@ -14,6 +14,7 @@ import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { LeadModal } from "@/components/lead-modal"
 import { CustomCursor } from "@/components/custom-cursor"
+import { track } from "@/lib/analytics"
 
 export type LeadMode = "proyecto" | "auditoria"
 
@@ -49,6 +50,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
     setModalOpen(true)
   }, [])
   const openAudit = useCallback(() => {
+    track("audit_started", { page: window.location.pathname })
     setModalMode("auditoria")
     setModalOpen(true)
   }, [])

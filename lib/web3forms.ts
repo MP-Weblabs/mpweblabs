@@ -1,6 +1,9 @@
+import { readAttribution, track } from "@/lib/analytics"
+
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit"
 
 export type LeadStatus = "idle" | "sending" | "sent" | "error"
+export type LeadForm = "proyecto" | "auditoria" | "contacto"
 
 // Envía el lead por dos vías en paralelo:
 // 1. Web3Forms directo desde el navegador (el plan gratuito no permite servidor) → email
@@ -8,14 +11,22 @@ export type LeadStatus = "idle" | "sending" | "sent" | "error"
 export async function submitLead(
   form: HTMLFormElement,
   subject: string,
+  formType: LeadForm,
 ): Promise<boolean> {
   const data = new FormData(form)
   if (data.get("botcheck") !== null) return true // honeypot: descartar bots
+
+  const attribution = readAttribution()
+  if (attribution) data.append("Origen visita", attribution)
 
   const [emailOk] = await Promise.all([
     sendWeb3Forms(data, subject),
     saveToNotion(data, subject),
   ])
+  if (emailOk) {
+    track("lead_submitted", { form: formType })
+    if (formType !== "auditoria") track("proposal_requested", { form: formType })
+  }
   return emailOk
 }
 
@@ -61,6 +72,7 @@ async function saveToNotion(data: FormData, subject: string): Promise<boolean> {
         email: data.get("Email"),
         telefono: data.get("Teléfono"),
         web: data.get("Web"),
+        origen: data.get("Origen visita"),
         mensaje: data.get("Mensaje"),
         subject,
       }),

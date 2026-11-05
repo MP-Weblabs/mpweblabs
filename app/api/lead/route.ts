@@ -73,10 +73,12 @@ export async function POST(req: Request) {
   const mensaje = clean(body.mensaje, 1800)
   const subject = clean(body.subject, 120)
   const web = clean(body.web, 200)
+  const origen = clean(body.origen, 400)
   const notas = [
     web ? `Web: ${web}` : "",
     mensaje,
     subject ? `Formulario: ${subject}` : "",
+    origen ? `Origen visita: ${origen}` : "",
   ]
     .filter(Boolean)
     .join("\n\n")

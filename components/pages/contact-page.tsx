@@ -20,7 +20,11 @@ export function ContactPage() {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setStatus("sending")
-    const ok = await submitLead(e.currentTarget, "Nuevo lead — Formulario de contacto")
+    const ok = await submitLead(
+      e.currentTarget,
+      "Nuevo lead — Formulario de contacto",
+      "contacto",
+    )
     setStatus(ok ? "sent" : "error")
   }
 

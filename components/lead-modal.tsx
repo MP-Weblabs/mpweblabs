@@ -96,7 +96,7 @@ export function LeadModal({
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setStatus("sending")
-    const ok = await submitLead(e.currentTarget, copy.subject)
+    const ok = await submitLead(e.currentTarget, copy.subject, mode)
     setStatus(ok ? "sent" : "error")
   }
 

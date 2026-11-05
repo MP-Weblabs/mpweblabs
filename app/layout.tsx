@@ -2,6 +2,7 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono, Instrument_Serif } from 'next/font/google'
 import { SiteShell } from '@/components/site-chrome'
+import { Analytics as ConsentAnalytics } from '@/components/analytics'
 import { INTRO_GATE_SCRIPT } from '@/lib/intro'
 import {
   CONTACT_EMAIL,
@@ -162,6 +163,7 @@ export default function RootLayout({
         />
         <SiteShell>{children}</SiteShell>
         {process.env.NODE_ENV === 'production' && <Analytics />}
+        <ConsentAnalytics />
       </body>
     </html>
   )
